@@ -1,0 +1,33 @@
+{
+    "displayName": "Coastline Run",
+    "limits": {
+      "maxBombs": 8,
+      "maxStealth": 0
+    },
+    "start": {
+      "lat": 32.592732,
+      "lng": 34.839532,
+      "heading": 150
+    },
+    "targetLocations": [
+      {
+        "lat": 32.4505,
+        "lng": 34.9117,
+        "emoji": "🏭",
+        "size": "medium"
+      },
+      {
+        "lat": 32.4477,
+        "lng": 34.9156,
+        "emoji": "🏭",
+        "size": "small"
+      },
+      {
+        "lat": 32.4468,
+        "lng": 34.9126,
+        "emoji": "🏭",
+        "size": "small"
+      }
+    ],
+    "radarLocations": []
+}

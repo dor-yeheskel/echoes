@@ -1,0 +1,122 @@
+{
+    "displayName": "Frozen Reach",
+    "limits": {
+      "maxBombs": 25,
+      "maxStealth": 2
+    },
+    "start": {
+      "lat": 63.7227,
+      "lng": -17.5580,
+      "heading": 30
+    },
+    "targetLocations": [
+      {
+        "lat": 63.7808,
+        "lng": -17.0961,
+        "emoji": "🛢️",
+        "size": "small" 
+      },
+      {
+        "lat": 63.7808,
+        "lng": -17.0941,
+        "emoji": "🛢️",
+        "size": "small" 
+      },
+      {
+        "lat": 63.7808,
+        "lng": -17.0911,
+        "emoji": "🛢️",
+        "size": "small" 
+      },
+      {
+        "lat": 63.778252,
+        "lng": -17.0883,
+        "emoji": "🚢",
+        "size": "small" 
+      },
+      {
+        "lat": 63.7787,
+        "lng": -17.0795,
+        "emoji": "🚢",
+        "size": "small" 
+      },
+      {
+        "lat": 63.8744,
+        "lng": -16.9705,
+        "emoji": "🛢️",
+        "size": "small" 
+      },
+      {
+        "lat": 63.9364,
+        "lng": -17.0301,
+        "emoji": "🛢️",
+        "size": "small" 
+      },
+      {
+        "lat": 63.9242,
+        "lng": -17.0309,
+        "emoji": "🛢️",
+        "size": "small" 
+      },
+      {
+        "lat": 63.9902,
+        "lng": -16.8920,
+        "emoji": "🏭",
+        "size": "small" 
+      },
+      {
+        "lat": 63.9916,
+        "lng": -16.8952,
+        "emoji": "🏭",
+        "size": "small" 
+      },
+      {
+        "lat": 64.0301,
+        "lng": -16.8843,
+        "emoji": "🏗️",
+        "size": "medium" 
+      }
+    ],
+    "radarLocations": [
+      {
+        "lat": 63.7821,
+        "lng": -17.1126,
+        "size": "medium",
+
+        "rocketSpeed": 10000,
+        "rocketFreq": 3.5,
+        "smartRocketsEvery": 1,
+        "smartRocketSpeedFactor": 0.456
+      },
+      {
+        "lat": 63.8734,
+        "lng": -16.9731,
+        "size": "small",
+
+        "rocketSpeed": 7000,
+        "rocketFreq": 0.5,
+
+        "predictRocketsEvery": 3,
+        "predictRocketsLead": 0.6
+      },
+      {
+        "lat": 64.0323,
+        "lng": -16.8828,
+        "size": "medium",
+
+        "rocketSpeed": 10000,
+        "rocketFreq": 0.5,
+
+        "predictRocketsEvery": 1,
+        "predictRocketsLead": 0.6
+      },
+      {
+        "lat": 64.0281,
+        "lng": -16.8805,
+        "size": "big",
+
+        "rocketSpeed": 12500,
+        "rocketFreq": 1
+      }
+    ]
+}

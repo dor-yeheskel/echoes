@@ -1,0 +1,89 @@
+{
+    "displayName": "Last Night",
+    "limits": {
+      "maxBombs": 1,
+      "maxStealth": 0
+    },
+    "start": {
+      "lat": 37.612945,
+      "lng": -122.377072,
+      "heading": 28
+    },
+    "night": true,
+    "base": {
+      "lat": 37.6220,
+      "lng": -122.3830,
+      "rotation": 26
+    },
+    "targetCount": 2,
+    "targetLocations": [
+      {
+        "lat": 37.8280,
+        "lng": -122.4228,
+        "emoji": "☢️",
+        "size": "medium" 
+      }
+    ],
+    "radarLocations": [
+      {
+        "lat": 37.8267,
+        "lng": -122.3760,
+        "size": "big",
+
+        "rocketSpeed": 10000,
+        "rocketFreq": 0.5,
+        "smartRocketsEvery": 4,
+        "smartRocketSpeedFactor": 0.45,
+
+        "predictRocketsEvery": 5,
+        "predictRocketsLead": 0.8
+      },
+      {
+        "lat": 37.8361,
+        "lng": -122.4781,
+        "size": "big",
+
+        "rocketSpeed": 10000,
+        "rocketFreq": 0.5,
+        "smartRocketsEvery": 4,
+        "smartRocketSpeedFactor": 0.45,
+
+        "predictRocketsEvery": 5,
+        "predictRocketsLead": 0.8
+      },
+      {
+        "lat": 37.8570,
+        "lng": -122.4390,
+        "size": "big",
+
+        "rocketSpeed": 10000,
+        "rocketFreq": 0.5,
+        "smartRocketsEvery": 4,
+        "smartRocketSpeedFactor": 0.45,
+
+        "predictRocketsEvery": 5,
+        "predictRocketsLead": 0.8
+      },
+      {
+        "lat": 37.7999,
+        "lng": -122.4584,
+        "size": "big",
+
+        "rocketSpeed": 10000,
+        "rocketFreq": 0.5,
+        "smartRocketsEvery": 4,
+        "smartRocketSpeedFactor": 0.45,
+
+        "predictRocketsEvery": 5,
+        "predictRocketsLead": 0.8
+      },
+      {
+        "lat": 37.82609,
+        "lng": -122.421,
+        "size": "small",
+
+        "rocketSpeed": 7000,
+        "rocketFreq": 1
+      }
+    ]
+}

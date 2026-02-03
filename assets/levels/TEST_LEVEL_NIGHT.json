@@ -1,0 +1,53 @@
+{
+    "displayName": "(Test)",
+    "limits": {
+      "maxBombs": 10,
+      "maxStealth": 2
+    },
+    "start": {
+      "lat": 31.5195,
+      "lng": 34.3888,
+      "heading": 90
+    },
+    "night": true,
+    "base": {
+      "lat": 31.5195,
+      "lng": 34.3198,
+      "rotation": 45
+    },
+    "targetLocations": [
+      { "lat": 31.5195, "lng": 34.3888, "emoji": "🏭", "size": "small" },
+      { "lat": 31.5195, "lng": 34.3708, "emoji": "🏭", "size": "medium" },
+      { "lat": 31.5195, "lng": 34.4068, "emoji": "🏭", "size": "big" }
+    ],
+    "radarLocations": [
+      {
+        "lat": 31.5195,
+        "lng": 34.3288,
+        "size": "small",
+
+        "rocketSpeed": 10000,
+        "rocketFreq": 0.9,
+        "predictRocketsEvery": 3,
+        "predictRocketsLead": 1
+      },
+      {
+        "lat": 31.5195,
+        "lng": 34.3270,
+        "size": "medium",
+
+        "rocketSpeed": 10000,
+        "rocketFreq": 0.9,
+        "smartRocketsEvery": 2,
+        "smartRocketSpeedFactor": 0.45
+      },
+      {
+        "lat": 31.5195,
+        "lng": 34.3260,
+        "size": "big",
+
+        "rocketSpeed": 10000,
+        "rocketFreq": 0.9
+      }
+    ]
+}
