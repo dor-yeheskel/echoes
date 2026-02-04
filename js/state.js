@@ -9,60 +9,27 @@ let currentState = GAME_STATE.MENU;
 let endScreenTimeout = null;
 
 const state = {
-  // dynamic per level
-  base: null,
-  hasBase: false,
-  baseRadius: CONFIG_DEFAULTS.baseRadius,
-
-  maxBombs: 10,
-  maxStealth: 2,
-
-  // plane
-  lat: 31.5085,
-  lng: 34.4538,
+  lat: 0,
+  lng: 0,
   heading: 0,
   speed: 3000,
 
-  // input / flags
   keys: {},
+
   gameStarted: false,
   gameOver: false,
+  paused: false,
 
-  // stealth
-  stealthUses: 2,
-  stealthActive: false,
-  stealthTimer: 0,
-
-  // resupply
-  refueled: false,
-
-  // scoring
-  destroyedRadars: 0,
-
-  // missiles config (defaults preserved unless overridden by level)
-  rocketSpeed: 5000, // km/h
-  rocketFreq: 1.0,    // seconds
-  predictRocketsEvery: 0,        // 0 disables
-  predictRocketsLead: 1,
-  smartRocketsEvery: 0, // 0 disables
-  smartRocketSpeedFactor: 0.5,
-  
-  // bookkeeping
   levelId: null,
   levelIndex: 0,
-  missileCounter: 0,
-  lastLockBeep: -999,
-  gameTime: 0,
 
-  paused: false
+  route: [],
+  routeIndex: 0,
+  currentTarget: null
 };
 
 const entities = {
-  targets: [],
-  radars: [],
-  bombs: [],
-  missiles: [],
-  remainingTargets: 0
+  targets: []
 };
 
 /* ========= UI ELEMENTS ========= */
@@ -91,6 +58,5 @@ let planeIcon = null;
 let planeMarker = null;
 let baseMarker = null;
 
-let isNight = false;
 const nightBursts = [];
 const activeFires = [];

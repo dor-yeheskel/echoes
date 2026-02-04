@@ -92,13 +92,6 @@ window.addEventListener("keydown", e => {
 
     }
   }
-  if (code === "Space") {
-    // ✅ PLAYING
-    if (currentState === GAME_STATE.PLAYING && !state.paused) {
-      dropBomb();
-      return;
-    }
-  }
 
   // ===== movement only during play =====
   if (currentState !== GAME_STATE.PLAYING) return;

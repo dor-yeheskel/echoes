@@ -1,5 +1,5 @@
 {
-  "displayName": "Echoes · Test Route",
+  "displayName": "Second",
 
   "start": {
     "lat": 31.5195,
@@ -13,23 +13,23 @@
       "name": "Alpha",
       "lat": 31.5195,
       "lng": 34.3955,
-      "arrivalRadius": 300,
+      "arrivalRadius": 1200,
       "humRadius": 7000
     },
     {
       "id": "B",
-      "name": "Bravo",     
-      "lat": 31.5215,
-      "lng": 34.4095,
-      "arrivalRadius": 300,
+      "name": "Bravo",
+      "lat": 31.5205,
+      "lng": 34.4025,
+      "arrivalRadius": 1200,
       "humRadius": 7000
     },
     {
       "id": "C",
       "name": "Charlie",
       "lat": 31.5215,
-      "lng": 34.4595,
-      "arrivalRadius": 300,
+      "lng": 34.4095,
+      "arrivalRadius": 1200,
       "humRadius": 7000
     }
   ]

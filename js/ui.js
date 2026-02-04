@@ -6,32 +6,35 @@ function renderProgressTable() {
   let html = `
     <div class="progressRow header">
       <div>#</div>
-      <div>Mission</div>
-      <div>Rank</div>
-      <div>Score</div>
+      <div>Route</div>
+      <div>Status</div>
+      <div></div>
     </div>
   `;
 
   for (let i = 0; i < levelOrder.length; i++) {
     const id = levelOrder[i];
     const lvl = levelToData[id];
-    const data = progress.scores[id];
+    const completed = progress.completedLevels?.includes(id);
     const unlocked = i < progress.unlockedCount;
 
     html += `
       <div class="progressRow
         ${unlocked ? "" : "locked"}
-        ${unlocked && !data ? "unplayed" : ""}
+        ${unlocked && !completed ? "unplayed" : ""}
         "
         data-level-id="${id}">
         <div class="mission-index">${i + 1}</div>
         <div>${lvl.displayName}</div>
-        <div class="${data?.rank?.includes('Gold') ? 'rank-gold' : ''}">
-          ${!unlocked ? "🔒" : (data ? data.rank : "—")}
+        <div>
+          ${!unlocked
+            ? "🔒"
+            : completed
+              ? "✔ Completed"
+              : "—"}
         </div>
-          <div class="${data?.score === 1000 ? 'score-max' : ''}">
-            ${!unlocked ? "🔒" : (data ? data.score : "—")}
-          </div>
+
+        <div></div>
       </div>
     `;
   }
@@ -57,7 +60,6 @@ function renderProgressTable() {
 }
 
 
-
 function moveMenuSelection(dir) {
   const rows = Array.from(
     document.querySelectorAll(".progressRow:not(.header):not(.locked)")
@@ -81,62 +83,27 @@ function moveMenuSelection(dir) {
   state.levelId = levelOrder[newIdx];
 }
 
-function updateHUD() {
-  setHUDValue("hud-bombs", state.bombs);
-  setHUDValue("hud-stealth", state.stealthUses);
-  setHUDValue("hud-targets", entities.remainingTargets);
 
-  const rtbEl = document.getElementById("returnToBaseIndicator");
-  if (rtbEl) {
-    const needReturnToBase =
-      state.hasBase &&
-      state.bombs === 0 &&
-      entities.bombs.length === 0 &&
-      !state.gameOver &&
-      state.gameStarted;
-
-    rtbEl.classList.toggle("active", needReturnToBase);
-  }
-}
-
-function setHUDValue(id, value) {
-  const el = document.getElementById(id);
+function renderRouteHUD() {
+  const el = document.getElementById("routeHud");
   if (!el) return;
-  if (id === "hud-stealth" && value === 0) {
-    el.textContent = "—";
-    el.classList.remove("hud-zero");
-    return;
-  }
-  el.textContent = value;
-  el.style.color = "";
-  if (id === "hud-targets" && value === 0) {
-    el.style.color = "#7CFFB2";
-  }
-  if (
-    value === 0 &&
-    (id === "hud-bombs" || id === "hud-stealth")
-  ) {
-    el.classList.add("hud-zero");
-  } else {
-    el.classList.remove("hud-zero");
-  }
 
+  const route = state.route || [];
+  const idx = state.routeIndex ?? 0;
 
-  el.classList.remove("bump");
-  void el.offsetWidth; // force reflow
-  el.classList.add("bump");
+  let html = "";
 
-}
+  for (let i = 0; i < route.length; i++) {
+    const name = route[i].name || route[i].id || `#${i + 1}`;
 
-function animateNumber(el, from, to, duration = 600) {
-  const start = performance.now();
-
-  function step(t) {
-    const p = Math.min(1, (t - start) / duration);
-    const value = Math.floor(from + (to - from) * p);
-    el.textContent = value;
-    if (p < 1) requestAnimationFrame(step);
+    if (i < idx) {
+      html += `<div class="route-done">${name}</div>`;
+    } else if (i === idx) {
+      html += `<div class="route-current">→ ${name}</div>`;
+    } else {
+      html += `<div class="route-next">${name}</div>`;
+    }
   }
 
-  requestAnimationFrame(step);
+  el.innerHTML = html;
 }

@@ -1,15 +1,12 @@
 /* ========= START / NAV ========= */
-
 function startGame() {
   document.activeElement.blur();
   introEl.style.display = "none";
   endScreenEl.style.display = "none";
 
   whiteFlash();
-  
+
   setTimeout(() => {
-    state.bombsUsed = 0;
-    state.stealthUsed = 0;
     state.gameStarted = true;
     state.gameOver = false;
     currentState = GAME_STATE.PLAYING;
@@ -23,14 +20,12 @@ function restartLevel() {
   startGame();
 }
 
-
 function nextLevel() {
   const nextIndex = Math.min(levelOrder.length - 1, state.levelIndex + 1);
   loadLevel(levelOrder[nextIndex]);
 }
 
 /* ========= BOOT ========= */
-
 window.addEventListener('DOMContentLoaded', async function() {
   const isMobile = window.matchMedia(
     "(hover: none) and (pointer: coarse)"

@@ -54,3 +54,27 @@ const aimMarker = L.marker([0, 0], {
     iconAnchor: [3, 3]
   })
 }).addTo(layerUi);
+
+
+
+let targetMarker = null;
+
+function addEchoTarget(target) {
+  const marker = L.marker([target.lat, target.lng], {
+    icon: L.divIcon({
+      html: `<div style="
+        font-size:28px;
+        opacity:0.9;
+        filter: drop-shadow(0 0 6px rgba(0,255,150,0.6));
+      ">📍</div>`,
+      className: "",
+      iconSize: [0, 0]
+    })
+  }).addTo(layerTargets);
+
+  entities.targets.push({
+    ...target,
+    marker,
+    echo: true
+  });
+}

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <!-- Title -->
-<title>Flight Ops</title>
+<title>Echoes</title>
 <link rel="icon" href="data:image/svg+xml,
 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'>
   <text x='50%' y='60%' dominant-baseline='middle' text-anchor='middle' font-size='90'>✈️</text>
@@ -34,7 +34,7 @@
 <div id="mobileBlocker">
   <div class="mobile-panel">
     <div class="mobile-icon">✈️</div>
-    <h2>Flight Ops</h2>
+    <h2>Echoes</h2>
     <p>
       This game is designed for desktop screens.<br>
       Mobile devices are not supported.
@@ -50,13 +50,10 @@
 <div id="hud">
   <div id="levelTitle"></div>
   <div class="hud-box">
-    <div class="hud-item">💣 <span id="hud-bombs">100</span></div>
-    <div class="hud-item">🕶 <span id="hud-stealth">2</span></div>
-    <div class="hud-item">🎯 <span id="hud-targets">2</span></div>
+    <div id="routeHud"></div>
   </div>
+
 </div>
-<div id="threatIndicator">⚠️</div>
-<div id="returnToBaseIndicator">🛬</div>
 <button id="muteBtn" class="mute-btn">🔊</button>
 
 <div id="radar">
@@ -66,23 +63,16 @@
 <div id="intro">
   <div class="panel">
 
-    <h2 class="mission-title">✈️ Mission Briefing</h2>
+    <h2 class="mission-title">✈️ Echoes</h2>
+    <div class="mission-subtitle">Navigation over real terrain</div>
 
     <div class="controls">
       <div><span>⬆️ ⬇️</span><span>Speed</span></div>
       <div><span>⬅️ ➡️</span><span>Turn</span></div>
-      <div><span>Space</span><span>Drop bomb 💣</span></div>
-      <div><span>Shift</span><span>Stealth 🕶️</span></div>
-    </div>
-
-    <div class="mission-objectives">
-      <hr>
-      <div>🎯 Destroy all enemy targets</div>
-      <div>⚠️ Avoid radar missiles</div>
     </div>
 
     <div class="mission-hint">
-      Select mission · Press Enter
+      Select route · Press Enter
     </div>
 
     <div id="progressTable" class="progressWrap"></div>
@@ -144,8 +134,6 @@
 <script src="js/level.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/effects.js"></script>
-<script src="js/weapons.js"></script>
-<script src="js/scoring.js"></script>
 <script src="js/gameover.js"></script>
 <script src="js/input.js"></script>
 <script src="js/radar.js"></script>
