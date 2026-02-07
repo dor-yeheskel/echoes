@@ -97,11 +97,11 @@ function renderRouteHUD() {
     const name = route[i].name || route[i].id || `#${i + 1}`;
 
     if (i < idx) {
-      html += `<div class="route-done">${name}</div>`;
+      html += `<div class="route-done">● ${name}</div>`;
     } else if (i === idx) {
-      html += `<div class="route-current">→ ${name}</div>`;
+      html += `<div class="route-current">● ${name}</div>`;
     } else {
-      html += `<div class="route-next">${name}</div>`;
+      html += `<div class="route-next">○ ${name}</div>`;
     }
   }
 
