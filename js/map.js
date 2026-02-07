@@ -25,7 +25,7 @@ L.tileLayer(
 )
 
 
-let zoom = 15;
+let zoom = 7;
 map.setMinZoom(zoom);
 map.setMaxZoom(zoom);
 map.createPane("planePane");
