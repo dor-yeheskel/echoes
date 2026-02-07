@@ -35,7 +35,7 @@ sounds.defeat.volume  = V.end;
 const CITY_TRACKS = {
   // TEST_LEVEL
   // "london|united kingdom": new Audio("assets/sounds/cities/london.wav"),
-  "paris|france": new Audio("assets/sounds/victory.wav"),
+  "paris|france": new Audio("assets/sounds/cities/paris.wav"),
   "berlin|germany": new Audio("assets/sounds/victory.wav"),
   "barcelona|spain": new Audio("assets/sounds/victory.wav"),
   // TEST_LEVEL_2
