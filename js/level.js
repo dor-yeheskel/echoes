@@ -216,6 +216,8 @@ function setNightMode(on) {
 function loadLevel(levelId) {
   resetLayersAndEntities();
   applyLevelConfig(levelId);
+  setLevelCenterFromTargets(entities.targets);
+  preloadCityMarkers();
 
   planeMarker.setLatLng([state.lat, state.lng]);
   map.setView([state.lat, state.lng], 13, { animate: false });

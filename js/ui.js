@@ -107,3 +107,32 @@ function renderRouteHUD() {
 
   el.innerHTML = html;
 }
+
+
+let currentCity = null;
+
+function updateCityHUD() {
+  const el = document.getElementById("hud-city");
+  if (!el) return;
+
+  const cities = getCityEntities();
+  if (!cities || !cities.length) return;
+
+  if (currentCity) {
+    const d = distance(state, currentCity);
+    if (d > CITY_MARKERS.CITY_HUD_RADIUS_M) {
+      currentCity = null;
+    }
+    return;
+  }
+
+  for (const city of cities) {
+    const d = distance(state, city);
+    if (d < CITY_MARKERS.CITY_HUD_RADIUS_M) {
+      currentCity = city;
+      el.textContent = city.name + (city.country ? `, ${city.country}` : "");
+      el.classList.add("active");
+      return;
+    }
+  }
+}

@@ -686,3 +686,31 @@ select:focus {
 #routeHud .route-next {
   opacity: 0.8;
 }
+
+/* ===== CITY HUD ===== */
+#hud-city {
+  margin-top: 8px;
+  padding: 6px 12px;
+
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+
+  color: #eaeaea;
+  background: rgba(0, 0, 0, 0.55);
+
+  border-radius: 999px; /* pill */
+  width: fit-content;
+
+  box-shadow:
+    0 0 12px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+#hud-city.active {
+  opacity: 1;
+  transform: translateY(0);
+}

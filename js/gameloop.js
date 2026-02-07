@@ -75,6 +75,7 @@ function loop(t) {
 
     }
 
+    updateCityHUD();
     drawRadar();
   }
 
@@ -94,3 +95,4 @@ function advanceToNextTarget() {
   state.currentTarget = entities.targets[state.routeIndex];
   renderRouteHUD();
 }
+

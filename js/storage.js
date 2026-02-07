@@ -20,3 +20,35 @@ function saveProgress(progress) {
 }
 
 let progress = loadProgress();
+
+
+/* ======== City Markers Memory (preloaded) ======== */
+function loadCityMarkersCache() {
+  try {
+    const raw = localStorage.getItem(CITY_MARKERS.CACHE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+
+    if (!parsed || parsed.v !== CITY_MARKERS.CACHE_SCHEMA_VERSION) return null;
+    if (!Array.isArray(parsed.items)) return null;
+
+    // items are stored as compact arrays:
+    // [lat, lng, pop, cityName, countryName]
+    return parsed.items;
+  } catch (e) {
+    return null;
+  }
+}
+
+function saveCityMarkersCache(items) {
+  try {
+    const payload = {
+      v: CITY_MARKERS.CACHE_SCHEMA_VERSION,
+      t: Date.now(),
+      items
+    };
+    localStorage.setItem(CITY_MARKERS.CACHE_KEY, JSON.stringify(payload));
+  } catch (e) {
+    // localStorage might be full; in that case we just won't cache.
+  }
+}
