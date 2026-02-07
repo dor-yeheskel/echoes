@@ -10,11 +10,13 @@ const CONFIG_DEFAULTS = {
   baseRadius: 400, // meters
   minSpeed: 600000,
   maxSpeed: 900000,  // 5000?
-  // TODO: Add zoom here.
+
   accel: 10000,
   radarRangeOnMinimap: 4500,
   turnRate: 140,
   emojiRotationOffset: -45,
+  // Default radius for counting a destination as reached (meters)
+  arrivalRadius: 25000,
 };
 
 /* ========= CITY MARKERS (CONFIG) ========= */
@@ -26,7 +28,7 @@ const CITY_MARKERS = {
   INCLUDE_CAPITALS: true,
 
   // radius rule (meters)
-  LEVEL_RADIUS_M: 2_000_000,
+  LEVEL_RADIUS_M: 4_000_000,
 
   CITY_HUD_RADIUS_M: 25_000,  // radius for showing city name on hover (meters)
 

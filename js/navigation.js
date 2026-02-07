@@ -38,10 +38,6 @@ window.addEventListener('DOMContentLoaded', async function() {
 
   await loadLevels();
   await loadCityIndex();
-    
-  for (const [k,v] of window.cityIndex.entries()) {
-    console.log("City item:", k, v);
-  }
 
   levelToData = window.LEVELS;
   levelOrder = Object.keys(window.LEVELS);

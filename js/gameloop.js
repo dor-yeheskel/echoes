@@ -60,11 +60,21 @@ function loop(t) {
     map.setView(pos, map.getZoom(), { animate: false });
     
 
-    if (state.currentTarget && !state.gameOver) {
-      const d = distance(state, state.currentTarget);
-
-      if (d <= state.currentTarget.arrivalRadius) {
-        advanceToNextTarget();
+    // Free-order: check proximity against any unfinished target
+    if (!state.gameOver && entities.targets && entities.targets.length) {
+      for (const t of entities.targets) {
+        if (t.completed) continue;
+        const d = distance(state, t);
+        const radius = Number.isFinite(t.arrivalRadius)
+          ? t.arrivalRadius
+          : CONFIG_DEFAULTS.arrivalRadius;
+        if (d <= radius) {
+          t.completed = true;
+          if (typeof entities.remainingTargets === 'number' && entities.remainingTargets > 0) {
+            entities.remainingTargets--;
+          }
+          renderRouteHUD();
+        }
       }
     }
 
@@ -82,16 +92,15 @@ function loop(t) {
 }
 
 
+// Sequential advance no longer used; keeping stub for compatibility
 function advanceToNextTarget() {
-  state.routeIndex++;
-
-  if (state.routeIndex >= entities.targets.length) {
-    endLevel();
-    return;
+  // Mark next unfinished as completed (fallback if invoked elsewhere)
+  const next = entities.targets?.find(t => !t.completed);
+  if (!next) { endLevel(); return; }
+  next.completed = true;
+  if (typeof entities.remainingTargets === 'number' && entities.remainingTargets > 0) {
+    entities.remainingTargets--;
   }
-
-
-  state.currentTarget = entities.targets[state.routeIndex];
   renderRouteHUD();
 }
 

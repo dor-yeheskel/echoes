@@ -1,0 +1,17 @@
+Level data:
+    Every location dest in the level will have:
+        1. radius.
+        2. Song .wav (automacitlly - will be played 4 seconds)
+
+Level (mission):
+    4-5 cities in a list.
+    Goal is to reach all of them - and fuel will be defined - 
+        maybe by their distances from the optimal path.
+
+    No refuel
+
+    points - deps on the fuel that left.
+
+Gameplay:
+    Same - mission failed, passed, etc.
+

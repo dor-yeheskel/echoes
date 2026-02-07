@@ -88,23 +88,25 @@ function renderRouteHUD() {
   const el = document.getElementById("routeHud");
   if (!el) return;
   // Build the HUD from the actual spawned targets so skipped entries
-  // or unresolved cities are not shown.
+  // or unresolved cities are not shown. No inherent order.
   const targets = entities.targets || [];
-  const idx = state.routeIndex ?? 0;
+  
 
   if (!targets.length) {
     el.innerHTML = "<div class=\"route-empty\">No route targets</div>";
     return;
   }
 
-  let html = "<ol class=\"route-list\">";
+  // Use an unordered list (no numbering) for cleaner look
+  let html = "<ul class=\"route-list\">";
   for (let i = 0; i < targets.length; i++) {
     const t = targets[i];
     const name = t.name || t.city || t.id || `#${i + 1}`;
-    const cls = i < idx ? "route-done" : i === idx ? "route-current" : "route-next";
-    html += `<li class="${cls}"><span class="marker">${i < idx ? '✓' : i === idx ? '●' : '○'}</span><span class="name">${name}</span></li>`;
+    const cls = t.completed ? "route-done" : "route-next";
+    const marker = t.completed ? '✓' : '○';
+    html += `<li class="${cls}"><span class="marker">${marker}</span><span class="name">${name}</span></li>`;
   }
-  html += "</ol>";
+  html += "</ul>";
 
   el.innerHTML = html;
 }

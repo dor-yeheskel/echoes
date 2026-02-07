@@ -668,9 +668,36 @@ select:focus {
   line-height: 1.4;
 }
 
+/* Cleaner, unnumbered destination list (transparent to avoid double box) */
+#routeHud .route-list {
+  list-style: none;
+  margin: 0;
+  padding: 6px 2px;
+}
+
+#routeHud .route-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 2px;
+}
+
+#routeHud .marker {
+  width: 18px;
+  display: inline-block;
+  text-align: center;
+}
+
+#routeHud .name { letter-spacing: 0.2px; }
+
 #routeHud .route-done {
-  text-decoration: line-through;
   opacity: 0.45;
+}
+
+/* Strike only the destination name, not the marker */
+#routeHud .route-done .name {
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
 }
 
 #routeHud .route-current {
@@ -678,9 +705,7 @@ select:focus {
   font-weight: 600;
 }
 
-#routeHud .route-next {
-  opacity: 0.8;
-}
+#routeHud .route-next { opacity: 0.85; }
 
 /* ===== CITY HUD ===== */
 #hud-city {

@@ -153,6 +153,10 @@ async function loadCityIndex() {
     const data = await res.json();
 
     for (const row of data) {
+      if (row.country === "Israel") {
+        console.log(`Israel city: ${row.city ?? row.name}`);
+      }
+      
       const lat = Number(row.lat ?? row.latitude);
       const lng = Number(row.lng ?? row.lon ?? row.longitude);
 
@@ -212,12 +216,6 @@ async function preloadCityMarkers() {
     });
 
   }
-
-  console.log("Cities drawn:", layerCities.getLayers().length);
-  for (const c of cityEntities) {
-    console.log(`- ${c.name}, ${c.country} (${c.lat.toFixed(2)}, ${c.lng.toFixed(2)})`);
-  }
-
 }
 
 

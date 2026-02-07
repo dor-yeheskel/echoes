@@ -18,8 +18,13 @@ function resolveCityRef(ref) {
   console.log("Resolving city ref:", ref);
   const key = `${ref.city}|${ref.country}`;
   const city = window.cityIndex.get(key);
-  console.log("Resolved city:", city);
   if (!city) {
+    console.log(`Candidate cities in ${ref.country}:`);
+    for (const [k, v] of window.cityIndex.entries()) {
+      if (k.endsWith(`|${ref.country}`)) {
+        console.log(`  - ${k}`);
+      }
+    }
     throw new Error(`City not found: ${key}`);
   }
   return city;
@@ -83,10 +88,21 @@ function applyLevelConfig(levelId) {
       }
     }
 
-    entities.targets.push({ ...t });
+    // Ensure defaults so gameplay logic works
+    const arrivalRadius = Number.isFinite(t.arrivalRadius)
+      ? t.arrivalRadius
+      : CONFIG_DEFAULTS.arrivalRadius;
+
+    entities.targets.push({
+      ...t,
+      arrivalRadius,
+      completed: false,
+      name: t.name || t.city || t.id
+    });
     entities.remainingTargets++;
   }
-  state.currentTarget = entities.targets[0] || null;
+  // In free-order mode we don't force a current target
+  state.currentTarget = null;
 
   if (hudLevelEl) {
     hudLevelEl.textContent = lvl.displayName;

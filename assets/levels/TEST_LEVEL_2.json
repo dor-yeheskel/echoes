@@ -2,35 +2,19 @@
   "displayName": "Second",
 
   "start": {
-    "lat": 31.5195,
-    "lng": 34.3888,
+    "city": "Tel Aviv-Yafo",
+    "country": "Israel",
     "heading": 90
   },
 
   "route": [
     {
-      "id": "A",
-      "name": "Alpha",
-      "lat": 31.5195,
-      "lng": 34.3955,
-      "arrivalRadius": 1200,
-      "humRadius": 7000
+        "city": "Dubai",
+        "country": "United Arab Emirates"
     },
     {
-      "id": "B",
-      "name": "Bravo",
-      "lat": 31.5205,
-      "lng": 34.4025,
-      "arrivalRadius": 1200,
-      "humRadius": 7000
-    },
-    {
-      "id": "C",
-      "name": "Charlie",
-      "lat": 31.5215,
-      "lng": 34.4095,
-      "arrivalRadius": 1200,
-      "humRadius": 7000
+        "city": "Cairo",
+        "country": "Egypt"
     }
   ]
 }
