@@ -73,6 +73,9 @@ function loop(t) {
           if (typeof entities.remainingTargets === 'number' && entities.remainingTargets > 0) {
             entities.remainingTargets--;
           }
+          if (t.city && t.country && typeof playCityTrack === 'function') {
+            playCityTrack(t.city, t.country);
+          }
           renderRouteHUD();
         }
       }
