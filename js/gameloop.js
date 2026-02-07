@@ -73,8 +73,13 @@ function loop(t) {
           if (typeof entities.remainingTargets === 'number' && entities.remainingTargets > 0) {
             entities.remainingTargets--;
           }
+
+          if (typeof markDestinationCityReached === "function") {
+            try { markDestinationCityReached(t); } catch {}
+          }
+
           if (t.city && t.country && typeof playCityTrack === 'function') {
-            Promise.resolve(playSound("erase")).then(() => {
+            Promise.resolve(playSound("reached")).then(() => {
               playCityTrack(t.city, t.country);
             });
           }

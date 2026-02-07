@@ -688,6 +688,10 @@ select:focus {
   text-align: center;
 }
 
+#routeHud .marker.marker-done {
+  opacity: 0.35;
+}
+
 #routeHud .name { letter-spacing: 0.2px; }
 
 #routeHud .route-done {
@@ -733,4 +737,57 @@ select:focus {
 #hud-city.active {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* ===== Destination completion (city emoji fade + pulse) ===== */
+
+.city-marker {
+  position: relative;
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+.city-marker.city-done {
+  opacity: 0.35;
+}
+
+.city-marker.city-pulse::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  border: 2px solid rgba(124, 255, 178, 0.85);
+  transform: translate(-50%, -50%) scale(0.6);
+  opacity: 1;
+  animation: cityRipple 0.9s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes cityRipple {
+  to {
+    transform: translate(-50%, -50%) scale(2.6);
+    opacity: 0;
+  }
+}
+
+.arrival-pulse {
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  border: 2px solid rgba(124, 255, 178, 0.75);
+  box-shadow: 0 0 18px rgba(124, 255, 178, 0.18);
+  transform: scale(0.25);
+  opacity: 1;
+  animation: arrivalRipple 0.95s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes arrivalRipple {
+  to {
+    transform: scale(1.25);
+    opacity: 0;
+  }
 }

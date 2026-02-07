@@ -7,7 +7,7 @@ const sounds = {
   destroyed: new Audio("assets/sounds/destroyed.wav"),
   key_arrow: new Audio("assets/sounds/key_arrow.wav"),
   fuel: new Audio("assets/sounds/fuel.wav"),
-  erase: new Audio("assets/sounds/erase.wav"),
+  reached: new Audio("assets/sounds/reached.wav"),
 };
 
 

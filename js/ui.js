@@ -103,8 +103,8 @@ function renderRouteHUD() {
     const t = targets[i];
     const name = t.name || t.city || t.id || `#${i + 1}`;
     const cls = t.completed ? "route-done" : "route-next";
-    const marker = t.completed ? '✓' : '○';
-    html += `<li class="${cls}"><span class="marker">${marker}</span><span class="name">${name}</span></li>`;
+    const markerCls = t.completed ? "marker marker-done" : "marker";
+    html += `<li class="${cls}"><span class="${markerCls}">🏢</span><span class="name">${name}</span></li>`;
   }
   html += "</ul>";
 

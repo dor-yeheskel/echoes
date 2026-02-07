@@ -84,7 +84,19 @@ const aimMarker = L.marker([0, 0], {
 let targetMarker = null;
 
 
-function addCityMarker(lat, lng, pop) {
+// Track spawned city markers so we can update them when a destination is reached.
+window.cityMarkerIndex = new Map(); // key: "Name|Country" -> Leaflet marker
+
+function _escapeHtml(s) {
+  return String(s)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function addCityMarker(lat, lng, pop, name = "", country = "") {
   let sizeKey;
 
   if (pop >= CITY_MARKERS.BIG_CITY_POPULATION) {
@@ -98,7 +110,10 @@ function addCityMarker(lat, lng, pop) {
   const size = CITY_MARKERS.SIZE_PX[sizeKey];
   const offset = CITY_MARKERS.OFFSET_PX[sizeKey];
 
-  L.marker([lat, lng], {
+  const safeName = _escapeHtml(name);
+  const safeCountry = _escapeHtml(country);
+
+  const marker = L.marker([lat, lng], {
     interactive: false,
     keyboard: false,
     icon: L.divIcon({
@@ -107,11 +122,15 @@ function addCityMarker(lat, lng, pop) {
         opacity:0.9;
         transform: translate(${offset.x}px, ${offset.y}px);
         filter: drop-shadow(0 0 6px rgba(0,0,0,0.6));
-      ">🏢</div>`,
+      " class="city-marker" data-city="${safeName}" data-country="${safeCountry}">🏢</div>`,
       className: "",
       iconSize: [0, 0]
     })
   }).addTo(layerCities);
+
+  if (name && country) {
+    window.cityMarkerIndex.set(`${name}|${country}`, marker);
+  }
 }
 
 
@@ -206,7 +225,7 @@ async function preloadCityMarkers() {
     if (!isCapital && !isBigCity) continue;
 
     // ✅ passed all rules
-    addCityMarker(c.lat, c.lng, c.pop);
+    addCityMarker(c.lat, c.lng, c.pop, c.name, c.country);
     
     cityEntities.push({
       lat: c.lat,
@@ -216,6 +235,59 @@ async function preloadCityMarkers() {
     });
 
   }
+}
+
+function spawnArrivalPulse(lat, lng) {
+  if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
+
+  const pulse = L.marker([lat, lng], {
+    interactive: false,
+    keyboard: false,
+    icon: L.divIcon({
+      html: `<div class="arrival-pulse"></div>`,
+      className: "",
+      iconSize: [56, 56],
+      iconAnchor: [28, 28]
+    }),
+    pane: "fxPane"
+  }).addTo(layerFx);
+
+  setTimeout(() => {
+    try { layerFx.removeLayer(pulse); } catch {}
+  }, 950);
+}
+
+function _pulseElement(el) {
+  if (!el) return;
+  el.classList.remove("city-pulse");
+  // force reflow so animation restarts
+  void el.offsetWidth;
+  el.classList.add("city-pulse");
+  setTimeout(() => el.classList.remove("city-pulse"), 900);
+}
+
+function markCityMarkerCompleted(city, country) {
+  if (!city || !country) return false;
+  const key = `${city}|${country}`;
+  const m = window.cityMarkerIndex?.get(key);
+  if (!m) return false;
+
+  const root = m.getElement?.();
+  const el = root?.querySelector?.(".city-marker") || root;
+  if (!el) return false;
+
+  el.classList.add("city-done");
+  _pulseElement(el);
+  return true;
+}
+
+// Called when a route destination is reached.
+function markDestinationCityReached(target) {
+  if (!target) return;
+  if (target.city && target.country) {
+    markCityMarkerCompleted(target.city, target.country);
+  }
+  spawnArrivalPulse(target.lat, target.lng);
 }
 
 
