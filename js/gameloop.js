@@ -74,7 +74,9 @@ function loop(t) {
             entities.remainingTargets--;
           }
           if (t.city && t.country && typeof playCityTrack === 'function') {
-            playCityTrack(t.city, t.country);
+            Promise.resolve(playSound("erase")).then(() => {
+              playCityTrack(t.city, t.country);
+            });
           }
           renderRouteHUD();
         }

@@ -7,6 +7,7 @@ const sounds = {
   destroyed: new Audio("assets/sounds/destroyed.wav"),
   key_arrow: new Audio("assets/sounds/key_arrow.wav"),
   fuel: new Audio("assets/sounds/fuel.wav"),
+  erase: new Audio("assets/sounds/erase.wav"),
 };
 
 
@@ -113,16 +114,52 @@ function getAllAudios() {
 }
 
 function playSound(name) {
-  if (!soundEnabled) return;
+  if (!soundEnabled) return Promise.resolve(false);
 
   const s = sounds[name];
-  if (!s) return;
+  if (!s) return Promise.resolve(false);
 
-  try {
-    s.pause();
-    s.currentTime = 0;
-    s.play().catch(() => {});
-  } catch {}
+  return new Promise((resolve) => {
+    let settled = false;
+    let timeoutId = null;
+
+    const cleanup = () => {
+      try { s.removeEventListener('ended', onEnded); } catch {}
+      try { s.removeEventListener('error', onError); } catch {}
+      if (timeoutId !== null) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+      }
+    };
+
+    const settle = (ok) => {
+      if (settled) return;
+      settled = true;
+      cleanup();
+      resolve(!!ok);
+    };
+
+    const onEnded = () => settle(true);
+    const onError = () => settle(false);
+
+    try {
+      s.addEventListener('ended', onEnded);
+      s.addEventListener('error', onError);
+
+      // Fallback: if audio is interrupted (pause/stop) we still want to unblock.
+      const dur = Number.isFinite(s.duration) && s.duration > 0 ? s.duration : 1.2;
+      timeoutId = setTimeout(() => settle(true), Math.ceil(dur * 1000) + 50);
+
+      s.pause();
+      s.currentTime = 0;
+      const p = s.play();
+      if (p && typeof p.catch === 'function') {
+        p.catch(() => settle(false));
+      }
+    } catch {
+      settle(false);
+    }
+  });
 }
 
 
