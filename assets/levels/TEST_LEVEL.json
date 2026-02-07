@@ -2,35 +2,23 @@
   "displayName": "Echoes · Test Route",
 
   "start": {
-    "lat": 51.5074,
-    "lng": 0.1278,
+    "city": "London",
+    "country": "United Kingdom",
     "heading": 90
   },
 
   "route": [
     {
-      "id": "A",
-      "name": "Alpha",
-      "lat": 50.5074,
-      "lng": 0.1278,
-      "arrivalRadius": 300,
-      "humRadius": 7000
+        "city": "Paris",
+        "country": "France"
     },
     {
-      "id": "B",
-      "name": "Bravo",     
-      "lat": 52.5074,
-      "lng": 0.1278,
-      "arrivalRadius": 300,
-      "humRadius": 7000
+        "city": "Berlin",
+        "country": "Germany"
     },
     {
-      "id": "C",
-      "name": "Charlie",
-      "lat": 51.5074,
-      "lng": 1.1278,
-      "arrivalRadius": 300,
-      "humRadius": 7000
+        "city": "Barcelona",
+        "country": "Spain"
     }
   ]
 }

@@ -39,12 +39,7 @@ html, body {
   filter: drop-shadow(0 4px 6px rgba(0,0,0,.5));
 }
 
-.missile{
-  font-size: 30px;
-  display: block;
-  transform-origin: 50% 50%;
-  filter: drop-shadow(0 6px 10px rgba(0,0,0,.4));
-}
+
 #hud {
   position: absolute;
   top: 14px;

@@ -42,10 +42,17 @@ function loadCityMarkersCache() {
 
 function saveCityMarkersCache(items) {
   try {
+    // Normalize to compact arrays for compatibility with older versions:
+    const compact = items.map(it => {
+      if (Array.isArray(it)) return it;
+      const name = it.name ?? it.city ?? "";
+      return [Number(it.lat), Number(it.lng), Number(it.pop ?? 0), name, it.country ?? ""];
+    });
+
     const payload = {
       v: CITY_MARKERS.CACHE_SCHEMA_VERSION,
       t: Date.now(),
-      items
+      items: compact
     };
     localStorage.setItem(CITY_MARKERS.CACHE_KEY, JSON.stringify(payload));
   } catch (e) {

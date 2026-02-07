@@ -96,25 +96,6 @@ window.addEventListener("keydown", e => {
   // ===== movement only during play =====
   if (currentState !== GAME_STATE.PLAYING) return;
 
-  if (!state.keys[code]) {
-    if (
-      (code === "ShiftLeft" || code === "ShiftRight") &&
-      state.stealthUses > 0 &&
-      !state.stealthActive
-    ) {
-      state.stealthActive = true;
-      state.stealthUsed = (state.stealthUsed || 0) + 1;
-      state.stealthUses--;
-      state.stealthTimer = 5;
-      playSound("stealth");
-
-      for (const m of entities.missiles) {
-        m.smart = false;
-        m.lockLost = true;
-      }
-    }
-  }
-
   state.keys[code] = true;
 });
 

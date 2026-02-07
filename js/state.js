@@ -36,18 +36,13 @@ const entities = {
 
 let hudLevelEl = null;
 let spdEl = null;
-let bombsEl = null;
 let targetsEl = null;
-let stealthEl = null;
 
 let introEl = null;
 let endScreenEl = null;
 
 let endRankEl = null;
 let endScoreEl = null;
-let endStealthEl = null;
-let endBombsEl = null;
-let endRadarsEl = null;
 
 let levelSelectEl = null;
 let startBtn = null;
@@ -58,5 +53,3 @@ let planeIcon = null;
 let planeMarker = null;
 let baseMarker = null;
 
-const nightBursts = [];
-const activeFires = [];

@@ -76,7 +76,6 @@ function loop(t) {
     }
 
     updateCityHUD();
-    drawRadar();
   }
 
   requestAnimationFrame(loop);

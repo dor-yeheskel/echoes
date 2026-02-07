@@ -58,9 +58,6 @@ map.getPane("fxPane").style.zIndex = 650;
 
 
 const layerTargets  = L.layerGroup().addTo(map);
-const layerRadars   = L.layerGroup().addTo(map);
-const layerBombs    = L.layerGroup().addTo(map);
-const layerMissiles = L.layerGroup().addTo(map);
 const layerFx       = L.layerGroup({ pane: "fxPane" }).addTo(map);
 const layerUi       = L.layerGroup().addTo(map);
 const layerCities = L.layerGroup().addTo(map);
@@ -85,26 +82,6 @@ const aimMarker = L.marker([0, 0], {
 
 
 let targetMarker = null;
-
-function addEchoTarget(target) {
-  const marker = L.marker([target.lat, target.lng], {
-    icon: L.divIcon({
-      html: `<div style="
-        font-size:28px;
-        opacity:0.9;
-        filter: drop-shadow(0 0 6px rgba(0,255,150,0.6));
-      ">📍</div>`,
-      className: "",
-      iconSize: [0, 0]
-    })
-  }).addTo(layerTargets);
-
-  entities.targets.push({
-    ...target,
-    marker,
-    echo: true
-  });
-}
 
 
 function addCityMarker(lat, lng, pop) {
@@ -138,19 +115,42 @@ function addCityMarker(lat, lng, pop) {
 }
 
 
+// global
+window.cityIndex = new Map(); // key: "Haifa|Israel" → {lat,lng,name,country,pop}
+const cityItems = [];
 
-async function preloadCityMarkers() {
+async function loadCityIndex() {
   cityEntities.length = 0;
   layerCities.clearLayers();
 
-  let items = loadCityMarkersCache();
+  cityItems.length = 0;
+  const cached = loadCityMarkersCache();
+  if (cached && cached.length > 0) {
+    // cached may be in compact-array format ([lat,lng,pop,name,country])
+    for (const row of cached) {
+      if (Array.isArray(row)) {
+        const [lat, lng, pop, name, country] = row;
+        cityItems.push({ lat, lng, pop, isCapital: false, name, country });
+        window.cityIndex.set(`${name}|${country}`, { lat, lng, name, country, pop });
+      } else {
+        const name = row.city ?? row.name;
+        cityItems.push({
+          lat: row.lat,
+          lng: row.lng,
+          pop: row.pop,
+          isCapital: row.isCapital ?? false,
+          name,
+          country: row.country
+        });
+        window.cityIndex.set(`${name}|${row.country}`, { lat: row.lat, lng: row.lng, name, country: row.country, pop: row.pop });
+      }
+    }
+  }
 
-  if (!items) {
+  // If cache didn't yield any items, fetch the city data source.
+  if (cityItems.length === 0) {
     const res = await fetch(CITY_MARKERS.DATA_URL, { cache: "force-cache" });
     const data = await res.json();
-    console.log(data[0]);
-
-    items = [];
 
     for (const row of data) {
       const lat = Number(row.lat ?? row.latitude);
@@ -160,19 +160,29 @@ async function preloadCityMarkers() {
       const pop = Number(row.population);
       const isCapital = row.capital === "primary";
 
-      items.push({
+      const name = row.city ?? row.name;
+
+      cityItems.push({
         lat,
         lng,
         pop,
         isCapital,
-        name: row.city,
+        name,
         country: row.country
       });
+      window.cityIndex.set(
+        `${name}|${row.country}`,
+        { lat, lng, name, country: row.country, pop }
+      );
     }
 
-    saveCityMarkersCache(items);
+    saveCityMarkersCache(cityItems);
   }
-  for (const c of items) {
+}
+
+async function preloadCityMarkers() {
+
+  for (const c of cityItems) {
 
     // 1. radius is mandatory
     if (!_levelCenterLatLng) continue;

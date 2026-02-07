@@ -87,23 +87,24 @@ function moveMenuSelection(dir) {
 function renderRouteHUD() {
   const el = document.getElementById("routeHud");
   if (!el) return;
-
-  const route = state.route || [];
+  // Build the HUD from the actual spawned targets so skipped entries
+  // or unresolved cities are not shown.
+  const targets = entities.targets || [];
   const idx = state.routeIndex ?? 0;
 
-  let html = "";
-
-  for (let i = 0; i < route.length; i++) {
-    const name = route[i].name || route[i].id || `#${i + 1}`;
-
-    if (i < idx) {
-      html += `<div class="route-done">● ${name}</div>`;
-    } else if (i === idx) {
-      html += `<div class="route-current">● ${name}</div>`;
-    } else {
-      html += `<div class="route-next">○ ${name}</div>`;
-    }
+  if (!targets.length) {
+    el.innerHTML = "<div class=\"route-empty\">No route targets</div>";
+    return;
   }
+
+  let html = "<ol class=\"route-list\">";
+  for (let i = 0; i < targets.length; i++) {
+    const t = targets[i];
+    const name = t.name || t.city || t.id || `#${i + 1}`;
+    const cls = i < idx ? "route-done" : i === idx ? "route-current" : "route-next";
+    html += `<li class="${cls}"><span class="marker">${i < idx ? '✓' : i === idx ? '●' : '○'}</span><span class="name">${name}</span></li>`;
+  }
+  html += "</ol>";
 
   el.innerHTML = html;
 }

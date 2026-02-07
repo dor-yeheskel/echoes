@@ -37,24 +37,25 @@ window.addEventListener('DOMContentLoaded', async function() {
   }
 
   await loadLevels();
+  await loadCityIndex();
+    
+  for (const [k,v] of window.cityIndex.entries()) {
+    console.log("City item:", k, v);
+  }
+
   levelToData = window.LEVELS;
   levelOrder = Object.keys(window.LEVELS);
 
   // Initialize all UI element references
   hudLevelEl = document.getElementById("levelTitle");
   spdEl = document.getElementById("spd");
-  bombsEl = document.getElementById("bombs");
   targetsEl = document.getElementById("targets");
-  stealthEl = document.getElementById("stealth");
   
   introEl = document.getElementById("intro");
   endScreenEl = document.getElementById("endScreen");
   
   endRankEl = document.getElementById("endRank");
   endScoreEl = document.getElementById("endScore");
-  endStealthEl = document.getElementById("endStealth");
-  endBombsEl = document.getElementById("endBombs");
-  endRadarsEl = document.getElementById("endRadars");
 
   startBtn = document.getElementById("startBtn");
 

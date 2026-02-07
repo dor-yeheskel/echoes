@@ -1,5 +1,4 @@
 /* ========= LEVEL LOADING ========= */
-
 async function loadLevels() {
     const index = await fetch("assets/levels/index.json").then(r => r.json());
 
@@ -11,30 +10,31 @@ async function loadLevels() {
     }
 }
 
-  
+
+function resolveCityRef(ref) {
+  if (window.cityIndex.size === 0) {
+    throw new Error("cityIndex is empty");
+  }
+  console.log("Resolving city ref:", ref);
+  const key = `${ref.city}|${ref.country}`;
+  const city = window.cityIndex.get(key);
+  console.log("Resolved city:", city);
+  if (!city) {
+    throw new Error(`City not found: ${key}`);
+  }
+  return city;
+}
+
+
 function resetLayersAndEntities() {
   layerTargets.clearLayers();
-  layerRadars.clearLayers();
-  layerBombs.clearLayers();
-  layerMissiles.clearLayers();
   layerFx.clearLayers();
 
   entities.targets = [];
-  entities.radars = [];
-  entities.bombs = [];
-  entities.missiles = [];
   entities.remainingTargets = 0;
-
-  state.missileCounter = 0;
-  state.lastLockBeep = -999;
-  state.destroyedRadars = 0;
-  state.refueled = false;
-
-  state.stealthActive = false;
-  state.stealthTimer = 0;
-
   state.keys = {};
 }
+
 
 function applyLevelConfig(levelId) {
   const lvl = levelToData[levelId];
@@ -42,10 +42,18 @@ function applyLevelConfig(levelId) {
   state.levelId = levelId;
   state.levelIndex = levelOrder.indexOf(levelId);
 
-  const start = lvl.start;
-  state.lat = start.lat;
-  state.lng = start.lng;
-  state.heading = start.heading ?? 0;
+  let startLatLng;
+
+  if (lvl.start.city) {
+    const city = resolveCityRef(lvl.start);
+    startLatLng = city;
+  } else {
+    startLatLng = lvl.start;
+  }
+  state.lat = startLatLng.lat;
+  state.lng = startLatLng.lng;
+
+  state.heading = startLatLng.heading ?? 0;
   state.speed = 3000;
 
   // ===== Echoes route =====
@@ -55,161 +63,35 @@ function applyLevelConfig(levelId) {
 
   // clear targets
   entities.targets = [];
-  entities.remainingTargets = state.route.length;
+  entities.remainingTargets = 0;
 
-  // spawn ALL route targets ONCE
-  for (const t of state.route) {
-    addEchoTarget(t);
+  // spawn ALL route targets ONCE — normalize city refs to lat/lng
+  for (const rt of state.route) {
+    let t = rt;
+    if (!Number.isFinite(t?.lat) || !Number.isFinite(t?.lng)) {
+      if (t?.city) {
+        try {
+          const city = resolveCityRef(t);
+          t = { ...t, lat: city.lat, lng: city.lng };
+        } catch (e) {
+          console.warn("Skipping route entry, cannot resolve city:", t, e);
+          continue; // skip unresolved entry
+        }
+      } else {
+        console.warn("Skipping route entry without coordinates:", t);
+        continue;
+      }
+    }
+
+    entities.targets.push({ ...t });
+    entities.remainingTargets++;
   }
-
   state.currentTarget = entities.targets[0] || null;
 
   if (hudLevelEl) {
     hudLevelEl.textContent = lvl.displayName;
   }
   renderRouteHUD();
-
-}
-
-
-function addTarget(target) {
-  const size = target.size || "small";
-  const stats = SIZE_STATS[size] || SIZE_STATS.medium;
-
-  const visualSize = Math.round(32 * stats.scale);
-
-  const marker = L.marker([target.lat, target.lng], {
-    icon: L.divIcon({
-      html: `
-        <div style="
-          width:${visualSize}px;
-          height:${visualSize}px;
-          display:flex;
-          align-items:center;
-          justify-content:center;
-          transform: translate(-50%, -50%);
-        ">
-          <div style="font-size:${visualSize}px; line-height:1;">
-            ${target.emoji || "🏭"}
-          </div>
-        </div>
-      `,
-      className: "",
-      iconSize: [0, 0],
-      iconAnchor: [0, 0]
-    })
-  }).addTo(layerTargets);
-
-
-  // ===== DEBUG: TARGET HIT RADIUS (TEMP) =====
-  const DEBUG_SHOW_TARGET_RADIUS = false;
-
-  if (DEBUG_SHOW_TARGET_RADIUS) {
-    L.circle([target.lat, target.lng], {
-      radius: getTargetHitRadius(size), // actual hit radius (by size)
-      color: "red",
-      weight: 1,
-      fill: false,
-      dashArray: "6 6",
-      interactive: false
-    }).addTo(layerUi);
-  }
-  // ===== END DEBUG =====
-  entities.targets.push({
-    ...target,
-    hp: stats.hp,
-    maxHp: stats.hp,
-    size,
-    marker,
-    fire: null
-  });
-}
-
-
-function addRadar(cfg) {
-  const type = radarSizeToType(cfg.size);
-  const stats = SIZE_STATS[cfg.size || "medium"] || SIZE_STATS.medium;
-  const visualSize = Math.round(36 * stats.scale);
-
-  const marker = L.marker([cfg.lat, cfg.lng], {
-    icon: L.divIcon({
-      html: `
-        <div style="
-          width:${visualSize}px;
-          height:${visualSize}px;
-          display:flex;
-          align-items:center;
-          justify-content:center;
-          transform: translate(-50%, -50%);
-          pointer-events:none;
-        ">
-          <div style="
-            font-size:${visualSize}px;
-            line-height:1;
-          ">
-            📡
-          </div>
-        </div>
-      `,
-      className: "",
-      iconSize: [0, 0],
-      iconAnchor: [0, 0]
-    })
-  }).addTo(layerRadars);
-
-
-  const circle = L.circle([cfg.lat, cfg.lng], {
-    radius: type.range,
-    color: "red",
-    fillOpacity: 0.05
-  }).addTo(layerRadars);
-
-  // ===== DEBUG: RADAR HIT RADIUS (BOMB) =====
-  const DEBUG_SHOW_RADAR_HIT_RADIUS = false;
-  let hitCircle = null;
-
-  if (DEBUG_SHOW_RADAR_HIT_RADIUS) {
-    hitCircle = L.circle([cfg.lat, cfg.lng], {
-      radius: getRadarHitRadius(cfg.size), // bomb hit radius (by size)
-      color: "white",
-      weight: 1,
-      fill: false,
-      dashArray: "6 6",
-      interactive: false
-    }).addTo(layerRadars);
-  }
-
-
-  entities.radars.push({
-    lat: cfg.lat,
-    lng: cfg.lng,
-    size: cfg.size,
-    hp: stats.hp,
-    maxHp: stats.hp,
-    fire: null,
-
-    range: type.range,
-    marker,
-    circle,
-    alive: true,
-
-    rocketSpeed: cfg.rocketSpeed ?? state.rocketSpeed,
-    rocketFreq: cfg.rocketFreq ?? state.rocketFreq,
-    smartRocketsEvery: cfg.smartRocketsEvery ?? state.smartRocketsEvery,
-    smartRocketSpeedFactor: cfg.smartRocketSpeedFactor ?? state.smartRocketSpeedFactor,
-    predictRocketsEvery: cfg.predictRocketsEvery ?? state.predictRocketsEvery,
-    predictRocketsLead:  cfg.predictRocketsLead  ?? state.predictRocketsLead,
-
-    cooldown: cfg.rocketFreq ?? state.rocketFreq
-  });
-}
-
-
-function setNightMode(on) {
-  document.body.classList.toggle("night", on);
-  if (!on) {
-    nightCtx.clearRect(0, 0, nightCanvas.width, nightCanvas.height);
-  }
 }
 
 
@@ -221,7 +103,6 @@ function loadLevel(levelId) {
 
   planeMarker.setLatLng([state.lat, state.lng]);
   map.setView([state.lat, state.lng], 13, { animate: false });
-
 
   introEl.style.display = "flex";
   endScreenEl.style.display = "none";
