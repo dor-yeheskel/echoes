@@ -108,6 +108,7 @@ function endLevelHandler() {
     btn.textContent = "Next Level";
     btn.onclick = () => {
       loadLevel(levelOrder[state.levelIndex + 1]);
+      stopAllSounds();
       startGame();
     };
   } else {
@@ -136,6 +137,7 @@ function endCrashHandler() {
   btn.textContent = "Retry";
   btn.onclick = () => {
     loadLevel(state.levelId);
+    stopAllSounds();
     startGame();
   };
 
