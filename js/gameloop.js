@@ -36,6 +36,11 @@ function loop(t) {
 
   if (state.gameStarted && !state.gameOver) {
 
+    const prevPos = {
+      lat: Number.isFinite(state.fuelPrevLat) ? state.fuelPrevLat : state.lat,
+      lng: Number.isFinite(state.fuelPrevLng) ? state.fuelPrevLng : state.lng
+    };
+
     // steering
     if (state.keys["ArrowLeft"])  state.heading -= CONFIG_DEFAULTS.turnRate * dt;
     if (state.keys["ArrowRight"]) state.heading += CONFIG_DEFAULTS.turnRate * dt;
@@ -47,6 +52,19 @@ function loop(t) {
     const pos = move(state.lat, state.lng, state.heading, (state.speed / 3.6) * dt);
     state.lat = pos.lat;
     state.lng = pos.lng;
+
+    const movedKm = distance(prevPos, state) / 1000;
+    if (Number.isFinite(movedKm) && movedKm > 0) {
+      state.fuel = Math.max(0, state.fuel - movedKm * FUEL_PER_KM);
+    }
+    state.fuelPrevLat = state.lat;
+    state.fuelPrevLng = state.lng;
+
+    if (state.fuel <= 0) {
+      crash();
+      requestAnimationFrame(loop);
+      return;
+    }
     if (DEBUG_COORDS) {
       _debugCoordsTimer += dt;
       if (_debugCoordsTimer >= DEBUG_COORDS_INTERVAL) {
@@ -74,6 +92,8 @@ function loop(t) {
             entities.remainingTargets--;
           }
 
+          onCityArrival(t);
+
           if (typeof markDestinationCityReached === "function") {
             try { markDestinationCityReached(t); } catch {}
           }
@@ -96,6 +116,7 @@ function loop(t) {
     }
 
     updateCityHUD();
+    updateFuelHUD();
   }
 
   requestAnimationFrame(loop);
@@ -112,5 +133,11 @@ function advanceToNextTarget() {
     entities.remainingTargets--;
   }
   renderRouteHUD();
+}
+
+function onCityArrival(cityTarget) {
+  if (!cityTarget) return;
+  const base = Math.max(state.fuel, REFUEL_FLOOR);
+  state.fuel = Math.min(TANK_CAPACITY, base + REFUEL_BONUS);
 }
 

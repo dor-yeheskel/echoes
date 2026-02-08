@@ -161,6 +161,71 @@ html, body {
   transform: scale(1.2);
 }
 
+/* ===== FUEL BAR ===== */
+.fuel-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 180px;
+}
+
+.fuel-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  opacity: 0.9;
+}
+
+.fuel-bar {
+  height: 8px;
+  width: 100%;
+  background: rgba(255,255,255,0.12);
+  border-radius: 999px;
+  overflow: hidden;
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.4);
+}
+
+.fuel-bar-fill {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #76ffb0, #00d67f);
+  border-radius: 999px;
+  transition: width 0.12s ease;
+}
+
+.fuel-bar-fill.warn {
+  background: linear-gradient(90deg, #ffcc66, #ff8a00);
+}
+
+.fuel-bar-fill.critical {
+  background: linear-gradient(90deg, #ff7b7b, #ff2f2f);
+}
+
+#threatIndicator {
+  display: inline-flex;
+  align-items: center;
+  font-size: 18px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  filter: drop-shadow(0 0 6px rgba(255,80,80,0.6));
+  transform: translateY(1px);
+}
+
+#threatIndicator.active {
+  opacity: 0.85;
+  animation: flicker 1.1s steps(2, end) infinite;
+}
+
+@keyframes flicker {
+  0% { opacity: 0.2; }
+  40% { opacity: 0.85; }
+  60% { opacity: 0.35; }
+  100% { opacity: 0.85; }
+}
+
 
 #radar {
   position: fixed;

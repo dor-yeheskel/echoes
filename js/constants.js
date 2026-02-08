@@ -19,6 +19,13 @@ const CONFIG_DEFAULTS = {
   arrivalRadius: 25000,
 };
 
+/* ========= FUEL SYSTEM ========= */
+// Units: fuel points and km. Tune values together.
+const TANK_CAPACITY = 100;
+const FUEL_PER_KM = 0.02;
+const REFUEL_FLOOR = 30;
+const REFUEL_BONUS = 12;
+
 /* ========= CITY MARKERS (CONFIG) ========= */
 const CITY_MARKERS = {
   DATA_URL: "https://cdn.jsdelivr.net/npm/world-cities-json@1.0.1/data/cities.json",

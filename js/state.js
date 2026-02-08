@@ -14,6 +14,10 @@ const state = {
   heading: 0,
   speed: 3000,
 
+  fuel: TANK_CAPACITY,
+  fuelPrevLat: 0,
+  fuelPrevLng: 0,
+
   keys: {},
 
   gameStarted: false,

@@ -114,6 +114,9 @@ function applyLevelConfig(levelId) {
 function loadLevel(levelId) {
   resetLayersAndEntities();
   applyLevelConfig(levelId);
+  state.fuel = TANK_CAPACITY;
+  state.fuelPrevLat = state.lat;
+  state.fuelPrevLng = state.lng;
   setLevelCenterFromTargets(entities.targets);
   preloadCityMarkers();
 

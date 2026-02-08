@@ -73,6 +73,20 @@ function endLevel() {
 }
 
 
+function crash() {
+  if (state.gameOver) return;
+
+  state.gameOver = true;
+  state.gameStarted = false;
+  currentState = GAME_STATE.GAMEOVER;
+
+  stopAllSounds({ fade: true, duration: 600 });
+  playSound("defeat");
+
+  endCrashHandler();
+}
+
+
 /* ========= GAME OVER UI ========= */
 function endLevelHandler() {
   currentState = GAME_STATE.GAMEOVER;
@@ -102,6 +116,28 @@ function endLevelHandler() {
     btn.onclick = () => goToMenu();
     showFinalCompletionOnce();
   }
+
+  endScreenEl.style.display = "flex";
+  endScreenEl.focus();
+}
+
+
+function endCrashHandler() {
+  const title = document.getElementById("endTitle");
+  title.textContent = "CRASHED";
+  title.className = "end-fail";
+
+  document.getElementById("endSubtitle").innerHTML = `
+    Out of fuel ✈️
+  `;
+
+  const btn = document.getElementById("primaryActionBtn");
+  btn.style.display = "inline-block";
+  btn.textContent = "Retry";
+  btn.onclick = () => {
+    loadLevel(state.levelId);
+    startGame();
+  };
 
   endScreenEl.style.display = "flex";
   endScreenEl.focus();
