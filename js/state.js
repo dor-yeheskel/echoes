@@ -55,5 +55,3 @@ let startBtn = null;
 
 let planeIcon = null;
 let planeMarker = null;
-let baseMarker = null;
-

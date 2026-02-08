@@ -1,4 +1,5 @@
 /* ========= UI & PROGRESS ========= */
+let currentCity = null;
 
 function renderProgressTable() {
   const el = document.getElementById("progressTable");
@@ -59,7 +60,6 @@ function renderProgressTable() {
 
 }
 
-
 function moveMenuSelection(dir) {
   const rows = Array.from(
     document.querySelectorAll(".progressRow:not(.header):not(.locked)")
@@ -82,7 +82,6 @@ function moveMenuSelection(dir) {
 
   state.levelId = levelOrder[newIdx];
 }
-
 
 function renderRouteHUD() {
   const el = document.getElementById("routeHud");
@@ -110,9 +109,6 @@ function renderRouteHUD() {
 
   el.innerHTML = html;
 }
-
-
-let currentCity = null;
 
 function updateCityHUD() {
   const el = document.getElementById("hud-city");

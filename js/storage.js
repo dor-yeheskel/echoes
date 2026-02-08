@@ -2,6 +2,8 @@
 const STORAGE_KEY = "flight_game_progress_v1";
 const SOUND_KEY = "flight_game_sound";
 let soundEnabled = localStorage.getItem(SOUND_KEY) !== "off";
+let progress = loadProgress();
+
 
 function loadProgress() {
   const raw = localStorage.getItem(STORAGE_KEY);
@@ -18,9 +20,6 @@ function loadProgress() {
 function saveProgress(progress) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
 }
-
-let progress = loadProgress();
-
 
 /* ======== City Markers Memory (preloaded) ======== */
 function loadCityMarkersCache() {

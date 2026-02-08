@@ -16,6 +16,8 @@ const CONFIG_DEFAULTS = {
 
   // Default radius for counting a destination as reached (meters)
   arrivalRadius: 35_000,
+
+  zoom: 7
 };
 
 /* ========= FUEL SYSTEM ========= */

@@ -5,7 +5,6 @@ const DEBUG_COORDS_INTERVAL = 0.1; // seconds
 let _debugCoordsTimer = 0;
 // =================
 
-
 let last = performance.now();
 
 function loop(t) {
@@ -31,8 +30,6 @@ function loop(t) {
   ) {
     endLevel();
   }
-
-
 
   if (state.gameStarted && !state.gameOver) {
 
@@ -122,18 +119,6 @@ function loop(t) {
   requestAnimationFrame(loop);
 }
 
-
-// Sequential advance no longer used; keeping stub for compatibility
-function advanceToNextTarget() {
-  // Mark next unfinished as completed (fallback if invoked elsewhere)
-  const next = entities.targets?.find(t => !t.completed);
-  if (!next) { endLevel(); return; }
-  next.completed = true;
-  if (typeof entities.remainingTargets === 'number' && entities.remainingTargets > 0) {
-    entities.remainingTargets--;
-  }
-  renderRouteHUD();
-}
 
 function onCityArrival(cityTarget) {
   if (!cityTarget) return;

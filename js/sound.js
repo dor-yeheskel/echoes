@@ -1,15 +1,10 @@
 /* ========= SOUND ========= */
-
 const sounds = {
   clicked: new Audio("assets/sounds/clicked.wav"),
-  victory: new Audio("assets/sounds/victory.wav"),
-  defeat: new Audio("assets/sounds/defeat.wav"),
-  destroyed: new Audio("assets/sounds/destroyed.wav"),
   key_arrow: new Audio("assets/sounds/key_arrow.wav"),
-  fuel: new Audio("assets/sounds/fuel.wav"),
   reached: new Audio("assets/sounds/reached.wav"),
+  defeat: new Audio("assets/sounds/defeat.wav"),
 };
-
 
 const V = {
   ui: 0.95,
@@ -24,9 +19,6 @@ const V = {
 sounds.key_arrow.volume = V.ui;
 sounds.clicked.volume   = V.ui_clicked;
 
-sounds.fuel.volume    = V.state;
-
-sounds.victory.volume = V.end;
 sounds.defeat.volume  = V.end;
 
 // ===== CITY TRACKS (city,country -> Audio) =====
@@ -36,7 +28,7 @@ const CITY_TRACKS = {
   // TEST_LEVEL
   // "london|united kingdom": new Audio("assets/sounds/cities/london.wav"),
   "paris|france": new Audio("assets/sounds/cities/paris.wav"),
-  "berlin|germany": new Audio("assets/sounds/victory.wav"),
+  "berlin|germany": new Audio("assets/sounds/reached.wav"),
   "barcelona|spain": new Audio("assets/sounds/cities/barcelona.wav"),
   // TEST_LEVEL_2
   // "tel aviv-yafo|israel": new Audio("assets/sounds/cities/tel-aviv-yafo.wav"),
@@ -48,6 +40,7 @@ const CITY_TRACKS = {
 for (const a of Object.values(CITY_TRACKS)) {
   try { a.volume = V.city; a.loop = false; } catch {}
 }
+
 
 function _cityKey(city, country) {
   const c1 = (city || "").trim().toLowerCase();
@@ -162,15 +155,12 @@ function playSound(name) {
   });
 }
 
-
 let muteBtn = null;
-
 
 function updateMuteUI() {
   if (!muteBtn) return;
   muteBtn.textContent = soundEnabled ? "🔊" : "🔇";
 }
-
 
 function toggleMute() {
   soundEnabled = !soundEnabled;
@@ -194,7 +184,6 @@ function togglePause() {
     overlay.style.display = state.paused ? "flex" : "none";
   }
 }
-
 
 function stopAllSounds({ fade = false, duration = 1200 } = {}) {
   const now = performance.now();

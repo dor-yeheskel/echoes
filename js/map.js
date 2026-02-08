@@ -34,8 +34,6 @@ function setLevelCenterFromTargets(targets) {
   );
 }
 
-
-
 L.tileLayer(
   "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
   { attribution: "Tiles © Esri" }
@@ -46,8 +44,7 @@ L.tileLayer(
   { maxZoom: 19 }
 )
 
-
-let zoom = 7;
+let zoom = CONFIG_DEFAULTS.zoom;
 map.setMinZoom(zoom);
 map.setMaxZoom(zoom);
 map.createPane("planePane");
@@ -62,9 +59,7 @@ const layerFx       = L.layerGroup({ pane: "fxPane" }).addTo(map);
 const layerUi       = L.layerGroup().addTo(map);
 const layerCities = L.layerGroup().addTo(map);
 
-
 const cityEntities = [];
-
 
 /* aim marker */
 const aimMarker = L.marker([0, 0], {
@@ -79,10 +74,7 @@ const aimMarker = L.marker([0, 0], {
   })
 }).addTo(layerUi);
 
-
-
 let targetMarker = null;
-
 
 // Track spawned city markers so we can update them when a destination is reached.
 window.cityMarkerIndex = new Map(); // key: "Name|Country" -> Leaflet marker
@@ -132,7 +124,6 @@ function addCityMarker(lat, lng, pop, name = "", country = "") {
     window.cityMarkerIndex.set(`${name}|${country}`, marker);
   }
 }
-
 
 // global
 window.cityIndex = new Map(); // key: "Haifa|Israel" → {lat,lng,name,country,pop}
