@@ -235,7 +235,8 @@ async function preloadCityMarkers() {
       lat: c.lat,
       lng: c.lng,
       name: c.name,
-      country: c.country
+      country: c.country,
+      pop: c.pop
     });
 
   }

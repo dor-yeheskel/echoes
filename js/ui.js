@@ -121,22 +121,34 @@ function updateCityHUD() {
   const cities = getCityEntities();
   if (!cities || !cities.length) return;
 
-  if (currentCity) {
-    const d = distance(state, currentCity);
-    if (d > CITY_MARKERS.CITY_HUD_RADIUS_M) {
-      currentCity = null;
-    }
-    return;
-  }
+  let bestCity = null;
+  let bestPop = -1;
+  let currentInRange = false;
 
   for (const city of cities) {
     const d = distance(state, city);
     if (d < CITY_MARKERS.CITY_HUD_RADIUS_M) {
-      currentCity = city;
-      el.textContent = city.name + (city.country ? `, ${city.country}` : "");
-      el.classList.add("active");
-      return;
+      if (city === currentCity) currentInRange = true;
+      const pop = Number.isFinite(city.pop) ? city.pop : 0;
+      if (!bestCity || pop > bestPop) {
+        bestCity = city;
+        bestPop = pop;
+      }
     }
+  }
+
+  if (!bestCity) {
+    currentCity = null;
+    return;
+  }
+
+  const currentPop = Number.isFinite(currentCity?.pop) ? currentCity.pop : 0;
+  const shouldSwitch = !currentCity || !currentInRange || currentPop < bestPop;
+
+  if (shouldSwitch) {
+    currentCity = bestCity;
+    el.textContent = bestCity.name + (bestCity.country ? `, ${bestCity.country}` : "");
+    el.classList.add("active");
   }
 }
 
