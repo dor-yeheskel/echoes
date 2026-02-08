@@ -204,6 +204,10 @@ async function loadCityIndex() {
 }
 
 async function preloadCityMarkers() {
+  // Reset per-level city markers so restarts do not stack duplicates.
+  layerCities.clearLayers();
+  cityEntities.length = 0;
+  window.cityMarkerIndex?.clear?.();
 
   for (const c of cityItems) {
 
