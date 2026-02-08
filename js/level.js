@@ -58,8 +58,9 @@ function applyLevelConfig(levelId) {
   state.lat = startLatLng.lat;
   state.lng = startLatLng.lng;
 
-  state.heading = startLatLng.heading ?? 0;
-  state.speed = 3000;
+  state.heading = lvl.start.heading;
+
+  state.speed = CONFIG_DEFAULTS.minSpeed;
 
   // ===== Echoes route =====
   state.route = lvl.route || [];
