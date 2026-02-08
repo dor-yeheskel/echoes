@@ -7,16 +7,15 @@ const GAME_STATE = {
 
 /* ========= CONSTANTS (defaults preserved) ========= */
 const CONFIG_DEFAULTS = {
-  baseRadius: 400, // meters
-  minSpeed: 600000,
-  maxSpeed: 900000,  // 5000?
+  minSpeed: 600_000,
+  maxSpeed: 600_000,
+  accel: 0, // no acceleration, only instant speed changes
 
-  accel: 10000,
-  radarRangeOnMinimap: 4500,
-  turnRate: 140,
-  emojiRotationOffset: -45,
+  turnRate: 140, // optimal
+  emojiRotationOffset: -45,  // optimal
+
   // Default radius for counting a destination as reached (meters)
-  arrivalRadius: 25000,
+  arrivalRadius: 35_000,
 };
 
 /* ========= FUEL SYSTEM ========= */
@@ -31,7 +30,7 @@ const CITY_MARKERS = {
   DATA_URL: "https://cdn.jsdelivr.net/npm/world-cities-json@1.0.1/data/cities.json",
 
  // population rules
-  MIN_POPULATION: 800_000,
+  MIN_POPULATION: 500_000,
   INCLUDE_CAPITALS: true,
 
   // radius rule (meters)

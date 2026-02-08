@@ -37,7 +37,7 @@ const CITY_TRACKS = {
   // "london|united kingdom": new Audio("assets/sounds/cities/london.wav"),
   "paris|france": new Audio("assets/sounds/cities/paris.wav"),
   "berlin|germany": new Audio("assets/sounds/victory.wav"),
-  "barcelona|spain": new Audio("assets/sounds/victory.wav"),
+  "barcelona|spain": new Audio("assets/sounds/cities/barcelona.wav"),
   // TEST_LEVEL_2
   // "tel aviv-yafo|israel": new Audio("assets/sounds/cities/tel-aviv-yafo.wav"),
   // "dubai|united arab emirates": new Audio("assets/sounds/cities/dubai.wav"),

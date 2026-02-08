@@ -142,9 +142,8 @@ function updateCityHUD() {
 
 function updateFuelHUD() {
   const bar = document.getElementById("fuelBarFill");
-  const label = document.getElementById("fuelValue");
   const indicator = document.getElementById("threatIndicator");
-  if (!bar || !label) return;
+  if (!bar) return;
 
   const cap = Number.isFinite(TANK_CAPACITY) && TANK_CAPACITY > 0
     ? TANK_CAPACITY
@@ -153,7 +152,6 @@ function updateFuelHUD() {
   const pct = Math.max(0, Math.min(1, fuel / cap));
 
   bar.style.width = `${(pct * 100).toFixed(1)}%`;
-  label.textContent = Math.round(fuel);
 
   bar.classList.remove("warn", "critical");
   if (pct <= 0.15) {
