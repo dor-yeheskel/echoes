@@ -173,6 +173,6 @@ function updateFuelHUD() {
   }
 
   if (indicator) {
-    indicator.classList.toggle("active", fuel < 30);
+    indicator.classList.toggle("active", fuel < 35);
   }
 }
