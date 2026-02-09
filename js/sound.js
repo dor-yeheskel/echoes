@@ -16,6 +16,8 @@ const V = {
   city: 0.6,
 };
 
+const CITY_TRACK_PLAY_MS = 3500;
+
 sounds.key_arrow.volume = V.ui;
 sounds.clicked.volume   = V.ui_clicked;
 
@@ -26,14 +28,14 @@ sounds.defeat.volume  = V.end;
 // You can extend or override this map per your assets.
 const CITY_TRACKS = {
   // TEST_LEVEL
-  // "london|united kingdom": new Audio("assets/sounds/cities/london.wav"),
   "paris|france": new Audio("assets/sounds/cities/paris.wav"),
-  "berlin|germany": new Audio("assets/sounds/reached.wav"),
+  "berlin|germany": new Audio("assets/sounds/cities/berlin.wav"),
   "barcelona|spain": new Audio("assets/sounds/cities/barcelona.wav"),
   // TEST_LEVEL_2
-  // "tel aviv-yafo|israel": new Audio("assets/sounds/cities/tel-aviv-yafo.wav"),
-  // "dubai|united arab emirates": new Audio("assets/sounds/cities/dubai.wav"),
-  // "cairo|egypt": new Audio("assets/sounds/cities/cairo.wav"),
+  "rome|italy": new Audio("assets/sounds/cities/rome.wav"),
+  "athens|greece": new Audio("assets/sounds/cities/athens.wav"),
+  "istanbul|turkey": new Audio("assets/sounds/cities/istanbul.wav"),
+  "cairo|egypt": new Audio("assets/sounds/cities/cairo.wav"),
 };
 
 
@@ -50,6 +52,14 @@ function _cityKey(city, country) {
 
 let currentCityAudio = null;
 let currentCityKey = null;
+let cityTrackTimeoutId = null;
+
+function _clearCityTrackTimeout() {
+  if (cityTrackTimeoutId !== null) {
+    clearTimeout(cityTrackTimeoutId);
+    cityTrackTimeoutId = null;
+  }
+}
 
 function _ensureBaseVolume(a) {
   if (typeof a._baseVolume !== "number" || !isFinite(a._baseVolume)) {
@@ -86,6 +96,7 @@ function playCityTrack(city, country) {
   if (!a) return;
 
   try {
+    _clearCityTrackTimeout();
     _ensureBaseVolume(a);
     if (currentCityAudio && currentCityAudio !== a) {
       _fadeOutAudio(currentCityAudio, { duration: 600 });
@@ -96,6 +107,11 @@ function playCityTrack(city, country) {
     a.currentTime = 0;
     a.volume = a._baseVolume;
     a.play().catch(() => {});
+    cityTrackTimeoutId = setTimeout(() => {
+      if (currentCityAudio === a && currentCityKey === key) {
+        _fadeOutAudio(a, { duration: 600 });
+      }
+    }, CITY_TRACK_PLAY_MS);
   } catch {}
 }
 

@@ -1,7 +1,50 @@
-UI:
-    * UI fix of the main screen - name of the game, colors, table.
-
 Sounds:
-    * Different sound to "reached".
-    * Songs via Suno AI (song inspired by ... OR classical old ...).
-=====================================================
+    -----------------------------------------------
+    Paris, France
+    Berlin, Germany
+    Barcelona, Spain
+    -----------------------------------------------
+    Rome, Italy
+    Athens, Greece
+    Istanbul, Turkey
+    Cairo, Egypt
+    -----------------------------------------------
+    Mecca, Saudi Arabia
+    Dubai, United Arab Emirates
+    Baghdad, Iraq
+    Tehran, Iran
+    -----------------------------------------------
+    Karachi, Pakistan
+    Mumbai, India
+    Delhi, India
+    Kathmandu, Nepal
+    Kolkāta, India
+    -----------------------------------------------
+    Rangoon, Myanmar
+    Bangkok, Thailand
+    Manila, Philippines
+    Hanoi, Vietnam
+    Ho Chi Minh City, Vietnam
+    -----------------------------------------------
+    Hong Kong, China
+    Shenzhen, China
+    Shanghai, China
+    Beijing, China
+    Chengdu, China
+    -----------------------------------------------
+    Seoul, South Korea
+    Tokyo, Japan
+    Addis Ababa, Ethiopia
+    Nairobi, Kenya
+    Dar es Salaam, Tanzania
+    Cape Town, South Africa
+    -----------------------------------------------
+    New York, United States
+    Miami, United States
+    Havana, Cuba
+    Mexico City, Mexico
+    Panama City, Panama
+    Lima, Peru
+    Rio de Janeiro, Brazil
+    Buenos Aires, Argentina
+    -----------------------------------------------
