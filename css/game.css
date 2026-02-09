@@ -283,7 +283,7 @@ html, body {
   );
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 16px;
-  padding: 18px 20px;
+  padding: 14px 20px 18px;
   box-shadow:
     0 20px 60px rgba(0,0,0,0.6),
     inset 0 1px 0 rgba(255,255,255,0.04);
@@ -369,10 +369,11 @@ html, body {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 10px 18px;
-  margin: 18px auto 8px;
-  width: fit-content;
+  margin: 12px auto 8px;
+  width: max-content;
   font-size: 15px;
   opacity: .9;
+  justify-items: center;
 }
 
 .controls > div {
@@ -380,27 +381,30 @@ html, body {
 }
 
 .controls span:first-child {
-  text-align: right;
-  min-width: 80px;
+  text-align: center;
+  min-width: 0;
   font-weight: 600;
 }
 
 .controls span:last-child {
-  text-align: left;
+  text-align: center;
   opacity: .85;
 }
 
 .progressTable,
 #progressTable,
 .progressWrap {
-  width: min(420px, 92%);
+  width: 100%;
+  max-width: 100%;
+  padding: 0 16px;
+  box-sizing: border-box;
   margin: 16px auto 0;
 }
 
 .progressRow {
   display: grid;
-  grid-template-columns: 28px 180px 110px 70px;
-  padding: 8px 4px;
+  grid-template-columns: 36px 1fr 110px 70px;
+  padding: 8px 12px;
   align-items: center;
   column-gap: 16px;
   cursor: pointer;
@@ -512,6 +516,8 @@ html, body {
   font-weight: 700;
   letter-spacing: 1px;
   text-shadow: 0 0 12px rgba(0,255,150,0.25);
+  text-align: center;
+  margin: 2px 0 22px;
 }
 
 #rankDisplay {
