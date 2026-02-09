@@ -150,7 +150,8 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  min-width: 180px;
+  width: 170px;
+  align-self: flex-start;
 }
 
 .fuel-label {
@@ -160,6 +161,7 @@ html, body {
   font-size: 13px;
   letter-spacing: 0.3px;
   opacity: 0.9;
+  width: 100%;
 }
 
 .fuel-bar {
@@ -701,6 +703,9 @@ select:focus {
   font-family: JetBrains Mono, monospace;
   font-size: 14px;
   line-height: 1.4;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* Cleaner, unnumbered destination list (transparent to avoid double box) */
