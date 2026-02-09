@@ -388,7 +388,9 @@ html, body {
   opacity: .85;
 }
 
-.progressTable {
+.progressTable,
+#progressTable,
+.progressWrap {
   width: min(420px, 92%);
   margin: 16px auto 0;
 }
