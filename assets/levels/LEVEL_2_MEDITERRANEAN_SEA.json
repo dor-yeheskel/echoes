@@ -1,6 +1,12 @@
 {
   "displayName": "Mediterranean Sea",
 
+  "config": {
+    "cityMarkers": {
+      "MIN_POPULATION": 300000
+    }
+  },
+
   "start": {
     "city": "Barcelona",
     "country": "Spain",

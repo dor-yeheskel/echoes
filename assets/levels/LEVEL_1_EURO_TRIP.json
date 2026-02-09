@@ -1,6 +1,12 @@
 {
   "displayName": "Euro Trip",
 
+  "config": {
+    "cityMarkers": {
+      "MIN_POPULATION": 300000
+    }
+  },
+
   "start": {
     "city": "London",
     "country": "United Kingdom",

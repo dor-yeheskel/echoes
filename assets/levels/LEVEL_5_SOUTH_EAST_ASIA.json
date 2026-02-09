@@ -4,7 +4,7 @@
   "start": {
     "city": "Kolkāta",
     "country": "India",
-    "heading": 120
+    "heading": 170
   },
 
   "route": [
@@ -23,6 +23,10 @@
     {
       "city": "Manila",
       "country": "Philippines"
+    },
+    {
+        "city": "Hanoi",
+        "country": "Vietnam"
     }
   ]
 }

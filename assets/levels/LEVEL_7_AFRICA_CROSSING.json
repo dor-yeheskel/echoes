@@ -3,7 +3,8 @@
 
   "config": {
     "cityMarkers": {
-      "LEVEL_RADIUS_M": 5000000
+      "LEVEL_RADIUS_M": 5000000,
+      "MIN_POPULATION": 300000
     },
     "FUEL_PER_KM": 0.012
   },
