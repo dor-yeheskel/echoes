@@ -31,7 +31,7 @@ function renderProgressTable() {
           ${!unlocked
             ? "🔒"
             : completed
-              ? "✔ Completed"
+              ? "✔"
               : "—"}
         </div>
 
