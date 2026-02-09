@@ -27,15 +27,64 @@ sounds.defeat.volume  = V.end;
 // Keys are normalized as "city|country" in lowercase.
 // You can extend or override this map per your assets.
 const CITY_TRACKS = {
-  // TEST_LEVEL
+  // Level 1: Euro Trip
+  "london|united kingdom": new Audio("assets/sounds/cities/london.wav"),
   "paris|france": new Audio("assets/sounds/cities/paris.wav"),
   "berlin|germany": new Audio("assets/sounds/cities/berlin.wav"),
   "barcelona|spain": new Audio("assets/sounds/cities/barcelona.wav"),
-  // TEST_LEVEL_2
+
+  // Level 2: Mediterranean Sea
   "rome|italy": new Audio("assets/sounds/cities/rome.wav"),
   "athens|greece": new Audio("assets/sounds/cities/athens.wav"),
   "istanbul|turkey": new Audio("assets/sounds/cities/istanbul.wav"),
   "cairo|egypt": new Audio("assets/sounds/cities/cairo.wav"),
+
+  // Level 3: Middle East
+  "mecca|saudi arabia": new Audio("assets/sounds/cities/mecca.wav"),
+  "baghdad|iraq": new Audio("assets/sounds/cities/baghdad.wav"),
+  "tehran|iran": new Audio("assets/sounds/cities/tehran.wav"),
+  "dubai|united arab emirates": new Audio("assets/sounds/cities/dubai.wav"),
+
+  // Level 4: South Asia
+  "karachi|pakistan": new Audio("assets/sounds/cities/karachi.wav"),
+  "mumbai|india": new Audio("assets/sounds/cities/mumbai.wav"),
+  "delhi|india": new Audio("assets/sounds/cities/delhi.wav"),
+  "kathmandu|nepal": new Audio("assets/sounds/cities/kathmandu.wav"),
+  "kolkāta|india": new Audio("assets/sounds/cities/kolkata.wav"),
+
+  // Level 5: South East Asia
+  "rangoon|myanmar": new Audio("assets/sounds/cities/rangoon.wav"),
+  "bangkok|thailand": new Audio("assets/sounds/cities/bangkok.wav"),
+  "ho chi minh city|vietnam": new Audio("assets/sounds/cities/ho-chi-minh-city.wav"),
+  "manila|philippines": new Audio("assets/sounds/cities/manila.wav"),
+  "hanoi|vietnam": new Audio("assets/sounds/cities/hanoi.wav"),
+
+  // Level 6: The East
+  "hong kong|china": new Audio("assets/sounds/cities/hong-kong.wav"),
+  "shenzhen|china": new Audio("assets/sounds/cities/shenzhen.wav"),
+  "shanghai|china": new Audio("assets/sounds/cities/shanghai.wav"),
+  "beijing|china": new Audio("assets/sounds/cities/beijing.wav"),
+  "chengdu|china": new Audio("assets/sounds/cities/chengdu.wav"),
+  "seoul|south korea": new Audio("assets/sounds/cities/seoul.wav"),
+  "tokyo|japan": new Audio("assets/sounds/cities/tokyo.wav"),
+
+  // Level 7: Africa Crossing
+  "addis ababa|ethiopia": new Audio("assets/sounds/cities/addis-ababa.wav"),
+  "nairobi|kenya": new Audio("assets/sounds/cities/nairobi.wav"),
+  "dar es salaam|tanzania": new Audio("assets/sounds/cities/dar-es-salaam.wav"),
+  "cape town|south africa": new Audio("assets/sounds/cities/cape-town.wav"),
+
+  // Level 8: The New World
+  "new york|united states": new Audio("assets/sounds/cities/new-york.wav"),
+
+  // Level 9: America Crossing
+  "miami|united states": new Audio("assets/sounds/cities/miami.wav"),
+  "havana|cuba": new Audio("assets/sounds/cities/havana.wav"),
+  "mexico city|mexico": new Audio("assets/sounds/cities/mexico-city.wav"),
+  "panama city|panama": new Audio("assets/sounds/cities/panama-city.wav"),
+  "lima|peru": new Audio("assets/sounds/cities/lima.wav"),
+  "rio de janeiro|brazil": new Audio("assets/sounds/cities/rio-de-janeiro.wav"),
+  "buenos aires|argentina": new Audio("assets/sounds/cities/buenos-aires.wav"),
 };
 
 
