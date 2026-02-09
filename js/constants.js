@@ -24,7 +24,7 @@ const CONFIG_DEFAULTS = {
 // Units: fuel points and km. Tune values together.
 const TANK_CAPACITY = 100;
 const FUEL_PER_KM = 0.02;
-const REFUEL_FLOOR = 40;
+const REFUEL_FLOOR = 60;
 const REFUEL_BONUS = 12;
 
 /* ========= CITY MARKERS (CONFIG) ========= */
@@ -61,3 +61,25 @@ const CITY_MARKERS = {
   CACHE_KEY: "echoes_city_markers_v4",
   CACHE_SCHEMA_VERSION: 2
 };
+
+/* ========= RUNTIME OVERRIDES (PER LEVEL) ========= */
+let fuelPerKm = FUEL_PER_KM;
+
+function _cloneCityMarkersConfig() {
+  return {
+    ...CITY_MARKERS,
+    SIZE_PX: { ...CITY_MARKERS.SIZE_PX },
+    OFFSET_PX: {
+      small: { ...CITY_MARKERS.OFFSET_PX.small },
+      medium: { ...CITY_MARKERS.OFFSET_PX.medium },
+      big: { ...CITY_MARKERS.OFFSET_PX.big }
+    }
+  };
+}
+
+let cityMarkersConfig = _cloneCityMarkersConfig();
+
+function resetRuntimeConfig() {
+  fuelPerKm = FUEL_PER_KM;
+  cityMarkersConfig = _cloneCityMarkersConfig();
+}

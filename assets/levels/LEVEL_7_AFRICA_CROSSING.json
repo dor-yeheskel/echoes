@@ -1,6 +1,12 @@
 {
   "displayName": "Africa Crossing",
 
+  "config": {
+    "cityMarkers": {
+      "LEVEL_RADIUS_M": 5000000
+    }
+  },
+
   "start": {
     "city": "Cairo",
     "country": "Egypt",

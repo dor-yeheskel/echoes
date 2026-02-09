@@ -44,6 +44,21 @@ function resetLayersAndEntities() {
 function applyLevelConfig(levelId) {
   const lvl = levelToData[levelId];
 
+  resetRuntimeConfig();
+  const cfg = lvl?.config;
+  if (cfg?.cityMarkers) {
+    const cm = cfg.cityMarkers;
+    if (Number.isFinite(cm.LEVEL_RADIUS_M)) {
+      cityMarkersConfig.LEVEL_RADIUS_M = cm.LEVEL_RADIUS_M;
+    }
+    if (Number.isFinite(cm.MIN_POPULATION)) {
+      cityMarkersConfig.MIN_POPULATION = cm.MIN_POPULATION;
+    }
+  }
+  if (Number.isFinite(cfg?.FUEL_PER_KM)) {
+    fuelPerKm = cfg.FUEL_PER_KM;
+  }
+
   state.levelId = levelId;
   state.levelIndex = levelOrder.indexOf(levelId);
 

@@ -1,6 +1,12 @@
 {
   "displayName": "The East",
 
+  "config": {
+    "cityMarkers": {
+      "MIN_POPULATION": 4000000
+    }
+  },
+
   "start": {
     "city": "Hanoi",
     "country": "Vietnam",

@@ -1,5 +1,12 @@
 {
   "displayName": "The New World",
+  
+  "config": {
+    "cityMarkers": {
+      "LEVEL_RADIUS_M": 6000000
+    },
+    "FUEL_PER_KM": 0.01
+  },
 
   "start": {
     "city": "Lisbon",

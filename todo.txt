@@ -1,11 +1,13 @@
 =====================================================
 Missions:
-    * Miami - can't be detected.
     * Cities in Amreica crossing that are too far (rio) - are not there.
         Need to increase size of radium
-    * Africa - Same + too hard in in terms fuel (need to fix a bit).
     * China - might need that per level - show 
         cities that population is greater than 1m? gpt.
+    * Miami - can't be detected.
+    
+    * Africa - Same + too hard in in terms fuel (need to fix a bit - maybe the same as ocean).
+    
 
 UI:
     * UI fix of the main screen - name of the game, colors, table.

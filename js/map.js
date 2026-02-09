@@ -91,16 +91,16 @@ function _escapeHtml(s) {
 function addCityMarker(lat, lng, pop, name = "", country = "") {
   let sizeKey;
 
-  if (pop >= CITY_MARKERS.BIG_CITY_POPULATION) {
+  if (pop >= cityMarkersConfig.BIG_CITY_POPULATION) {
     sizeKey = "big";
-  } else if (pop >= CITY_MARKERS.MEDIUM_CITY_POPULATION) {
+  } else if (pop >= cityMarkersConfig.MEDIUM_CITY_POPULATION) {
     sizeKey = "medium";
   } else {
     sizeKey = "small";
   }
 
-  const size = CITY_MARKERS.SIZE_PX[sizeKey];
-  const offset = CITY_MARKERS.OFFSET_PX[sizeKey];
+  const size = cityMarkersConfig.SIZE_PX[sizeKey];
+  const offset = cityMarkersConfig.OFFSET_PX[sizeKey];
 
   const safeName = _escapeHtml(name);
   const safeCountry = _escapeHtml(country);
@@ -206,15 +206,15 @@ async function preloadCityMarkers() {
     if (!_levelCenterLatLng) continue;
 
     const d = _levelCenterLatLng.distanceTo([c.lat, c.lng]);
-    if (d > CITY_MARKERS.LEVEL_RADIUS_M) continue;
+    if (d > cityMarkersConfig.LEVEL_RADIUS_M) continue;
 
     // 2. significance rule
     const isBigCity =
       Number.isFinite(c.pop) &&
-      c.pop >= CITY_MARKERS.MIN_POPULATION;
+      c.pop >= cityMarkersConfig.MIN_POPULATION;
 
     const isCapital =
-      CITY_MARKERS.INCLUDE_CAPITALS &&
+      cityMarkersConfig.INCLUDE_CAPITALS &&
       c.isCapital === true;
 
     if (!isCapital && !isBigCity) continue;

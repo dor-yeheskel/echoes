@@ -1,6 +1,13 @@
 {
   "displayName": "America Crossing",
 
+  "config": {
+    "cityMarkers": {
+      "LEVEL_RADIUS_M": 5000000
+    },
+    "FUEL_PER_KM": 0.012
+  },
+
   "start": {
     "city": "New York",
     "country": "United States",
