@@ -4,13 +4,14 @@
   "config": {
     "cityMarkers": {
       "LEVEL_RADIUS_M": 5000000
-    }
+    },
+    "FUEL_PER_KM": 0.012
   },
 
   "start": {
     "city": "Cairo",
     "country": "Egypt",
-    "heading": 180
+    "heading": 200
   },
 
   "route": [
@@ -28,10 +29,6 @@
     },
     {
       "city": "Cape Town",
-      "country": "South Africa"
-    },
-    {
-      "city": "Johannesburg",
       "country": "South Africa"
     }
   ]

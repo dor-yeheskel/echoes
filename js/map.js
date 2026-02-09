@@ -134,6 +134,27 @@ async function loadCityIndex() {
   layerCities.clearLayers();
 
   cityItems.length = 0;
+  function upsertCityIndex(name, country, lat, lng, pop) {
+    const key = `${name}|${country}`;
+    const existing = window.cityIndex.get(key);
+    if (!existing) {
+      window.cityIndex.set(key, { lat, lng, name, country, pop });
+      return;
+    }
+
+    const existingPop = Number.isFinite(existing.pop) ? existing.pop : null;
+    const nextPop = Number.isFinite(pop) ? pop : null;
+
+    if (existingPop === null && nextPop !== null) {
+      window.cityIndex.set(key, { lat, lng, name, country, pop });
+      return;
+    }
+
+    if (existingPop !== null && nextPop !== null && nextPop > existingPop) {
+      window.cityIndex.set(key, { lat, lng, name, country, pop });
+    }
+  }
+
   const cached = loadCityMarkersCache();
   if (cached && cached.length > 0) {
     // cached may be in compact-array format ([lat,lng,pop,name,country])
@@ -141,7 +162,7 @@ async function loadCityIndex() {
       if (Array.isArray(row)) {
         const [lat, lng, pop, name, country] = row;
         cityItems.push({ lat, lng, pop, isCapital: false, name, country });
-        window.cityIndex.set(`${name}|${country}`, { lat, lng, name, country, pop });
+        upsertCityIndex(name, country, lat, lng, pop);
       } else {
         const name = row.city ?? row.name;
         cityItems.push({
@@ -152,7 +173,7 @@ async function loadCityIndex() {
           name,
           country: row.country
         });
-        window.cityIndex.set(`${name}|${row.country}`, { lat: row.lat, lng: row.lng, name, country: row.country, pop: row.pop });
+        upsertCityIndex(name, row.country, row.lat, row.lng, row.pop);
       }
     }
   }
@@ -184,10 +205,7 @@ async function loadCityIndex() {
         name,
         country: row.country
       });
-      window.cityIndex.set(
-        `${name}|${row.country}`,
-        { lat, lng, name, country: row.country, pop }
-      );
+      upsertCityIndex(name, row.country, lat, lng, pop);
     }
 
     saveCityMarkersCache(cityItems);
@@ -200,13 +218,26 @@ async function preloadCityMarkers() {
   cityEntities.length = 0;
   window.cityMarkerIndex?.clear?.();
 
+  const forcedCityKeys = new Set();
+  if (entities?.targets?.length) {
+    for (const t of entities.targets) {
+      if (t?.city && t?.country) {
+        forcedCityKeys.add(`${t.city}|${t.country}`);
+      }
+    }
+  }
+
   for (const c of cityItems) {
+    const key = `${c.name}|${c.country}`;
+    const isForced = forcedCityKeys.has(key);
 
     // 1. radius is mandatory
-    if (!_levelCenterLatLng) continue;
+    if (!_levelCenterLatLng && !isForced) continue;
 
-    const d = _levelCenterLatLng.distanceTo([c.lat, c.lng]);
-    if (d > cityMarkersConfig.LEVEL_RADIUS_M) continue;
+    if (!isForced) {
+      const d = _levelCenterLatLng.distanceTo([c.lat, c.lng]);
+      if (d > cityMarkersConfig.LEVEL_RADIUS_M) continue;
+    }
 
     // 2. significance rule
     const isBigCity =
@@ -217,7 +248,7 @@ async function preloadCityMarkers() {
       cityMarkersConfig.INCLUDE_CAPITALS &&
       c.isCapital === true;
 
-    if (!isCapital && !isBigCity) continue;
+    if (!isForced && !isCapital && !isBigCity) continue;
 
     // ✅ passed all rules
     addCityMarker(c.lat, c.lng, c.pop, c.name, c.country);

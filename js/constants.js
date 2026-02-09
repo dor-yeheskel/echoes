@@ -24,7 +24,7 @@ const CONFIG_DEFAULTS = {
 // Units: fuel points and km. Tune values together.
 const TANK_CAPACITY = 100;
 const FUEL_PER_KM = 0.02;
-const REFUEL_FLOOR = 60;
+const REFUEL_FLOOR = 50;
 const REFUEL_BONUS = 12;
 
 /* ========= CITY MARKERS (CONFIG) ========= */
@@ -59,7 +59,7 @@ const CITY_MARKERS = {
 
 
   CACHE_KEY: "echoes_city_markers_v4",
-  CACHE_SCHEMA_VERSION: 2
+  CACHE_SCHEMA_VERSION: 3
 };
 
 /* ========= RUNTIME OVERRIDES (PER LEVEL) ========= */
