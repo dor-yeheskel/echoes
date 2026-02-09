@@ -1,0 +1,40 @@
+{
+  "displayName": "The East",
+
+  "start": {
+    "city": "Hanoi",
+    "country": "Vietnam",
+    "heading": 45
+  },
+
+  "route": [
+    {
+      "city": "Hong Kong",
+      "country": "China"
+    },
+    {
+      "city": "Shenzhen",
+      "country": "China"
+    },
+    {
+      "city": "Shanghai",
+      "country": "China"
+    },
+    {
+      "city": "Beijing",
+      "country": "China"
+    },
+    {
+      "city": "Chengdu",
+      "country": "China"
+    },
+    {
+      "city": "Seoul",
+      "country": "South Korea"
+    },
+    {
+      "city": "Tokyo",
+      "country": "Japan"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "displayName": "Mediterranean Sea",
+
+  "start": {
+    "city": "Barcelona",
+    "country": "Spain",
+    "heading": 100
+  },
+
+  "route": [
+    {
+      "city": "Rome",
+      "country": "Italy"
+    },
+    {
+      "city": "Athens",
+      "country": "Greece"
+    },
+    {
+      "city": "Istanbul",
+      "country": "Turkey"
+    },
+    {
+      "city": "Cairo",
+      "country": "Egypt"
+    }
+  ]
+}

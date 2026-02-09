@@ -1,8 +1,16 @@
-* UI fix of the main screen - name of the game, colors, table.
+=====================================================
+Missions:
+    * Miami - can't be detected.
+    * Cities in Amreica crossing that are too far (rio) - are not there.
+        Need to increase size of radium
+    * Africa - Same + too hard in in terms fuel (need to fix a bit).
+    * China - might need that per level - show 
+        cities that population is greater than 1m? gpt.
 
-* Missions design with GPT.
-* Run them.
+UI:
+    * UI fix of the main screen - name of the game, colors, table.
 
-* Different sound to "reached".
-
-* Songs via Suno AI (song inspired by ... OR classical old ...).
+Sounds:
+    * Different sound to "reached".
+    * Songs via Suno AI (song inspired by ... OR classical old ...).
+=====================================================

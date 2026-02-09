@@ -36,7 +36,7 @@ const CITY_MARKERS = {
   INCLUDE_CAPITALS: true,
 
   // radius rule (meters)
-  LEVEL_RADIUS_M: 4_000_000,
+  LEVEL_RADIUS_M: 4_000_000,  // 4_500_000 not enoght for Africa cross
 
   CITY_HUD_RADIUS_M: 35_000,  // radius for showing city name on hover (meters)
 

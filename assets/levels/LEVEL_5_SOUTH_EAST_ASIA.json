@@ -1,0 +1,28 @@
+{
+  "displayName": "South East Asia",
+
+  "start": {
+    "city": "Kolkāta",
+    "country": "India",
+    "heading": 120
+  },
+
+  "route": [
+    {
+      "city": "Rangoon",
+      "country": "Myanmar"
+    },
+    {
+      "city": "Bangkok",
+      "country": "Thailand"
+    },
+    {
+      "city": "Ho Chi Minh City",
+      "country": "Vietnam"
+    },
+    {
+      "city": "Manila",
+      "country": "Philippines"
+    }
+  ]
+}

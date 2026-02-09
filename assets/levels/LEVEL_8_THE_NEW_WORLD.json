@@ -1,0 +1,16 @@
+{
+  "displayName": "The New World",
+
+  "start": {
+    "city": "Lisbon",
+    "country": "Portugal",
+    "heading": 300
+  },
+
+  "route": [
+    {
+      "city": "New York",
+      "country": "United States"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "displayName": "Africa Crossing",
+
+  "start": {
+    "city": "Cairo",
+    "country": "Egypt",
+    "heading": 180
+  },
+
+  "route": [
+    {
+      "city": "Addis Ababa",
+      "country": "Ethiopia"
+    },
+    {
+      "city": "Nairobi",
+      "country": "Kenya"
+    },
+    {
+      "city": "Dar es Salaam",
+      "country": "Tanzania"
+    },
+    {
+      "city": "Cape Town",
+      "country": "South Africa"
+    },
+    {
+      "city": "Johannesburg",
+      "country": "South Africa"
+    }
+  ]
+}

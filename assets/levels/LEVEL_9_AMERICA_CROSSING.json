@@ -1,0 +1,40 @@
+{
+  "displayName": "America Crossing",
+
+  "start": {
+    "city": "New York",
+    "country": "United States",
+    "heading": 210
+  },
+
+  "route": [
+    {
+      "city": "Miami",
+      "country": "United States"
+    },
+    {
+      "city": "Havana",
+      "country": "Cuba"
+    },
+    {
+      "city": "Mexico City",
+      "country": "Mexico"
+    },
+    {
+      "city": "Panama City",
+      "country": "Panama"
+    },
+    {
+      "city": "Lima",
+      "country": "Peru"
+    },
+    {
+      "city": "Rio de Janeiro",
+      "country": "Brazil"
+    },
+    {
+      "city": "Buenos Aires",
+      "country": "Argentina"
+    }
+  ]
+}

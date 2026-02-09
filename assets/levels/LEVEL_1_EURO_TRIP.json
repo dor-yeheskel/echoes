@@ -1,0 +1,24 @@
+{
+  "displayName": "Euro Trip",
+
+  "start": {
+    "city": "London",
+    "country": "United Kingdom",
+    "heading": 110
+  },
+
+  "route": [
+    {
+      "city": "Paris",
+      "country": "France"
+    },
+    {
+      "city": "Berlin",
+      "country": "Germany"
+    },
+    {
+      "city": "Barcelona",
+      "country": "Spain"
+    }
+  ]
+}

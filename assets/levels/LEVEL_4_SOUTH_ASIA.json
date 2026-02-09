@@ -1,0 +1,32 @@
+{
+  "displayName": "South Asia",
+
+  "start": {
+    "city": "Dubai",
+    "country": "United Arab Emirates",
+    "heading": 100
+  },
+
+  "route": [
+    {
+      "city": "Karachi",
+      "country": "Pakistan"
+    },
+    {
+      "city": "Mumbai",
+      "country": "India"
+    },
+    {
+      "city": "Delhi",
+      "country": "India"
+    },
+    {
+      "city": "Kathmandu",
+      "country": "Nepal"
+    },
+    {
+      "city": "Kolkāta",
+      "country": "India"
+    }
+  ]
+}
