@@ -2,9 +2,9 @@
   "displayName": "Middle East",
 
   "start": {
-    "city": "Tel Aviv-Yafo",
-    "country": "Israel",
-    "heading": 115
+    "city": "Cairo",
+    "country": "Egypt",
+    "heading": 90
   },
 
   "route": [
@@ -13,16 +13,16 @@
       "country": "Saudi Arabia"
     },
     {
-      "city": "Dubai",
-      "country": "United Arab Emirates"
-    },
-    {
       "city": "Baghdad",
       "country": "Iraq"
     },
     {
       "city": "Tehran",
       "country": "Iran"
+    },
+    {
+      "city": "Dubai",
+      "country": "United Arab Emirates"
     }
   ]
 }
