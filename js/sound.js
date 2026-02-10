@@ -47,16 +47,16 @@ const CITY_TRACKS = {
 
   // Level 4: South Asia
   "karachi|pakistan": new Audio("assets/sounds/cities/karachi.wav"),
+  "kathmandu|nepal": new Audio("assets/sounds/cities/kathmandu.wav"),
   "mumbai|india": new Audio("assets/sounds/cities/mumbai.wav"),
   "delhi|india": new Audio("assets/sounds/cities/delhi.wav"),
-  "kathmandu|nepal": new Audio("assets/sounds/cities/kathmandu.wav"),
   "kolkāta|india": new Audio("assets/sounds/cities/kolkata.wav"),
 
   // Level 5: South East Asia
   "rangoon|myanmar": new Audio("assets/sounds/cities/rangoon.wav"),
   "bangkok|thailand": new Audio("assets/sounds/cities/bangkok.wav"),
-  "ho chi minh city|vietnam": new Audio("assets/sounds/cities/ho-chi-minh-city.wav"),
   "manila|philippines": new Audio("assets/sounds/cities/manila.wav"),
+  "ho chi minh city|vietnam": new Audio("assets/sounds/cities/ho-chi-minh-city.wav"),
   "hanoi|vietnam": new Audio("assets/sounds/cities/hanoi.wav"),
 
   // Level 6: The East
