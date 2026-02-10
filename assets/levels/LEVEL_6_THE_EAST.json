@@ -15,10 +15,6 @@
 
   "route": [
     {
-      "city": "Hong Kong",
-      "country": "China"
-    },
-    {
       "city": "Shenzhen",
       "country": "China"
     },
