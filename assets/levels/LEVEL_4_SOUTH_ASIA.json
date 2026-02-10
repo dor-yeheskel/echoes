@@ -1,6 +1,12 @@
 {
   "displayName": "South Asia",
 
+  "config": {
+    "cityMarkers": {
+      "LEVEL_RADIUS_M": 3000000
+    }
+  },
+
   "start": {
     "city": "Dubai",
     "country": "United Arab Emirates",
