@@ -774,6 +774,11 @@ select:focus {
   transform: translateY(0);
 }
 
+#hud-city.aged {
+  opacity: 0.45;
+  color: #b9b9b9;
+}
+
 /* ===== Destination completion (city emoji fade + pulse) ===== */
 
 .city-marker {

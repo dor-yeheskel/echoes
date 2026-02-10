@@ -1,5 +1,6 @@
 /* ========= UI & PROGRESS ========= */
 let currentCity = null;
+let cityFadeTimer = null;
 
 function renderProgressTable() {
   const el = document.getElementById("progressTable");
@@ -145,6 +146,13 @@ function updateCityHUD() {
     currentCity = bestCity;
     el.textContent = bestCity.name + (bestCity.country ? `, ${bestCity.country}` : "");
     el.classList.add("active");
+    el.classList.remove("aged");
+    if (cityFadeTimer) {
+      clearTimeout(cityFadeTimer);
+    }
+    cityFadeTimer = setTimeout(() => {
+      el.classList.add("aged");
+    }, 2000);
   }
 }
 
