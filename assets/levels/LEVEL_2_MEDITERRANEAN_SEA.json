@@ -15,16 +15,16 @@
 
   "route": [
     {
+      "city": "Istanbul",
+      "country": "Turkey"
+    },
+    {
       "city": "Rome",
       "country": "Italy"
     },
     {
       "city": "Athens",
       "country": "Greece"
-    },
-    {
-      "city": "Istanbul",
-      "country": "Turkey"
     },
     {
       "city": "Cairo",

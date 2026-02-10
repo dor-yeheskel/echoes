@@ -15,15 +15,15 @@
 
   "route": [
     {
+      "city": "Beijing",
+      "country": "China"
+    },
+    {
       "city": "Shenzhen",
       "country": "China"
     },
     {
       "city": "Shanghai",
-      "country": "China"
-    },
-    {
-      "city": "Beijing",
       "country": "China"
     },
     {

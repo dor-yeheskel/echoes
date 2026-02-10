@@ -20,28 +20,28 @@
       "country": "United States"
     },
     {
-      "city": "Havana",
-      "country": "Cuba"
-    },
-    {
       "city": "Mexico City",
       "country": "Mexico"
     },
     {
-      "city": "Panama City",
-      "country": "Panama"
+      "city": "Havana",
+      "country": "Cuba"
     },
     {
       "city": "Lima",
       "country": "Peru"
     },
     {
-      "city": "Rio de Janeiro",
-      "country": "Brazil"
+      "city": "Panama City",
+      "country": "Panama"
     },
     {
       "city": "Buenos Aires",
       "country": "Argentina"
+    },
+    {
+      "city": "Rio de Janeiro",
+      "country": "Brazil"
     }
   ]
 }

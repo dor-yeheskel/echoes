@@ -9,20 +9,20 @@
 
   "route": [
     {
-      "city": "Rangoon",
-      "country": "Myanmar"
-    },
-    {
       "city": "Bangkok",
       "country": "Thailand"
     },
     {
-      "city": "Ho Chi Minh City",
-      "country": "Vietnam"
+      "city": "Rangoon",
+      "country": "Myanmar"
     },
     {
       "city": "Manila",
       "country": "Philippines"
+    },
+    {
+      "city": "Ho Chi Minh City",
+      "country": "Vietnam"
     },
     {
         "city": "Hanoi",

@@ -19,12 +19,12 @@
       "country": "France"
     },
     {
-      "city": "Berlin",
-      "country": "Germany"
-    },
-    {
       "city": "Barcelona",
       "country": "Spain"
+    },
+    {
+      "city": "Berlin",
+      "country": "Germany"
     }
   ]
 }

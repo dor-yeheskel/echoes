@@ -15,16 +15,16 @@
 
   "route": [
     {
-      "city": "Karachi",
-      "country": "Pakistan"
-    },
-    {
       "city": "Mumbai",
       "country": "India"
     },
     {
       "city": "Delhi",
       "country": "India"
+    },
+    {
+      "city": "Karachi",
+      "country": "Pakistan"
     },
     {
       "city": "Kathmandu",
