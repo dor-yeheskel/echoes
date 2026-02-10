@@ -89,7 +89,8 @@ function loop(t) {
             entities.remainingTargets--;
           }
 
-          onCityArrival(t);
+          const isFinalTarget = entities.remainingTargets === 0;
+          onCityArrival(t, { isFinalTarget });
 
           if (typeof markDestinationCityReached === "function") {
             try { markDestinationCityReached(t); } catch {}
@@ -120,8 +121,9 @@ function loop(t) {
 }
 
 
-function onCityArrival(cityTarget) {
+function onCityArrival(cityTarget, opts = {}) {
   if (!cityTarget) return;
+  if (opts.isFinalTarget) return;
   const base = Math.max(state.fuel, REFUEL_FLOOR);
   state.fuel = Math.min(TANK_CAPACITY, base + REFUEL_BONUS);
 }
