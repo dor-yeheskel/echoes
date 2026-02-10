@@ -40,8 +40,8 @@ const CITY_MARKERS = {
 
   CITY_HUD_RADIUS_M: 30_000,  // radius for showing city name on hover (meters)
 
-  BIG_CITY_POPULATION: 3_000_000,
-  MEDIUM_CITY_POPULATION: 1_000_000,
+  BIG_CITY_POPULATION: 1_000_000_000,// 3_000_000,
+  MEDIUM_CITY_POPULATION: 1_000_000_000,// 1_000_000,
   
   // emoji sizes by population
   SIZE_PX: {
