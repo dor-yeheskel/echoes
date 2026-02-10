@@ -45,9 +45,6 @@ window.addEventListener('DOMContentLoaded', async function() {
   
   introEl = document.getElementById("intro");
   endScreenEl = document.getElementById("endScreen");
-  
-  endRankEl = document.getElementById("endRank");
-  endScoreEl = document.getElementById("endScore");
 
   startBtn = document.getElementById("startBtn");
 

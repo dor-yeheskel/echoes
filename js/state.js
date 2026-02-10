@@ -45,9 +45,6 @@ let targetsEl = null;
 let introEl = null;
 let endScreenEl = null;
 
-let endRankEl = null;
-let endScoreEl = null;
-
 let levelSelectEl = null;
 let startBtn = null;
 

@@ -51,7 +51,7 @@ html, body {
 /* ===== LEVEL TITLE ===== */
 #levelTitle {
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 800;
   letter-spacing: 0.6px;
   margin-bottom: 10px;
   padding: 6px 12px;
@@ -495,22 +495,6 @@ html, body {
   transform: scale(1.04);
 }
 
-.rank-gold {
-  color: #ffd36a;
-  text-shadow:
-    0 0 6px rgba(255, 211, 106, 0.4),
-    0 0 12px rgba(255, 180, 0, 0.25);
-  font-weight: 600;
-}
-
-#rankDisplay {
-  margin-top: 12px;
-  font-size: 26px;
-  font-weight: 600;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
 .mission-title {
   font-size: 24px;
   font-weight: 700;
@@ -519,16 +503,6 @@ html, body {
   text-align: center;
   margin: 2px 0 22px;
 }
-
-#rankDisplay {
-  font-size: 26px;
-  font-weight: 600;
-  text-align: center;
-  margin-top: 10px;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
 
 #intro::before {
   content: "";
@@ -752,8 +726,8 @@ select:focus {
   padding: 6px 12px;
 
   font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.4px;
+  font-weight: 400;
+  letter-spacing: 0.6px;
 
   color: #eaeaea;
   background: rgba(0, 0, 0, 0.55);
