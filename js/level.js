@@ -15,7 +15,6 @@ function resolveCityRef(ref) {
   if (window.cityIndex.size === 0) {
     throw new Error("cityIndex is empty");
   }
-  console.log("Resolving city ref:", ref);
   const key = `${ref.city}|${ref.country}`;
   const city = window.cityIndex.get(key);
   if (!city) {
