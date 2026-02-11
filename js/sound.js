@@ -26,9 +26,11 @@ sounds.defeat.volume  = V.end;
 // ===== CITY TRACKS (city,country -> Audio) =====
 // Keys are normalized as "city|country" in lowercase.
 // You can extend or override this map per your assets.
+
+// Gen:"COUNTRY Folk dance music." / "COUNTRY Folk modern dance music."
+
 const CITY_TRACKS = {
   // Level 1: Euro Trip
-  "london|united kingdom": new Audio("assets/sounds/cities/london.wav"),
   "paris|france": new Audio("assets/sounds/cities/paris.wav"),
   "berlin|germany": new Audio("assets/sounds/cities/berlin.wav"),
   "barcelona|spain": new Audio("assets/sounds/cities/barcelona.wav"),
@@ -60,7 +62,6 @@ const CITY_TRACKS = {
   "hanoi|vietnam": new Audio("assets/sounds/cities/hanoi.wav"),
 
   // Level 6: The East
-  "hong kong|china": new Audio("assets/sounds/cities/hong-kong.wav"),
   "shenzhen|china": new Audio("assets/sounds/cities/shenzhen.wav"),
   "shanghai|china": new Audio("assets/sounds/cities/shanghai.wav"),
   "beijing|china": new Audio("assets/sounds/cities/beijing.wav"),

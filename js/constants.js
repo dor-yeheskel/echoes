@@ -31,8 +31,8 @@ const REFUEL_BONUS = 12;
 const CITY_MARKERS = {
   DATA_URL: "https://cdn.jsdelivr.net/npm/world-cities-json@1.0.1/data/cities.json",
 
- // population rules
-  MIN_POPULATION: 500_000,
+  // population rules
+  MIN_POPULATION: 400_000,
   INCLUDE_CAPITALS: true,
 
   // radius rule (meters)

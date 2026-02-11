@@ -3,7 +3,7 @@
 
   "config": {
     "cityMarkers": {
-      "MIN_POPULATION": 300000
+      "MIN_POPULATION": 250000
     }
   },
 
