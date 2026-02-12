@@ -11,7 +11,7 @@ function loadProgress() {
     localStorage.removeItem("lastPlayedLevel");
     return {
       unlockedCount: 1,
-      scores: {}
+      completedLevels: []
     };
   }
   return JSON.parse(raw);
