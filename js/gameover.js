@@ -107,8 +107,8 @@ function endLevelHandler() {
     btn.style.display = "inline-block";
     btn.textContent = "Next Level";
     btn.onclick = () => {
-      loadLevel(levelOrder[state.levelIndex + 1]);
       stopAllSounds();
+      loadLevel(levelOrder[state.levelIndex + 1]);
       startGame();
     };
   } else {
