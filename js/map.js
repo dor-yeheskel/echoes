@@ -229,11 +229,7 @@ async function loadCityIndex() {
     const res = await fetch(CITY_MARKERS.DATA_URL, { cache: "force-cache" });
     const data = await res.json();
 
-    for (const row of data) {
-      if (row.country === "Israel") {
-        console.log(`Israel city: ${row.city ?? row.name}`);
-      }
-      
+    for (const row of data) {      
       const lat = Number(row.lat ?? row.latitude);
       const lng = Number(row.lng ?? row.lon ?? row.longitude);
 
