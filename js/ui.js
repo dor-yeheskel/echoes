@@ -1,6 +1,9 @@
 /* ========= UI & PROGRESS ========= */
 let currentCity = null;
 let cityFadeTimer = null;
+let cityHudLastUpdateMs = 0;
+
+const CITY_HUD_UPDATE_INTERVAL_MS = 120;
 
 function renderProgressTable() {
   const el = document.getElementById("progressTable");
@@ -112,10 +115,22 @@ function renderRouteHUD() {
 }
 
 function updateCityHUD() {
+  const now = performance.now();
+  if (now - cityHudLastUpdateMs < CITY_HUD_UPDATE_INTERVAL_MS) {
+    return;
+  }
+  cityHudLastUpdateMs = now;
+
   const el = document.getElementById("hud-city");
   if (!el) return;
 
-  const cities = getCityEntities();
+  const radiusM = Number.isFinite(cityMarkersConfig?.CITY_HUD_RADIUS_M)
+    ? cityMarkersConfig.CITY_HUD_RADIUS_M
+    : CITY_MARKERS.CITY_HUD_RADIUS_M;
+
+  const cities = typeof getNearbyCityEntities === "function"
+    ? getNearbyCityEntities(state.lat, state.lng, radiusM)
+    : getCityEntities();
   if (!cities || !cities.length) return;
 
   let bestCity = null;
@@ -124,7 +139,7 @@ function updateCityHUD() {
 
   for (const city of cities) {
     const d = distance(state, city);
-    if (d < CITY_MARKERS.CITY_HUD_RADIUS_M) {
+    if (d < radiusM) {
       if (city === currentCity) currentInRange = true;
       const pop = Number.isFinite(city.pop) ? city.pop : 0;
       if (!bestCity || pop > bestPop) {

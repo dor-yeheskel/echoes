@@ -60,6 +60,51 @@ const layerUi       = L.layerGroup().addTo(map);
 const layerCities = L.layerGroup().addTo(map);
 
 const cityEntities = [];
+const cityHudGrid = new Map(); // key "latCell|lngCell" -> city[]
+const CITY_HUD_GRID_DEG = 0.35;
+
+function _cityHudCellKey(lat, lng) {
+  const latCell = Math.floor(lat / CITY_HUD_GRID_DEG);
+  const lngCell = Math.floor(lng / CITY_HUD_GRID_DEG);
+  return `${latCell}|${lngCell}`;
+}
+
+function _cityHudGridInsert(city) {
+  const key = _cityHudCellKey(city.lat, city.lng);
+  let bucket = cityHudGrid.get(key);
+  if (!bucket) {
+    bucket = [];
+    cityHudGrid.set(key, bucket);
+  }
+  bucket.push(city);
+}
+
+function getNearbyCityEntities(lat, lng, radiusM) {
+  if (!Number.isFinite(lat) || !Number.isFinite(lng) || !Number.isFinite(radiusM) || radiusM <= 0) {
+    return cityEntities;
+  }
+
+  const metersPerDegLat = 111_320;
+  const latRangeDeg = radiusM / metersPerDegLat;
+  const cosLat = Math.cos(lat * Math.PI / 180);
+  const safeCosLat = Math.max(0.15, Math.abs(cosLat));
+  const lngRangeDeg = radiusM / (metersPerDegLat * safeCosLat);
+
+  const minLatCell = Math.floor((lat - latRangeDeg) / CITY_HUD_GRID_DEG);
+  const maxLatCell = Math.floor((lat + latRangeDeg) / CITY_HUD_GRID_DEG);
+  const minLngCell = Math.floor((lng - lngRangeDeg) / CITY_HUD_GRID_DEG);
+  const maxLngCell = Math.floor((lng + lngRangeDeg) / CITY_HUD_GRID_DEG);
+
+  const out = [];
+  for (let la = minLatCell; la <= maxLatCell; la++) {
+    for (let ln = minLngCell; ln <= maxLngCell; ln++) {
+      const bucket = cityHudGrid.get(`${la}|${ln}`);
+      if (!bucket || !bucket.length) continue;
+      out.push(...bucket);
+    }
+  }
+  return out;
+}
 
 /* aim marker */
 const aimMarker = L.marker([0, 0], {
@@ -131,6 +176,7 @@ const cityItems = [];
 
 async function loadCityIndex() {
   cityEntities.length = 0;
+  cityHudGrid.clear();
   layerCities.clearLayers();
 
   cityItems.length = 0;
@@ -216,6 +262,7 @@ async function preloadCityMarkers() {
   // Reset per-level city markers so restarts do not stack duplicates.
   layerCities.clearLayers();
   cityEntities.length = 0;
+  cityHudGrid.clear();
   window.cityMarkerIndex?.clear?.();
 
   const forcedCityKeys = new Set();
@@ -260,6 +307,7 @@ async function preloadCityMarkers() {
       country: c.country,
       pop: c.pop
     });
+    _cityHudGridInsert(cityEntities[cityEntities.length - 1]);
 
   }
 }
