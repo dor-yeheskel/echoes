@@ -14,7 +14,13 @@ function loadProgress() {
       completedLevels: []
     };
   }
-  return JSON.parse(raw);
+  const parsed = JSON.parse(raw);
+
+  if (!Array.isArray(parsed.completedLevels)) {
+    parsed.completedLevels = [];
+    parsed.unlockedCount = 1;
+  }
+  return parsed;
 }
 
 function saveProgress(progress) {
