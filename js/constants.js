@@ -24,6 +24,7 @@ const CONFIG_DEFAULTS = {
 // Units: fuel points and km. Tune values together.
 const TANK_CAPACITY = 100;
 const FUEL_PER_KM = 0.02;
+const FUEL_GRACE_SECONDS = 1;
 const REFUEL_FLOOR = 50;
 const REFUEL_BONUS = 12;
 

@@ -23,6 +23,7 @@ const state = {
   gameStarted: false,
   gameOver: false,
   paused: false,
+  gameTime: 0,
 
   levelId: null,
   levelIndex: 0,

@@ -51,7 +51,8 @@ function loop(t) {
     state.lng = pos.lng;
 
     const movedKm = distance(prevPos, state) / 1000;
-    if (Number.isFinite(movedKm) && movedKm > 0) {
+    const inFuelGracePeriod = state.gameTime < FUEL_GRACE_SECONDS;
+    if (!inFuelGracePeriod && Number.isFinite(movedKm) && movedKm > 0) {
       state.fuel = Math.max(0, state.fuel - movedKm * fuelPerKm);
     }
     state.fuelPrevLat = state.lat;
