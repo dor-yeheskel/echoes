@@ -27,6 +27,35 @@ function saveProgress(progress) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
 }
 
+function resetAllStorage({ reload = true } = {}) {
+  localStorage.clear();
+  sessionStorage.clear();
+
+  soundEnabled = true;
+  progress = {
+    unlockedCount: 1,
+    completedLevels: []
+  };
+
+  if (reload) location.reload();
+}
+
+function resetGameStorage({ reload = true } = {}) {
+  localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(SOUND_KEY);
+  localStorage.removeItem("lastPlayedLevel");
+  localStorage.removeItem(CITY_MARKERS.CACHE_KEY);
+  sessionStorage.clear();
+
+  soundEnabled = true;
+  progress = {
+    unlockedCount: 1,
+    completedLevels: []
+  };
+
+  if (reload) location.reload();
+}
+
 /* ======== City Markers Memory (preloaded) ======== */
 function loadCityMarkersCache() {
   try {
