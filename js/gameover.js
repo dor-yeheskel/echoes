@@ -1,4 +1,5 @@
 function goToMenu() {
+  stopAllSounds();
   if (state.levelId) localStorage.setItem("lastPlayedLevel", state.levelId);
 
   state.gameStarted = false;
