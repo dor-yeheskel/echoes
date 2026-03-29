@@ -121,9 +121,8 @@ function loop(t) {
           mc.inRadius = true;
 
           // Always play music on every encounter
-          Promise.resolve(playSound("reached")).then(() => {
-            playCityTrack(mc.city, mc.country);
-          });
+          playSound("reached");
+          playCityTrack(mc.city, mc.country);
 
           if (!mc.discovered) {
             mc.discovered = true;
