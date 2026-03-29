@@ -63,6 +63,13 @@ const cityEntities = [];
 const cityHudGrid = new Map(); // key "latCell|lngCell" -> city[]
 const CITY_HUD_GRID_DEG = 0.35;
 
+/* ========= VIEWPORT CULLING (explore mode) ========= */
+const _exploreCityPool = [];          // all qualifying cities (data only, no marker)
+const _visibleCityMarkers = new Map(); // key -> Leaflet marker (currently on map)
+let _lastCullBounds = null;
+const _CULL_PAD = 0.3;                // pad viewport by 30% to avoid pop-in
+const _CULL_INTERVAL_MS = 250;
+
 function _cityHudCellKey(lat, lng) {
   const latCell = Math.floor(lat / CITY_HUD_GRID_DEG);
   const lngCell = Math.floor(lng / CITY_HUD_GRID_DEG);
@@ -260,6 +267,9 @@ async function preloadCityMarkers() {
   cityEntities.length = 0;
   cityHudGrid.clear();
   window.cityMarkerIndex?.clear?.();
+  _exploreCityPool.length = 0;
+  _visibleCityMarkers.clear();
+  _lastCullBounds = null;
 
   const forcedCityKeys = new Set();
   if (entities?.targets?.length) {
@@ -295,9 +305,7 @@ async function preloadCityMarkers() {
 
     if (!isForced && !isCapital && !isBigCity) continue;
 
-    // ✅ passed all rules
-    addCityMarker(c.lat, c.lng, c.pop, c.name, c.country);
-    
+    // ✅ passed all rules — register for HUD grid always
     cityEntities.push({
       lat: c.lat,
       lng: c.lng,
@@ -307,6 +315,24 @@ async function preloadCityMarkers() {
     });
     _cityHudGridInsert(cityEntities[cityEntities.length - 1]);
 
+    if (state.isExploreMode) {
+      // Defer marker creation to viewport culling
+      _exploreCityPool.push({
+        lat: c.lat,
+        lng: c.lng,
+        pop: c.pop,
+        name: c.name,
+        country: c.country,
+        key
+      });
+    } else {
+      addCityMarker(c.lat, c.lng, c.pop, c.name, c.country);
+    }
+  }
+
+  // If explore mode, do an initial viewport cull
+  if (state.isExploreMode) {
+    cullCityMarkersToViewport();
   }
 }
 
@@ -383,6 +409,53 @@ function computeLevelCenterFromTargets(targets) {
 
 function getCityEntities() {
   return cityEntities;
+}
+
+
+let _lastCullTime = 0;
+
+function cullCityMarkersToViewport() {
+  if (!state.isExploreMode || !_exploreCityPool.length) return;
+
+  const now = performance.now();
+  if (now - _lastCullTime < _CULL_INTERVAL_MS) return;
+  _lastCullTime = now;
+
+  const bounds = map.getBounds();
+  if (!bounds) return;
+
+  const latPad = (bounds.getNorth() - bounds.getSouth()) * _CULL_PAD;
+  const lngPad = (bounds.getEast() - bounds.getWest()) * _CULL_PAD;
+
+  const south = bounds.getSouth() - latPad;
+  const north = bounds.getNorth() + latPad;
+  const west = bounds.getWest() - lngPad;
+  const east = bounds.getEast() + lngPad;
+
+  const shouldBeVisible = new Set();
+
+  for (const c of _exploreCityPool) {
+    if (c.lat >= south && c.lat <= north && c.lng >= west && c.lng <= east) {
+      shouldBeVisible.add(c.key);
+
+      if (!_visibleCityMarkers.has(c.key)) {
+        addCityMarker(c.lat, c.lng, c.pop, c.name, c.country);
+        _visibleCityMarkers.set(c.key, true);
+      }
+    }
+  }
+
+  // Remove markers that went off-screen
+  for (const [key] of _visibleCityMarkers) {
+    if (!shouldBeVisible.has(key)) {
+      const m = window.cityMarkerIndex?.get(key);
+      if (m) {
+        layerCities.removeLayer(m);
+        window.cityMarkerIndex.delete(key);
+      }
+      _visibleCityMarkers.delete(key);
+    }
+  }
 }
 
 

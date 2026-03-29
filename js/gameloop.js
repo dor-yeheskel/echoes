@@ -151,6 +151,9 @@ function loop(t) {
     if (!state.isExploreMode) {
       updateFuelHUD();
     }
+    if (state.isExploreMode) {
+      cullCityMarkersToViewport();
+    }
   }
 
   requestAnimationFrame(loop);
