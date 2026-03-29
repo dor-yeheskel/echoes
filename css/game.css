@@ -935,14 +935,14 @@ body.explore-mode #routeHud {
 
 /* Small repeating green pulse for visited music cities */
 .music-visited-pulse {
-  width: 28px;
-  height: 28px;
+  width: 56px;
+  height: 56px;
   border-radius: 999px;
   border: 2px solid rgba(124, 255, 178, 0.5);
   box-shadow: 0 0 8px rgba(124, 255, 178, 0.15);
   transform: scale(0.3);
   opacity: 1;
-  animation: visitedSmallRipple 1s ease-out infinite;
+  animation: visitedSmallRipple 2s ease-out infinite;
   pointer-events: none;
 }
 

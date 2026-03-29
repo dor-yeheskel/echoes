@@ -506,8 +506,8 @@ function markExploreMusicVisited(city, country) {
       icon: L.divIcon({
         html: '<div class="music-visited-pulse"></div>',
         className: "",
-        iconSize: [28, 28],
-        iconAnchor: [14, 14]
+        iconSize: [56, 56],
+        iconAnchor: [28, 28]
       }),
       pane: "fxPane"
     }).addTo(layerFx);
