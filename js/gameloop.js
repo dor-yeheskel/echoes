@@ -120,13 +120,15 @@ function loop(t) {
         if (inRadius && !mc.inRadius) {
           mc.inRadius = true;
 
+          // Always play music on every encounter
+          Promise.resolve(playSound("reached")).then(() => {
+            playCityTrack(mc.city, mc.country);
+          });
+
           if (!mc.discovered) {
             mc.discovered = true;
             spawnArrivalPulse(mc.lat, mc.lng);
             markExploreMusicVisited(mc.city, mc.country);
-            Promise.resolve(playSound("reached")).then(() => {
-              playCityTrack(mc.city, mc.country);
-            });
 
             const idx = state.exploreVisited.findIndex(
               v => v.city === mc.city && v.country === mc.country
