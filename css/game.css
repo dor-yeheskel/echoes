@@ -897,6 +897,12 @@ body.explore-mode #routeHud {
   letter-spacing: 0.3px;
 }
 
+.explore-counter.explore-complete {
+  opacity: 0.9;
+  color: #7CFFB2;
+  font-weight: 600;
+}
+
 /* Blue music pulse on map (explore mode) */
 .music-pulse {
   width: 80px;

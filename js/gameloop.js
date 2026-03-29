@@ -119,24 +119,28 @@ function loop(t) {
 
         if (inRadius && !mc.inRadius) {
           mc.inRadius = true;
-          spawnArrivalPulse(mc.lat, mc.lng);
-          markExploreMusicVisited(mc.city, mc.country);
-          Promise.resolve(playSound("reached")).then(() => {
-            playCityTrack(mc.city, mc.country);
-          });
 
-          const idx = state.exploreVisited.findIndex(
-            v => v.city === mc.city && v.country === mc.country
-          );
-          if (idx !== -1) state.exploreVisited.splice(idx, 1);
-          state.exploreVisited.unshift({ city: mc.city, country: mc.country });
-          if (state.exploreVisited.length > EXPLORE_MODE.MAX_VISITED_DISPLAY) {
-            state.exploreVisited.length = EXPLORE_MODE.MAX_VISITED_DISPLAY;
+          if (!mc.discovered) {
+            mc.discovered = true;
+            spawnArrivalPulse(mc.lat, mc.lng);
+            markExploreMusicVisited(mc.city, mc.country);
+            Promise.resolve(playSound("reached")).then(() => {
+              playCityTrack(mc.city, mc.country);
+            });
+
+            const idx = state.exploreVisited.findIndex(
+              v => v.city === mc.city && v.country === mc.country
+            );
+            if (idx !== -1) state.exploreVisited.splice(idx, 1);
+            state.exploreVisited.unshift({ city: mc.city, country: mc.country });
+            if (state.exploreVisited.length > EXPLORE_MODE.MAX_VISITED_DISPLAY) {
+              state.exploreVisited.length = EXPLORE_MODE.MAX_VISITED_DISPLAY;
+            }
+
+            state.exploreDiscoveredSet.add(`${mc.city}|${mc.country}`);
+
+            renderExploreHUD();
           }
-
-          state.exploreDiscoveredSet.add(`${mc.city}|${mc.country}`);
-
-          renderExploreHUD();
         } else if (!inRadius && mc.inRadius) {
           mc.inRadius = false;
         }

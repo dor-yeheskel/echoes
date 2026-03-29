@@ -238,6 +238,7 @@ function renderExploreHUD() {
 
   const total = state.exploreMusicCities ? state.exploreMusicCities.length : 0;
   const discovered = state.exploreDiscoveredSet ? state.exploreDiscoveredSet.size : 0;
+  const allFound = total > 0 && discovered >= total;
 
   let html = '<div class="explore-visited-title">Last visited:</div><ul class="explore-visited-list">';
   for (const v of visited) {
@@ -246,6 +247,15 @@ function renderExploreHUD() {
     html += `<li><span>🏢</span><span>${safeCity}, ${safeCountry}</span></li>`;
   }
   html += '</ul>';
-  html += `<div class="explore-counter">${discovered} / ${total} locations discovered</div>`;
+
+  if (allFound) {
+    html += '<div class="explore-counter explore-complete">🌍 You\'ve discovered everything</div>';
+    if (!state._exploreVictoryPlayed) {
+      state._exploreVictoryPlayed = true;
+      playSound("victory");
+    }
+  } else {
+    html += `<div class="explore-counter">${discovered} / ${total} locations discovered</div>`;
+  }
   el.innerHTML = html;
 }

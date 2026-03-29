@@ -4,6 +4,7 @@ const sounds = {
   key_arrow: new Audio("assets/sounds/key_arrow.wav"),
   reached: new Audio("assets/sounds/reached.wav"),
   defeat: new Audio("assets/sounds/defeat.wav"),
+  victory: new Audio("assets/sounds/victory.wav"),
 };
 
 const V = {
@@ -22,7 +23,7 @@ sounds.key_arrow.volume = V.ui;
 sounds.clicked.volume   = V.ui_clicked;
 
 sounds.defeat.volume  = V.end;
-
+sounds.victory.volume = V.end;
 // ===== CITY TRACKS (city,country -> Audio) =====
 // Keys are normalized as "city|country" in lowercase.
 // You can extend or override this map per your assets.
