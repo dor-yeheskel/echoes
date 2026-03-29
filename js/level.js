@@ -211,7 +211,7 @@ function loadExploreMode() {
   spawnExploreMusicMarkers(state.exploreMusicCities);
 
   if (hudLevelEl) {
-    hudLevelEl.textContent = "Explore Mode: Free Roam";
+    hudLevelEl.textContent = "Explore";
   }
 
   renderExploreHUD();
