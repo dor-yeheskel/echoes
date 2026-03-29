@@ -298,6 +298,38 @@ html, body {
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* Loading spinner in intro */
+.intro-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 32px 0;
+}
+
+.loader-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(255,255,255,0.1);
+  border-top-color: rgba(0,255,136,0.7);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loader-text {
+  font-size: 13px;
+  opacity: 0.5;
+  letter-spacing: 0.5px;
+}
+
+.intro-content {
+  animation: fadeIn 0.3s ease-out;
+}
+
 #endTitle {
   font-size: 42px;
   margin-bottom: 10px;
