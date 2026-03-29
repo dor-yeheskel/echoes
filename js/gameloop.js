@@ -25,6 +25,7 @@ function loop(t) {
   if (
     state.gameStarted &&
     !state.gameOver &&
+    !state.isExploreMode &&
     entities.remainingTargets === 0 &&
     entities.targets.length > 0
   ) {
@@ -50,18 +51,21 @@ function loop(t) {
     state.lat = pos.lat;
     state.lng = pos.lng;
 
-    const movedKm = distance(prevPos, state) / 1000;
-    const inFuelGracePeriod = state.gameTime < FUEL_GRACE_SECONDS;
-    if (!inFuelGracePeriod && Number.isFinite(movedKm) && movedKm > 0) {
-      state.fuel = Math.max(0, state.fuel - movedKm * fuelPerKm);
-    }
     state.fuelPrevLat = state.lat;
     state.fuelPrevLng = state.lng;
 
-    if (state.fuel <= 0) {
-      crash();
-      requestAnimationFrame(loop);
-      return;
+    if (!state.isExploreMode) {
+      const movedKm = distance(prevPos, state) / 1000;
+      const inFuelGracePeriod = state.gameTime < FUEL_GRACE_SECONDS;
+      if (!inFuelGracePeriod && Number.isFinite(movedKm) && movedKm > 0) {
+        state.fuel = Math.max(0, state.fuel - movedKm * fuelPerKm);
+      }
+
+      if (state.fuel <= 0) {
+        crash();
+        requestAnimationFrame(loop);
+        return;
+      }
     }
     if (DEBUG_COORDS) {
       _debugCoordsTimer += dt;
@@ -107,6 +111,35 @@ function loop(t) {
       }
     }
 
+    // Explore mode: check music city proximity
+    if (state.isExploreMode && state.exploreMusicCities && state.exploreMusicCities.length) {
+      for (const mc of state.exploreMusicCities) {
+        const d = distance(state, mc);
+        const inRadius = d <= EXPLORE_MODE.MUSIC_ARRIVAL_RADIUS;
+
+        if (inRadius && !mc.inRadius) {
+          mc.inRadius = true;
+          spawnArrivalPulse(mc.lat, mc.lng);
+          Promise.resolve(playSound("reached")).then(() => {
+            playCityTrack(mc.city, mc.country);
+          });
+
+          const idx = state.exploreVisited.findIndex(
+            v => v.city === mc.city && v.country === mc.country
+          );
+          if (idx !== -1) state.exploreVisited.splice(idx, 1);
+          state.exploreVisited.unshift({ city: mc.city, country: mc.country });
+          if (state.exploreVisited.length > EXPLORE_MODE.MAX_VISITED_DISPLAY) {
+            state.exploreVisited.length = EXPLORE_MODE.MAX_VISITED_DISPLAY;
+          }
+
+          renderExploreHUD();
+        } else if (!inRadius && mc.inRadius) {
+          mc.inRadius = false;
+        }
+      }
+    }
+
     const planeEl = document.getElementById("plane");
     if (planeEl) {
       planeEl.style.transform =
@@ -115,7 +148,9 @@ function loop(t) {
     }
 
     updateCityHUD();
-    updateFuelHUD();
+    if (!state.isExploreMode) {
+      updateFuelHUD();
+    }
   }
 
   requestAnimationFrame(loop);

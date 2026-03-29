@@ -2,6 +2,11 @@ function goToMenu() {
   stopAllSounds();
   if (state.levelId) localStorage.setItem("lastPlayedLevel", state.levelId);
 
+  state.isExploreMode = false;
+  state.exploreVisited = [];
+  state.exploreMusicCities = [];
+  document.body.classList.remove("explore-mode");
+
   state.gameStarted = false;
   state.gameOver = false;
   currentState = GAME_STATE.MENU;
@@ -10,10 +15,21 @@ function goToMenu() {
   introEl.style.display = "flex";
 
   // highlight selected level in progress table
+  const exploreBtn = document.getElementById("exploreBtn");
+  if (exploreBtn) exploreBtn.classList.remove("selected");
   const rows = document.querySelectorAll(".progressRow:not(.header)");
   rows.forEach((row, i) => {
     row.classList.toggle("selected", levelOrder[i] === state.levelId);
   });
+
+  // Ensure at least one row is selected
+  if (!document.querySelector(".progressRow.selected")) {
+    const first = document.querySelector(".progressRow:not(.header):not(.locked)");
+    if (first) {
+      first.classList.add("selected");
+      state.levelId = first.dataset.levelId;
+    }
+  }
 
 }
 

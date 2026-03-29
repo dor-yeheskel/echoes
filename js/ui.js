@@ -50,6 +50,10 @@ function renderProgressTable() {
     row.addEventListener("click", () => {
       const levelId = row.dataset.levelId;
 
+      // Deselect explore button
+      const exploreBtn = document.getElementById("exploreBtn");
+      if (exploreBtn) exploreBtn.classList.remove("selected");
+
       // UI
       el.querySelectorAll(".progressRow.selected")
         .forEach(r => r.classList.remove("selected"));
@@ -68,23 +72,45 @@ function moveMenuSelection(dir) {
   const rows = Array.from(
     document.querySelectorAll(".progressRow:not(.header):not(.locked)")
   );
+  const exploreBtn = document.getElementById("exploreBtn");
   if (!rows.length) return;
 
+  const exploreSelected = exploreBtn && exploreBtn.classList.contains("selected");
+
+  if (exploreSelected) {
+    if (dir === 1) {
+      // Move down from explore to first level
+      exploreBtn.classList.remove("selected");
+      rows[0].classList.add("selected");
+      state.levelId = rows[0].dataset.levelId;
+      playSound("key_arrow");
+    }
+    return;
+  }
+
   let idx = rows.findIndex(r => r.classList.contains("selected"));
-
   if (idx === -1) idx = 0;
-  
-  const prevIdx = idx;
-  const newIdx = (idx + dir + rows.length) % rows.length;
 
-  if (newIdx !== prevIdx) {
+  const newIdx = idx + dir;
+
+  if (newIdx < 0 && exploreBtn) {
+    // Move up from first level to explore
+    rows.forEach(r => r.classList.remove("selected"));
+    exploreBtn.classList.add("selected");
+    playSound("key_arrow");
+    return;
+  }
+
+  if (newIdx < 0 || newIdx >= rows.length) return;
+
+  if (newIdx !== idx) {
     playSound("key_arrow");
   }
 
   rows.forEach(r => r.classList.remove("selected"));
   rows[newIdx].classList.add("selected");
 
-  state.levelId = levelOrder[newIdx];
+  state.levelId = rows[newIdx].dataset.levelId;
 }
 
 function renderRouteHUD() {
@@ -194,4 +220,26 @@ function updateFuelHUD() {
   if (indicator) {
     indicator.classList.toggle("active", fuel < 35);
   }
+}
+
+function renderExploreHUD() {
+  const el = document.getElementById("routeHud");
+  if (!el) return;
+
+  const visited = state.exploreVisited || [];
+
+  if (!visited.length) {
+    el.innerHTML = '<div class="explore-visited-title">Last visited:</div>' +
+      '<div style="opacity:0.4; font-size:13px; padding:4px 2px;">No cities visited yet</div>';
+    return;
+  }
+
+  let html = '<div class="explore-visited-title">Last visited:</div><ul class="explore-visited-list">';
+  for (const v of visited) {
+    const safeCity = _escapeHtml(v.city);
+    const safeCountry = _escapeHtml(v.country);
+    html += `<li><span>🏢</span><span>${safeCity}, ${safeCountry}</span></li>`;
+  }
+  html += '</ul>';
+  el.innerHTML = html;
 }

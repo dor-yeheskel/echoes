@@ -127,6 +127,8 @@ function applyLevelConfig(levelId) {
 
 
 function loadLevel(levelId) {
+  state.isExploreMode = false;
+  document.body.classList.remove("explore-mode");
   resetLayersAndEntities();
   applyLevelConfig(levelId);
   state.fuel = TANK_CAPACITY;
@@ -145,4 +147,81 @@ function loadLevel(levelId) {
   state.gameStarted = false;
   state.gameOver = false;
 
+}
+
+
+function getMusicCities() {
+  const result = [];
+  for (const trackKey of Object.keys(CITY_TRACKS)) {
+    let found = null;
+    for (const [key, value] of window.cityIndex.entries()) {
+      if (key.toLowerCase() === trackKey) {
+        found = value;
+        break;
+      }
+    }
+    if (found) {
+      result.push({
+        city: found.name,
+        country: found.country,
+        lat: found.lat,
+        lng: found.lng,
+        trackKey: trackKey,
+        inRadius: false
+      });
+    }
+  }
+  return result;
+}
+
+
+function loadExploreMode() {
+  state.isExploreMode = true;
+  state.levelId = null;
+  document.body.classList.add("explore-mode");
+
+  resetLayersAndEntities();
+  resetRuntimeConfig();
+
+  // Start position: Marseille, France
+  state.lat = EXPLORE_MODE.START.lat;
+  state.lng = EXPLORE_MODE.START.lng;
+  state.heading = EXPLORE_MODE.START.heading;
+  state.speed = CONFIG_DEFAULTS.minSpeed;
+
+  state.fuel = TANK_CAPACITY;
+  state.gameTime = 0;
+  state.fuelPrevLat = state.lat;
+  state.fuelPrevLng = state.lng;
+
+  state.route = [];
+  state.routeIndex = 0;
+  state.currentTarget = null;
+  state.exploreVisited = [];
+  state.exploreMusicCities = [];
+
+  // Configure city markers for explore (show all cities globally)
+  cityMarkersConfig.MIN_POPULATION = EXPLORE_MODE.MIN_POPULATION;
+
+  setLevelCenterFromTargets([]);
+  preloadCityMarkers();
+
+  // Spawn music city markers with blue pulse
+  state.exploreMusicCities = getMusicCities();
+  spawnExploreMusicMarkers(state.exploreMusicCities);
+
+  if (hudLevelEl) {
+    hudLevelEl.textContent = "Explore Mode: Free Roam";
+  }
+
+  renderExploreHUD();
+
+  planeMarker.setLatLng([state.lat, state.lng]);
+  map.setView([state.lat, state.lng], CONFIG_DEFAULTS.zoom, { animate: false });
+
+  introEl.style.display = "flex";
+  endScreenEl.style.display = "none";
+
+  state.gameStarted = false;
+  state.gameOver = false;
 }

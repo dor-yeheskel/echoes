@@ -75,6 +75,17 @@ window.addEventListener('DOMContentLoaded', async function() {
   state.levelId = levelOrder[0];
   document.querySelector(".progressRow:not(.header)")?.classList.add("selected");
 
+  const exploreBtn = document.getElementById("exploreBtn");
+  if (exploreBtn) {
+    exploreBtn.addEventListener("click", () => {
+      document.querySelectorAll(".progressRow.selected")
+        .forEach(r => r.classList.remove("selected"));
+      playSound("clicked");
+      loadExploreMode();
+      startGame();
+    });
+  }
+
   progress.unlockedCount = Math.max(
     1,
     Math.min(progress.unlockedCount || 1, levelOrder.length)

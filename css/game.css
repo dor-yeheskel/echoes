@@ -805,3 +805,107 @@ select:focus {
     opacity: 0;
   }
 }
+
+/* ========= EXPLORE MODE ========= */
+
+/* Explore button in menu */
+.explore-btn {
+  margin: 14px auto 12px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #e5e5e5;
+  background: rgba(60, 140, 255, 0.10);
+  border: 1px solid rgba(60, 140, 255, 0.25);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  width: fit-content;
+}
+
+.explore-btn:hover {
+  background: rgba(60, 140, 255, 0.18);
+  border-color: rgba(60, 140, 255, 0.45);
+}
+
+.explore-btn.selected {
+  background: rgba(60, 140, 255, 0.22);
+  box-shadow: inset 0 0 0 1px rgba(60, 140, 255, 0.5),
+              0 0 14px rgba(60, 140, 255, 0.25);
+  border-color: rgba(60, 140, 255, 0.6);
+}
+
+/* Levels section title */
+.levels-title {
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.4;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin: 6px 0 2px;
+  padding-left: 16px;
+}
+
+/* Hide fuel bar in explore mode */
+body.explore-mode .fuel-wrap {
+  display: none;
+}
+
+/* Clean up route HUD border when fuel is hidden */
+body.explore-mode #routeHud {
+  border-top: none;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+/* Explore visited list */
+.explore-visited-title {
+  font-size: 12px;
+  opacity: 0.55;
+  margin-bottom: 6px;
+  letter-spacing: 0.3px;
+}
+
+.explore-visited-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.explore-visited-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 2px;
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.explore-visited-list li:first-child {
+  opacity: 1;
+  font-weight: 600;
+}
+
+/* Blue music pulse on map (explore mode) */
+.music-pulse {
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  border: 2px solid rgba(100, 180, 255, 0.75);
+  box-shadow: 0 0 18px rgba(100, 180, 255, 0.18);
+  animation: musicRipple 1s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes musicRipple {
+  0% {
+    transform: scale(0.25);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.25);
+    opacity: 0;
+  }
+}

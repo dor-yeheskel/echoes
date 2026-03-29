@@ -274,12 +274,14 @@ async function preloadCityMarkers() {
     const key = `${c.name}|${c.country}`;
     const isForced = forcedCityKeys.has(key);
 
-    // 1. radius is mandatory
-    if (!_levelCenterLatLng && !isForced) continue;
+    // 1. radius check (skip in explore mode)
+    if (!state.isExploreMode) {
+      if (!_levelCenterLatLng && !isForced) continue;
 
-    if (!isForced) {
-      const d = _levelCenterLatLng.distanceTo([c.lat, c.lng]);
-      if (d > cityMarkersConfig.LEVEL_RADIUS_M) continue;
+      if (!isForced) {
+        const d = _levelCenterLatLng.distanceTo([c.lat, c.lng]);
+        if (d > cityMarkersConfig.LEVEL_RADIUS_M) continue;
+      }
     }
 
     // 2. significance rule
@@ -381,4 +383,21 @@ function computeLevelCenterFromTargets(targets) {
 
 function getCityEntities() {
   return cityEntities;
+}
+
+
+function spawnExploreMusicMarkers(musicCities) {
+  for (const mc of musicCities) {
+    L.marker([mc.lat, mc.lng], {
+      interactive: false,
+      keyboard: false,
+      icon: L.divIcon({
+        html: '<div class="music-pulse"></div>',
+        className: "",
+        iconSize: [56, 56],
+        iconAnchor: [28, 28]
+      }),
+      pane: "fxPane"
+    }).addTo(layerFx);
+  }
 }

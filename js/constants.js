@@ -84,3 +84,15 @@ function resetRuntimeConfig() {
   fuelPerKm = FUEL_PER_KM;
   cityMarkersConfig = _cloneCityMarkersConfig();
 }
+
+/* ========= EXPLORE MODE ========= */
+const EXPLORE_MODE = {
+  MIN_POPULATION: 200_000,
+  MAX_VISITED_DISPLAY: 5,
+  START: {
+    lat: 43.2965,   // Marseille, France
+    lng: 5.3698,
+    heading: 95      // towards Rome
+  },
+  MUSIC_ARRIVAL_RADIUS: 35_000,
+};

@@ -25,6 +25,10 @@ const state = {
   paused: false,
   gameTime: 0,
 
+  isExploreMode: false,
+  exploreVisited: [],
+  exploreMusicCities: [],
+
   levelId: null,
   levelIndex: 0,
 

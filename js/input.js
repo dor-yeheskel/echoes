@@ -82,6 +82,13 @@ window.addEventListener("keydown", e => {
       }
 
       if (isEnter || code === "Space") {
+        const exploreBtn = document.getElementById("exploreBtn");
+        if (exploreBtn && exploreBtn.classList.contains("selected")) {
+          playSound("clicked");
+          loadExploreMode();
+          startGame();
+          return;
+        }
         if (!state.levelId) return;
         playSound("clicked");
         loadLevel(state.levelId);
