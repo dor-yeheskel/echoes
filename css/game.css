@@ -565,9 +565,9 @@ select:focus {
 }
 
 .mission-hint {
-  margin-top: 10px;
+  margin-top: 14px;
   font-size: 12px;
-  opacity: 0.45;
+  opacity: 0.35;
   letter-spacing: 0.3px;
 }
 
