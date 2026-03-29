@@ -123,9 +123,12 @@ function _fadeOutAudio(a, { duration = 700 } = {}) {
   _ensureBaseVolume(a);
   if (a._fading) return;
   a._fading = true;
+  a._fadeId = (a._fadeId || 0) + 1;
+  const fadeId = a._fadeId;
   const start = performance.now();
   const base = a._baseVolume;
   function step(t) {
+    if (a._fadeId !== fadeId) return;           // cancelled by _cancelFade
     const p = Math.min(1, (t - start) / duration);
     a.volume = base * (1 - p);
     if (p < 1) {
@@ -140,6 +143,14 @@ function _fadeOutAudio(a, { duration = 700 } = {}) {
   requestAnimationFrame(step);
 }
 
+function _cancelFade(a) {
+  if (!a) return;
+  a._fading = false;
+  a._fadeId = (a._fadeId || 0) + 1;
+  _ensureBaseVolume(a);
+  a.volume = a._baseVolume;
+}
+
 function playCityTrack(city, country) {
   if (!soundEnabled) return;
   const key = _cityKey(city, country);
@@ -152,6 +163,7 @@ function playCityTrack(city, country) {
     if (currentCityAudio && currentCityAudio !== a) {
       _fadeOutAudio(currentCityAudio, { duration: 600 });
     }
+    _cancelFade(a);
     currentCityAudio = a;
     currentCityKey = key;
     a.pause();
