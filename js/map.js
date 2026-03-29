@@ -459,18 +459,42 @@ function cullCityMarkersToViewport() {
 }
 
 
+const _exploreMusicMarkers = new Map();
+
 function spawnExploreMusicMarkers(musicCities) {
+  _exploreMusicMarkers.clear();
   for (const mc of musicCities) {
-    L.marker([mc.lat, mc.lng], {
+    const key = `${mc.city}|${mc.country}`;
+    const marker = L.marker([mc.lat, mc.lng], {
       interactive: false,
       keyboard: false,
       icon: L.divIcon({
         html: '<div class="music-pulse"></div>',
         className: "",
-        iconSize: [56, 56],
-        iconAnchor: [28, 28]
+        iconSize: [80, 80],
+        iconAnchor: [40, 40]
       }),
       pane: "fxPane"
     }).addTo(layerFx);
+    _exploreMusicMarkers.set(key, marker);
   }
+}
+
+function markExploreMusicVisited(city, country) {
+  const key = `${city}|${country}`;
+  const marker = _exploreMusicMarkers.get(key);
+  if (!marker) return;
+  try { layerFx.removeLayer(marker); } catch {}
+  const visited = L.marker(marker.getLatLng(), {
+    interactive: false,
+    keyboard: false,
+    icon: L.divIcon({
+      html: '<div class="music-visited"></div>',
+      className: "",
+      iconSize: [56, 56],
+      iconAnchor: [28, 28]
+    }),
+    pane: "fxPane"
+  }).addTo(layerFx);
+  _exploreMusicMarkers.set(key, visited);
 }

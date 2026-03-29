@@ -120,6 +120,7 @@ function loop(t) {
         if (inRadius && !mc.inRadius) {
           mc.inRadius = true;
           spawnArrivalPulse(mc.lat, mc.lng);
+          markExploreMusicVisited(mc.city, mc.country);
           Promise.resolve(playSound("reached")).then(() => {
             playCityTrack(mc.city, mc.country);
           });
