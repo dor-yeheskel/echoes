@@ -199,6 +199,7 @@ function loadExploreMode() {
   state.currentTarget = null;
   state.exploreVisited = [];
   state.exploreMusicCities = [];
+  state.exploreDiscoveredSet = new Set();
 
   // Configure city markers for explore (show all cities globally)
   cityMarkersConfig.MIN_POPULATION = EXPLORE_MODE.MIN_POPULATION;

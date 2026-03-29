@@ -5,6 +5,7 @@ function goToMenu() {
   state.isExploreMode = false;
   state.exploreVisited = [];
   state.exploreMusicCities = [];
+  state.exploreDiscoveredSet = new Set();
   document.body.classList.remove("explore-mode");
 
   state.gameStarted = false;

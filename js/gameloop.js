@@ -133,6 +133,8 @@ function loop(t) {
             state.exploreVisited.length = EXPLORE_MODE.MAX_VISITED_DISPLAY;
           }
 
+          state.exploreDiscoveredSet.add(`${mc.city}|${mc.country}`);
+
           renderExploreHUD();
         } else if (!inRadius && mc.inRadius) {
           mc.inRadius = false;

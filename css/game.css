@@ -888,6 +888,15 @@ body.explore-mode #routeHud {
   font-weight: 600;
 }
 
+.explore-counter {
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 12px;
+  opacity: 0.45;
+  letter-spacing: 0.3px;
+}
+
 /* Blue music pulse on map (explore mode) */
 .music-pulse {
   width: 56px;

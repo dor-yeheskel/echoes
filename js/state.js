@@ -28,6 +28,7 @@ const state = {
   isExploreMode: false,
   exploreVisited: [],
   exploreMusicCities: [],
+  exploreDiscoveredSet: new Set(),
 
   levelId: null,
   levelIndex: 0,
