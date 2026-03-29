@@ -88,7 +88,7 @@ function resetRuntimeConfig() {
 /* ========= EXPLORE MODE ========= */
 const EXPLORE_MODE = {
   MIN_POPULATION: 200_000,
-  MAX_VISITED_DISPLAY: 5,
+  MAX_VISITED_DISPLAY: 3,
   START: {
     lat: 43.2965,   // Marseille, France
     lng: 5.3698,
