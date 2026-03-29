@@ -482,19 +482,35 @@ function spawnExploreMusicMarkers(musicCities) {
 
 function markExploreMusicVisited(city, country) {
   const key = `${city}|${country}`;
+  // Remove the blue pulse marker
   const marker = _exploreMusicMarkers.get(key);
-  if (!marker) return;
-  try { layerFx.removeLayer(marker); } catch {}
-  const visited = L.marker(marker.getLatLng(), {
-    interactive: false,
-    keyboard: false,
-    icon: L.divIcon({
-      html: '<div class="music-visited"></div>',
-      className: "",
-      iconSize: [56, 56],
-      iconAnchor: [28, 28]
-    }),
-    pane: "fxPane"
-  }).addTo(layerFx);
-  _exploreMusicMarkers.set(key, visited);
+  if (marker) {
+    try { layerFx.removeLayer(marker); } catch {}
+    _exploreMusicMarkers.delete(key);
+  }
+  // Add green glow to the city's 🏢 emoji marker
+  const cityMarker = window.cityMarkerIndex?.get(`${city}|${country}`);
+  if (cityMarker) {
+    const root = cityMarker.getElement?.();
+    const el = root?.querySelector?.(".city-marker") || root;
+    if (el) {
+      el.classList.add("explore-visited-glow");
+    }
+  }
+  // Add small repeating green pulse
+  const latlng = marker ? marker.getLatLng() : (cityMarker ? cityMarker.getLatLng() : null);
+  if (latlng) {
+    const pulse = L.marker(latlng, {
+      interactive: false,
+      keyboard: false,
+      icon: L.divIcon({
+        html: '<div class="music-visited-pulse"></div>',
+        className: "",
+        iconSize: [28, 28],
+        iconAnchor: [14, 14]
+      }),
+      pane: "fxPane"
+    }).addTo(layerFx);
+    _exploreMusicMarkers.set(key, pulse);
+  }
 }

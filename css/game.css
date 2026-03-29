@@ -927,26 +927,32 @@ body.explore-mode #routeHud {
   }
 }
 
-/* Green static circle for visited music locations */
-.music-visited {
-  width: 56px;
-  height: 56px;
+/* Subtle green tint on visited music city emoji (explore mode) */
+.city-marker.explore-visited-glow {
+  filter: drop-shadow(0 0 6px rgba(124, 255, 178, 0.25))
+          drop-shadow(0 0 3px rgba(124, 255, 178, 0.15)) !important;
+}
+
+/* Small repeating green pulse for visited music cities */
+.music-visited-pulse {
+  width: 28px;
+  height: 28px;
   border-radius: 999px;
-  border: 3px solid rgba(124, 255, 178, 0.85);
-  box-shadow: 0 0 18px rgba(124, 255, 178, 0.35);
-  transform: scale(0.25);
+  border: 2px solid rgba(124, 255, 178, 0.5);
+  box-shadow: 0 0 8px rgba(124, 255, 178, 0.15);
+  transform: scale(0.3);
   opacity: 1;
-  animation: visitedRipple 0.95s ease-out infinite;
+  animation: visitedSmallRipple 1s ease-out infinite;
   pointer-events: none;
 }
 
-@keyframes visitedRipple {
+@keyframes visitedSmallRipple {
   0% {
-    transform: scale(0.25);
-    opacity: 1;
+    transform: scale(0.3);
+    opacity: 0.7;
   }
   100% {
-    transform: scale(1.25);
+    transform: scale(1);
     opacity: 0;
   }
 }
