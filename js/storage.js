@@ -45,6 +45,7 @@ function resetGameStorage({ reload = true } = {}) {
   localStorage.removeItem(SOUND_KEY);
   localStorage.removeItem("lastPlayedLevel");
   localStorage.removeItem(CITY_MARKERS.CACHE_KEY);
+  localStorage.removeItem(EXPLORE_STATE_KEY);
   sessionStorage.clear();
 
   soundEnabled = true;
@@ -54,6 +55,33 @@ function resetGameStorage({ reload = true } = {}) {
   };
 
   if (reload) location.reload();
+}
+
+/* ======== Explore Mode Memory ======== */
+const EXPLORE_STATE_KEY = "echoes_explore_state_v1";
+
+function saveExploreState() {
+  try {
+    const data = {
+      visited: state.exploreVisited || [],
+      discovered: [...(state.exploreDiscoveredSet || [])]
+    };
+    localStorage.setItem(EXPLORE_STATE_KEY, JSON.stringify(data));
+  } catch {}
+}
+
+function loadExploreState() {
+  try {
+    const raw = localStorage.getItem(EXPLORE_STATE_KEY);
+    if (!raw) return null;
+    const data = JSON.parse(raw);
+    return {
+      visited: Array.isArray(data.visited) ? data.visited : [],
+      discovered: Array.isArray(data.discovered) ? new Set(data.discovered) : new Set()
+    };
+  } catch {
+    return null;
+  }
 }
 
 /* ======== City Markers Memory (preloaded) ======== */

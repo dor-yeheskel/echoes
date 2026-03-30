@@ -211,6 +211,36 @@ function loadExploreMode() {
   state.exploreMusicCities = getMusicCities();
   spawnExploreMusicMarkers(state.exploreMusicCities);
 
+  // Restore saved explore progress
+  const saved = loadExploreState();
+  if (saved) {
+    state.exploreVisited = saved.visited;
+    state.exploreDiscoveredSet = saved.discovered;
+
+    // Mark previously discovered music cities
+    for (const mc of state.exploreMusicCities) {
+      const key = `${mc.city}|${mc.country}`;
+      if (saved.discovered.has(key)) {
+        mc.discovered = true;
+        markExploreMusicVisited(mc.city, mc.country);
+      }
+    }
+
+    // Start at last visited city if available
+    if (saved.visited.length > 0) {
+      const last = saved.visited[0];
+      const mc = state.exploreMusicCities.find(
+        m => m.city === last.city && m.country === last.country
+      );
+      if (mc) {
+        state.lat = mc.lat;
+        state.lng = mc.lng;
+        state.fuelPrevLat = mc.lat;
+        state.fuelPrevLng = mc.lng;
+      }
+    }
+  }
+
   if (hudLevelEl) {
     hudLevelEl.textContent = "Explore";
   }

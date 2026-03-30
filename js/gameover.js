@@ -2,6 +2,10 @@ function goToMenu() {
   stopAllSounds();
   if (state.levelId) localStorage.setItem("lastPlayedLevel", state.levelId);
 
+  if (state.isExploreMode) {
+    saveExploreState();
+  }
+
   state.isExploreMode = false;
   state.exploreVisited = [];
   state.exploreMusicCities = [];
