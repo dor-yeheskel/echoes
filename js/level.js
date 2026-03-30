@@ -257,6 +257,7 @@ function loadExploreMode() {
   map.setView([state.lat, state.lng], CONFIG_DEFAULTS.zoom, { animate: false });
 
   showMinimap(state.lat, state.lng);
+  spawnMinimapCityDots(state.exploreMusicCities, state.exploreDiscoveredSet);
 
   introEl.style.display = "flex";
   endScreenEl.style.display = "none";

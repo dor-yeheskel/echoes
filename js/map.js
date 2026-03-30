@@ -62,6 +62,7 @@ const layerCities = L.layerGroup().addTo(map);
 /* ========= EXPLORE MINI MAP ========= */
 let minimap = null;
 let minimapPlaneMarker = null;
+const _minimapCityDots = new Map();
 
 function initMinimap() {
   if (minimap) return;
@@ -123,6 +124,37 @@ function updateMinimap(lat, lng, heading) {
   const el = minimapPlaneMarker.getElement()?.querySelector('.minimap-plane');
   if (el) {
     el.style.transform = `rotate(${(heading || 0) + CONFIG_DEFAULTS.emojiRotationOffset}deg)`;
+  }
+}
+
+function spawnMinimapCityDots(musicCities, discoveredSet) {
+  if (!minimap) return;
+  // Clear old dots
+  for (const dot of _minimapCityDots.values()) {
+    try { minimap.removeLayer(dot); } catch {}
+  }
+  _minimapCityDots.clear();
+
+  for (const mc of musicCities) {
+    const key = `${mc.city}|${mc.country}`;
+    const isDiscovered = discoveredSet && discoveredSet.has(key);
+    const dot = L.circleMarker([mc.lat, mc.lng], {
+      radius: 1.5,
+      color: isDiscovered ? "#7CFFB2" : "#ff4444",
+      fillColor: isDiscovered ? "#7CFFB2" : "#ff4444",
+      fillOpacity: 0.9,
+      weight: 0,
+      interactive: false,
+    }).addTo(minimap);
+    _minimapCityDots.set(key, dot);
+  }
+}
+
+function markMinimapCityDiscovered(city, country) {
+  const key = `${city}|${country}`;
+  const dot = _minimapCityDots.get(key);
+  if (dot) {
+    dot.setStyle({ color: "#7CFFB2", fillColor: "#7CFFB2" });
   }
 }
 

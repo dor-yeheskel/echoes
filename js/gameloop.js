@@ -143,6 +143,7 @@ function loop(t) {
             mc.discovered = true;
             spawnArrivalPulse(mc.lat, mc.lng);
             markExploreMusicVisited(mc.city, mc.country);
+            markMinimapCityDiscovered(mc.city, mc.country);
             state.exploreDiscoveredSet.add(`${mc.city}|${mc.country}`);
           }
 
