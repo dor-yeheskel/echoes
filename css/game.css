@@ -8,6 +8,8 @@ html, body {
 
   font-family: "JetBrains Mono", system-ui, monospace;
 
+  user-select: none;
+  -webkit-user-select: none;
 }
 #map { height:100%; }
 
