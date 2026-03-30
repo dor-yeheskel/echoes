@@ -93,7 +93,7 @@ function initMinimap() {
     interactive: false,
     keyboard: false,
     icon: L.divIcon({
-      html: '<div style="font-size:14px;line-height:1;">✈️</div>',
+      html: '<div class="minimap-plane" style="font-size:14px;line-height:1;">✈️</div>',
       className: "",
       iconSize: [16, 16],
       iconAnchor: [8, 8]
@@ -116,10 +116,14 @@ function hideMinimap() {
   if (el) el.style.display = "none";
 }
 
-function updateMinimap(lat, lng) {
+function updateMinimap(lat, lng, heading) {
   if (!minimap || !minimapPlaneMarker) return;
   minimapPlaneMarker.setLatLng([lat, lng]);
   minimap.setView([lat, lng], EXPLORE_MODE.MINIMAP.ZOOM, { animate: false });
+  const el = minimapPlaneMarker.getElement()?.querySelector('.minimap-plane');
+  if (el) {
+    el.style.transform = `rotate(${(heading || 0) + CONFIG_DEFAULTS.emojiRotationOffset}deg)`;
+  }
 }
 
 const cityEntities = [];

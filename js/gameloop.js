@@ -78,7 +78,7 @@ function loop(t) {
     }
     planeMarker.setLatLng(pos);
     map.setView(pos, map.getZoom(), { animate: false });
-    if (state.isExploreMode) updateMinimap(pos.lat, pos.lng);
+    if (state.isExploreMode) updateMinimap(pos.lat, pos.lng, state.heading);
     
 
     // Free-order: check proximity against any unfinished target
