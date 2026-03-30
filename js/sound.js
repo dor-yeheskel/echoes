@@ -176,7 +176,7 @@ function playCityTrack(city, country, { playbackRate = 1 } = {}) {
         a.playbackRate = 1;
         _fadeOutAudio(a, { duration: 600 });
       }
-    }, CITY_TRACK_PLAY_MS);
+    }, CITY_TRACK_PLAY_MS / playbackRate);
   } catch {}
 }
 
