@@ -9,12 +9,12 @@ let progress = loadProgress();
 function initTheme() {
   const saved = localStorage.getItem(THEME_KEY);
   const isDark = saved !== "light";
-  document.body.classList.toggle("theme-dark", isDark);
+  document.documentElement.classList.toggle("theme-dark", isDark);
   updateThemeUI();
 }
 
 function toggleTheme() {
-  const isDark = document.body.classList.toggle("theme-dark");
+  const isDark = document.documentElement.classList.toggle("theme-dark");
   localStorage.setItem(THEME_KEY, isDark ? "dark" : "light");
   updateThemeUI();
 }
@@ -22,7 +22,7 @@ function toggleTheme() {
 function updateThemeUI() {
   const btn = document.getElementById("themeBtn");
   if (!btn) return;
-  const isDark = document.body.classList.contains("theme-dark");
+  const isDark = document.documentElement.classList.contains("theme-dark");
   btn.textContent = isDark ? "☀️" : "🌙";
 }
 

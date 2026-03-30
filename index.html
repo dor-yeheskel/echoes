@@ -24,11 +24,19 @@
 <!-- CSS -->
 <link rel="stylesheet" href="css/game.css">
 
+<!-- Theme: apply before first paint to avoid flash -->
+<script>
+  (function(){
+    var t = localStorage.getItem("echoes_theme");
+    if (t !== "light") document.documentElement.classList.add("theme-dark");
+  })();
+</script>
+
 <!-- Map -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 </head>
-<body class="theme-dark">
+<body>
 <div id="map"></div>
 
 <div id="mobileBlocker">
