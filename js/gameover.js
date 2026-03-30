@@ -1,10 +1,13 @@
 function goToMenu() {
   stopAllSounds();
-  if (state.levelId) localStorage.setItem("lastPlayedLevel", state.levelId);
-
   if (state.isExploreMode) {
+    localStorage.setItem("lastPlayedLevel", "__explore__");
     saveExploreState();
+  } else if (state.levelId) {
+    localStorage.setItem("lastPlayedLevel", state.levelId);
   }
+
+  const wasExplore = state.isExploreMode;
 
   state.isExploreMode = false;
   state.exploreVisited = [];
@@ -20,23 +23,29 @@ function goToMenu() {
   endScreenEl.style.display = "none";
   introEl.style.display = "flex";
 
-  // highlight selected level in progress table
+  // highlight selected option in progress table
   const exploreBtn = document.getElementById("exploreBtn");
-  if (exploreBtn) exploreBtn.classList.remove("selected");
   const rows = document.querySelectorAll(".progressRow:not(.header)");
-  rows.forEach((row, i) => {
-    row.classList.toggle("selected", levelOrder[i] === state.levelId);
-  });
 
-  // Ensure at least one row is selected
-  if (!document.querySelector(".progressRow.selected")) {
-    const first = document.querySelector(".progressRow:not(.header):not(.locked)");
-    if (first) {
-      first.classList.add("selected");
-      state.levelId = first.dataset.levelId;
+  if (wasExplore) {
+    // Coming from explore: select explore button
+    rows.forEach(r => r.classList.remove("selected"));
+    if (exploreBtn) exploreBtn.classList.add("selected");
+  } else {
+    if (exploreBtn) exploreBtn.classList.remove("selected");
+    rows.forEach((row, i) => {
+      row.classList.toggle("selected", levelOrder[i] === state.levelId);
+    });
+
+    // Ensure at least one row is selected
+    if (!document.querySelector(".progressRow.selected")) {
+      const first = document.querySelector(".progressRow:not(.header):not(.locked)");
+      if (first) {
+        first.classList.add("selected");
+        state.levelId = first.dataset.levelId;
+      }
     }
   }
-
 }
 
 

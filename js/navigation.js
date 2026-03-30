@@ -78,10 +78,26 @@ window.addEventListener('DOMContentLoaded', async function() {
   }).addTo(map);
   
   renderProgressTable();
-  state.levelId = levelOrder[0];
-  document.querySelector(".progressRow:not(.header)")?.classList.add("selected");
 
+  // Restore last played selection
+  const lastPlayed = localStorage.getItem("lastPlayedLevel");
   const exploreBtn = document.getElementById("exploreBtn");
+
+  if (lastPlayed === "__explore__" && exploreBtn) {
+    // Last session was explore mode
+    exploreBtn.classList.add("selected");
+  } else if (lastPlayed && levelOrder.includes(lastPlayed)) {
+    // Last session was a specific level
+    state.levelId = lastPlayed;
+    const rows = document.querySelectorAll(".progressRow:not(.header)");
+    rows.forEach((row, i) => {
+      row.classList.toggle("selected", levelOrder[i] === lastPlayed);
+    });
+  } else {
+    // Default: first level
+    state.levelId = levelOrder[0];
+    document.querySelector(".progressRow:not(.header)")?.classList.add("selected");
+  }
   if (exploreBtn) {
     exploreBtn.addEventListener("click", () => {
       document.querySelectorAll(".progressRow.selected")
