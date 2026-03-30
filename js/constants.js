@@ -95,4 +95,11 @@ const EXPLORE_MODE = {
     heading: 95      // towards Rome
   },
   MUSIC_ARRIVAL_RADIUS: 35_000,
+
+  MINIMAP: {
+    WIDTH: 200,        // px
+    HEIGHT: 140,       // px
+    ZOOM: 2,           // world overview zoom
+    SATELLITE: false,  // false = dark carto style
+  },
 };

@@ -59,6 +59,66 @@ const layerFx       = L.layerGroup({ pane: "fxPane" }).addTo(map);
 const layerUi       = L.layerGroup().addTo(map);
 const layerCities = L.layerGroup().addTo(map);
 
+/* ========= EXPLORE MINI MAP ========= */
+let minimap = null;
+let minimapPlaneMarker = null;
+
+function initMinimap() {
+  if (minimap) return;
+  const el = document.getElementById("minimap");
+  if (!el) return;
+  const cfg = EXPLORE_MODE.MINIMAP;
+  el.style.width = cfg.WIDTH + "px";
+  el.style.height = cfg.HEIGHT + "px";
+
+  minimap = L.map(el, {
+    zoomControl: false,
+    attributionControl: false,
+    dragging: false,
+    scrollWheelZoom: false,
+    doubleClickZoom: false,
+    boxZoom: false,
+    keyboard: false,
+    touchZoom: false,
+    tap: false,
+  });
+  minimap.setView([0, 0], cfg.ZOOM);
+
+  const tileUrl = cfg.SATELLITE
+    ? "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+    : "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
+  L.tileLayer(tileUrl, { maxZoom: 19 }).addTo(minimap);
+
+  minimapPlaneMarker = L.circleMarker([0, 0], {
+    radius: 4,
+    color: "#ff4444",
+    fillColor: "#ff4444",
+    fillOpacity: 1,
+    weight: 2,
+  }).addTo(minimap);
+}
+
+function showMinimap(lat, lng) {
+  const el = document.getElementById("minimap");
+  if (!el) return;
+  initMinimap();
+  el.style.display = "block";
+  minimap.invalidateSize();
+  minimapPlaneMarker.setLatLng([lat, lng]);
+  minimap.setView([lat, lng], EXPLORE_MODE.MINIMAP.ZOOM, { animate: false });
+}
+
+function hideMinimap() {
+  const el = document.getElementById("minimap");
+  if (el) el.style.display = "none";
+}
+
+function updateMinimap(lat, lng) {
+  if (!minimap || !minimapPlaneMarker) return;
+  minimapPlaneMarker.setLatLng([lat, lng]);
+  minimap.setView([lat, lng], EXPLORE_MODE.MINIMAP.ZOOM, { animate: false });
+}
+
 const cityEntities = [];
 const cityHudGrid = new Map(); // key "latCell|lngCell" -> city[]
 const CITY_HUD_GRID_DEG = 0.35;

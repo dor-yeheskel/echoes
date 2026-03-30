@@ -256,6 +256,8 @@ function loadExploreMode() {
   planeMarker.setLatLng([state.lat, state.lng]);
   map.setView([state.lat, state.lng], CONFIG_DEFAULTS.zoom, { animate: false });
 
+  showMinimap(state.lat, state.lng);
+
   introEl.style.display = "flex";
   endScreenEl.style.display = "none";
 

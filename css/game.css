@@ -1004,6 +1004,23 @@ body.explore-mode #routeHud {
   pointer-events: none;
 }
 
+/* Explore mini map */
+#minimap {
+  display: none;
+  position: fixed;
+  bottom: 14px;
+  right: 14px;
+  z-index: 9998;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+#minimap .leaflet-control-attribution {
+  display: none;
+}
+
 @keyframes strikeRipple {
   0% {
     transform: scale(0.15);

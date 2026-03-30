@@ -11,6 +11,7 @@ function goToMenu() {
   state.exploreMusicCities = [];
   state.exploreDiscoveredSet = new Set();
   document.body.classList.remove("explore-mode");
+  hideMinimap();
 
   state.gameStarted = false;
   state.gameOver = false;
