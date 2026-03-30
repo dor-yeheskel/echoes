@@ -1,5 +1,3 @@
-
-Explore easter egg:
-If someone reached the same city in a strike (again and again the same city),
-so in the 4th time only, there will be a big red circle echoes that will appear for 1.5 seconds (in high freq)
-, same effect as the green blue circle echo, just to show that the player is in the same city again, kind of an easter egg for the explore mode.
+Bug fixes:
+- Clicking on Pause should pause the music as well (today, the music continue even if pause is clicked)
+Happens in both explore and level mode.

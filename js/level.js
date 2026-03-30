@@ -237,9 +237,15 @@ function loadExploreMode() {
         state.lng = mc.lng;
         state.fuelPrevLat = mc.lat;
         state.fuelPrevLng = mc.lng;
+        // Suppress music trigger at spawn — player must leave and re-enter
+        mc.inRadius = true;
       }
     }
   }
+
+  // Reset easter egg strike counter (per session only)
+  state._exploreStrikeCount = 0;
+  state._exploreLastVisitKey = null;
 
   if (hudLevelEl) {
     hudLevelEl.textContent = "Explore";

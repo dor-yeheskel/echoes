@@ -264,6 +264,24 @@ function togglePause() {
     overlay.innerHTML = "⏸ PAUSED";
     overlay.style.display = state.paused ? "flex" : "none";
   }
+
+  if (state.paused) {
+    // Pause all currently playing audio
+    for (const s of getAllAudios()) {
+      if (!s.paused && !s.ended) {
+        s._wasPausedByGame = true;
+        s.pause();
+      }
+    }
+  } else {
+    // Resume audio that was paused by the game
+    for (const s of getAllAudios()) {
+      if (s._wasPausedByGame) {
+        s._wasPausedByGame = false;
+        s.play().catch(() => {});
+      }
+    }
+  }
 }
 
 function stopAllSounds({ fade = false, duration = 1200 } = {}) {
