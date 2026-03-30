@@ -23,6 +23,10 @@ function goToMenu() {
   endScreenEl.style.display = "none";
   introEl.style.display = "flex";
 
+  // Show theme button on menu
+  const themeBtnEl = document.getElementById("themeBtn");
+  if (themeBtnEl) themeBtnEl.style.display = "";
+
   // highlight selected option in progress table
   const exploreBtn = document.getElementById("exploreBtn");
   const rows = document.querySelectorAll(".progressRow:not(.header)");

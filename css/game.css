@@ -574,7 +574,7 @@ select:focus {
   font-size: 16px;
   color: white;
   cursor: pointer;
-  z-index: 10000;
+  z-index: 100000;
   opacity: 0.6;
 }
 
@@ -1030,4 +1030,141 @@ body.explore-mode #routeHud {
     transform: scale(1.4);
     opacity: 0;
   }
+}
+
+/* ========= THEME TOGGLE BUTTON ========= */
+.theme-btn {
+  position: fixed;
+  top: 14px;
+  right: 58px;
+  background: rgba(0,0,0,0.5);
+  border: none;
+  border-radius: 50%;
+  padding: 8px;
+  font-size: 16px;
+  color: white;
+  cursor: pointer;
+  z-index: 100000;
+  opacity: 0.6;
+}
+.theme-btn:hover {
+  opacity: 1;
+}
+
+/* ========= LIGHT THEME (default) ========= */
+body:not(.theme-dark) #intro {
+  background: #e4e7ec;
+  color: #1a1a2e;
+}
+
+body:not(.theme-dark) #intro::before {
+  background:
+    radial-gradient(circle at 50% 20%, rgba(60, 140, 255, 0.05), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,0.15), rgba(228,231,236,0.6));
+}
+
+body:not(.theme-dark) .panel {
+  background: linear-gradient(
+    180deg,
+    rgba(252, 253, 255, 0.97),
+    rgba(244, 245, 250, 0.97)
+  );
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.06),
+    0 4px 16px rgba(0, 0, 0, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+body:not(.theme-dark) .mission-title {
+  color: #1a1a2e;
+  text-shadow: none;
+}
+
+body:not(.theme-dark) .controls {
+  color: #444;
+}
+
+body:not(.theme-dark) .mission-objectives {
+  color: #555;
+}
+
+body:not(.theme-dark) .mission-objectives hr {
+  opacity: 0.12;
+  border-color: #000;
+}
+
+body:not(.theme-dark) .explore-btn {
+  color: #1a1a2e;
+  background: rgba(60, 140, 255, 0.08);
+  border: 1px solid rgba(60, 140, 255, 0.2);
+}
+
+body:not(.theme-dark) .explore-btn:hover {
+  background: rgba(60, 140, 255, 0.14);
+  border-color: rgba(60, 140, 255, 0.35);
+}
+
+body:not(.theme-dark) .explore-btn.selected {
+  background: rgba(60, 140, 255, 0.16);
+  box-shadow: inset 0 0 0 1px rgba(60, 140, 255, 0.4),
+              0 0 12px rgba(60, 140, 255, 0.15);
+  border-color: rgba(60, 140, 255, 0.5);
+}
+
+body:not(.theme-dark) .levels-title {
+  color: #555;
+}
+
+body:not(.theme-dark) .progressRow.header {
+  color: #555;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body:not(.theme-dark) .progressRow {
+  color: #2a2a3e;
+}
+
+body:not(.theme-dark) .progressRow:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+body:not(.theme-dark) .progressRow.selected {
+  background: rgba(60, 140, 255, 0.1);
+  box-shadow: inset 0 0 0 1px rgba(60, 140, 255, 0.3);
+}
+
+body:not(.theme-dark) .progressRow.locked > div {
+  color: #aaa;
+}
+
+body:not(.theme-dark) .mission-hint {
+  color: #777;
+  opacity: 0.7;
+}
+
+body:not(.theme-dark) .mute-btn,
+body:not(.theme-dark) .theme-btn {
+  background: rgba(0, 0, 0, 0.12);
+  color: #222;
+  opacity: 1;
+}
+
+body:not(.theme-dark) .loader-spinner {
+  border-color: rgba(0, 0, 0, 0.08);
+  border-top-color: rgba(60, 140, 255, 0.6);
+}
+
+body:not(.theme-dark) .loader-text {
+  color: #888;
+}
+
+body:not(.theme-dark) select {
+  background: #fff;
+  color: #1a1a2e;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+body:not(.theme-dark) select:focus {
+  outline: 2px solid rgba(60, 140, 255, 0.5);
 }

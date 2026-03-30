@@ -1,8 +1,30 @@
 /* ======== Levels Memory ======== */
 const STORAGE_KEY = "flight_game_progress_v1";
 const SOUND_KEY = "flight_game_sound";
+const THEME_KEY = "echoes_theme";
 let soundEnabled = localStorage.getItem(SOUND_KEY) !== "off";
 let progress = loadProgress();
+
+/* ======== Theme ======== */
+function initTheme() {
+  const saved = localStorage.getItem(THEME_KEY);
+  const isDark = saved === "dark";
+  document.body.classList.toggle("theme-dark", isDark);
+  updateThemeUI();
+}
+
+function toggleTheme() {
+  const isDark = document.body.classList.toggle("theme-dark");
+  localStorage.setItem(THEME_KEY, isDark ? "dark" : "light");
+  updateThemeUI();
+}
+
+function updateThemeUI() {
+  const btn = document.getElementById("themeBtn");
+  if (!btn) return;
+  const isDark = document.body.classList.contains("theme-dark");
+  btn.textContent = isDark ? "☀️" : "🌙";
+}
 
 
 function loadProgress() {
