@@ -30,7 +30,6 @@ function updateThemeUI() {
 function loadProgress() {
   const raw = localStorage.getItem(STORAGE_KEY);
   if (!raw) {
-    localStorage.removeItem("lastPlayedLevel");
     return {
       unlockedCount: 1,
       completedLevels: []

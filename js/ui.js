@@ -61,6 +61,7 @@ function renderProgressTable() {
 
       state.levelId = levelId;
       state.levelIndex = levelOrder.indexOf(levelId);
+      localStorage.setItem("lastPlayedLevel", levelId);
 
       playSound("clicked");
     });
@@ -83,6 +84,7 @@ function moveMenuSelection(dir) {
       exploreBtn.classList.remove("selected");
       rows[0].classList.add("selected");
       state.levelId = rows[0].dataset.levelId;
+      localStorage.setItem("lastPlayedLevel", state.levelId);
       playSound("key_arrow");
     }
     return;
@@ -97,6 +99,7 @@ function moveMenuSelection(dir) {
     // Move up from first level to explore
     rows.forEach(r => r.classList.remove("selected"));
     exploreBtn.classList.add("selected");
+    localStorage.setItem("lastPlayedLevel", "__explore__");
     playSound("key_arrow");
     return;
   }
@@ -111,6 +114,7 @@ function moveMenuSelection(dir) {
   rows[newIdx].classList.add("selected");
 
   state.levelId = rows[newIdx].dataset.levelId;
+  localStorage.setItem("lastPlayedLevel", state.levelId);
 }
 
 function renderRouteHUD() {

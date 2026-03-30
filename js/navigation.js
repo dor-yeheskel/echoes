@@ -129,11 +129,5 @@ window.addEventListener('DOMContentLoaded', async function() {
     Math.min(progress.unlockedCount || 1, levelOrder.length)
   );
   
-  window.addEventListener("beforeunload", () => {
-    if (state.levelId) {
-      localStorage.setItem("lastPlayedLevel", state.levelId);
-    }
-  });
-  
   requestAnimationFrame(loop);
 });
