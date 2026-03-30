@@ -256,6 +256,9 @@ function loadExploreMode() {
   planeMarker.setLatLng([state.lat, state.lng]);
   map.setView([state.lat, state.lng], CONFIG_DEFAULTS.zoom, { animate: false });
 
+  // Pre-cull city markers so they're visible immediately (no empty-map flash)
+  cullCityMarkersToViewport();
+
   showMinimap(state.lat, state.lng);
   spawnMinimapCityDots(state.exploreMusicCities, state.exploreDiscoveredSet);
 
