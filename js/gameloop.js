@@ -131,6 +131,19 @@ function loop(t) {
             state.exploreDiscoveredSet.add(`${mc.city}|${mc.country}`);
           }
 
+          // Track consecutive visits to the same city (easter egg)
+          const mcKey = `${mc.city}|${mc.country}`;
+          if (state._exploreLastVisitKey === mcKey) {
+            state._exploreStrikeCount = (state._exploreStrikeCount || 0) + 1;
+          } else {
+            state._exploreLastVisitKey = mcKey;
+            state._exploreStrikeCount = 1;
+          }
+          if (state._exploreStrikeCount === 4) {
+            spawnStrikeEcho(mc.lat, mc.lng);
+            state._exploreStrikeCount = 0;
+          }
+
           // Always update visited list on every entry
           const idx = state.exploreVisited.findIndex(
             v => v.city === mc.city && v.country === mc.country

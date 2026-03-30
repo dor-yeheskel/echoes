@@ -356,6 +356,26 @@ function spawnArrivalPulse(lat, lng) {
   }, 950);
 }
 
+function spawnStrikeEcho(lat, lng) {
+  if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
+
+  const echo = L.marker([lat, lng], {
+    interactive: false,
+    keyboard: false,
+    icon: L.divIcon({
+      html: '<div class="strike-echo"></div>',
+      className: "",
+      iconSize: [120, 120],
+      iconAnchor: [60, 60]
+    }),
+    pane: "fxPane"
+  }).addTo(layerFx);
+
+  setTimeout(() => {
+    try { layerFx.removeLayer(echo); } catch {}
+  }, 1500);
+}
+
 function _pulseElement(el) {
   if (!el) return;
   el.classList.remove("city-pulse");

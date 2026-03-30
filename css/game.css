@@ -990,3 +990,27 @@ body.explore-mode #routeHud {
     opacity: 0;
   }
 }
+
+/* Easter egg: big red echo for 4th consecutive same-city visit */
+.strike-echo {
+  width: 120px;
+  height: 120px;
+  border-radius: 999px;
+  border: 3px solid rgba(255, 60, 60, 0.9);
+  box-shadow: 0 0 24px rgba(255, 60, 60, 0.45);
+  transform: scale(0.15);
+  opacity: 1;
+  animation: strikeRipple 0.35s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes strikeRipple {
+  0% {
+    transform: scale(0.15);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
