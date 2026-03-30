@@ -8,7 +8,7 @@ let progress = loadProgress();
 /* ======== Theme ======== */
 function initTheme() {
   const saved = localStorage.getItem(THEME_KEY);
-  const isDark = saved === "dark";
+  const isDark = saved !== "light";
   document.body.classList.toggle("theme-dark", isDark);
   updateThemeUI();
 }
