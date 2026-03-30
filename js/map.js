@@ -89,12 +89,15 @@ function initMinimap() {
     : "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
   L.tileLayer(tileUrl, { maxZoom: 19 }).addTo(minimap);
 
-  minimapPlaneMarker = L.circleMarker([0, 0], {
-    radius: 4,
-    color: "#ff4444",
-    fillColor: "#ff4444",
-    fillOpacity: 1,
-    weight: 2,
+  minimapPlaneMarker = L.marker([0, 0], {
+    interactive: false,
+    keyboard: false,
+    icon: L.divIcon({
+      html: '<div style="font-size:14px;line-height:1;">✈️</div>',
+      className: "",
+      iconSize: [16, 16],
+      iconAnchor: [8, 8]
+    })
   }).addTo(minimap);
 }
 

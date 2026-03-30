@@ -97,8 +97,8 @@ const EXPLORE_MODE = {
   MUSIC_ARRIVAL_RADIUS: 35_000,
 
   MINIMAP: {
-    WIDTH: 200,        // px
-    HEIGHT: 140,       // px
+    WIDTH: 260,        // px
+    HEIGHT: 200,       // px
     ZOOM: 2,           // world overview zoom
     SATELLITE: false,  // false = dark carto style
   },
