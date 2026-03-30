@@ -472,7 +472,7 @@ function spawnStrikeEcho(lat, lng) {
 
   setTimeout(() => {
     try { layerFx.removeLayer(echo); } catch {}
-  }, 1500);
+  }, 2200);
 }
 
 function _pulseElement(el) {
