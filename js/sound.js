@@ -151,7 +151,7 @@ function _cancelFade(a) {
   a.volume = a._baseVolume;
 }
 
-function playCityTrack(city, country) {
+function playCityTrack(city, country, { playbackRate = 1 } = {}) {
   if (!soundEnabled) return;
   const key = _cityKey(city, country);
   const a = CITY_TRACKS[key];
@@ -169,9 +169,11 @@ function playCityTrack(city, country) {
     a.pause();
     a.currentTime = 0;
     a.volume = a._baseVolume;
+    a.playbackRate = playbackRate;
     a.play().catch(() => {});
     cityTrackTimeoutId = setTimeout(() => {
       if (currentCityAudio === a && currentCityKey === key) {
+        a.playbackRate = 1;
         _fadeOutAudio(a, { duration: 600 });
       }
     }, CITY_TRACK_PLAY_MS);

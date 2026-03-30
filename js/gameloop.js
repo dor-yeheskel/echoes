@@ -120,17 +120,6 @@ function loop(t) {
         if (inRadius && !mc.inRadius) {
           mc.inRadius = true;
 
-          // Always play music on every encounter
-          playSound("reached");
-          playCityTrack(mc.city, mc.country);
-
-          if (!mc.discovered) {
-            mc.discovered = true;
-            spawnArrivalPulse(mc.lat, mc.lng);
-            markExploreMusicVisited(mc.city, mc.country);
-            state.exploreDiscoveredSet.add(`${mc.city}|${mc.country}`);
-          }
-
           // Track consecutive visits to the same city (easter egg)
           const mcKey = `${mc.city}|${mc.country}`;
           if (state._exploreLastVisitKey === mcKey) {
@@ -139,9 +128,21 @@ function loop(t) {
             state._exploreLastVisitKey = mcKey;
             state._exploreStrikeCount = 1;
           }
-          if (state._exploreStrikeCount === 4) {
+          const isStrike = state._exploreStrikeCount === 4;
+          if (isStrike) {
             spawnStrikeEcho(mc.lat, mc.lng);
             state._exploreStrikeCount = 0;
+          }
+
+          // Always play music on every encounter
+          playSound("reached");
+          playCityTrack(mc.city, mc.country, isStrike ? { playbackRate: 2 } : undefined);
+
+          if (!mc.discovered) {
+            mc.discovered = true;
+            spawnArrivalPulse(mc.lat, mc.lng);
+            markExploreMusicVisited(mc.city, mc.country);
+            state.exploreDiscoveredSet.add(`${mc.city}|${mc.country}`);
           }
 
           // Always update visited list on every entry
