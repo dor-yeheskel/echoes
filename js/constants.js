@@ -98,7 +98,7 @@ const EXPLORE_MODE = {
 
   MINIMAP: {
     WIDTH: 260,        // px
-    HEIGHT: 200,       // px
+    HEIGHT: 180,       // px
     ZOOM: 2,           // world overview zoom
     SATELLITE: false,  // false = dark carto style
   },

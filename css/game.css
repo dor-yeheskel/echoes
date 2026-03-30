@@ -1008,7 +1008,7 @@ body.explore-mode #routeHud {
 #minimap {
   display: none;
   position: fixed;
-  bottom: 40px;
+  bottom: 30px;
   right: 14px;
   z-index: 9998;
   border: 2px solid rgba(255, 255, 255, 0.15);
