@@ -64,6 +64,8 @@ function renderProgressTable() {
       localStorage.setItem("lastPlayedLevel", levelId);
 
       playSound("clicked");
+      loadLevel(levelId);
+      startGame();
     });
   });
 
