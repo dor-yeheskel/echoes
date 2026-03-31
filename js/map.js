@@ -155,6 +155,22 @@ function markMinimapCityDiscovered(city, country) {
   const dot = _minimapCityDots.get(key);
   if (dot) {
     dot.setStyle({ color: "#7CFFB2", fillColor: "#7CFFB2" });
+
+    // Pulse ring (same animation as level minimap reveals)
+    const latlng = dot.getLatLng();
+    const pulse = L.marker(latlng, {
+      interactive: false,
+      keyboard: false,
+      icon: L.divIcon({
+        html: '<div class="minimap-dot-pulse"></div>',
+        className: '',
+        iconSize: [0, 0],
+        iconAnchor: [0, 0]
+      })
+    }).addTo(minimap);
+    setTimeout(() => {
+      try { minimap.removeLayer(pulse); } catch {}
+    }, 700);
   }
 }
 
