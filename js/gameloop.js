@@ -181,6 +181,7 @@ function loop(t) {
     }
     if (state.isExploreMode) {
       cullCityMarkersToViewport();
+      repositionExploreMusicMarkers();
     }
   }
 

@@ -108,8 +108,9 @@ function showMinimap(lat, lng) {
   initMinimap();
   el.style.display = "block";
   minimap.invalidateSize();
-  minimapPlaneMarker.setLatLng([lat, lng]);
-  minimap.setView([lat, lng], EXPLORE_MODE.MINIMAP.ZOOM, { animate: false });
+  const mmLng = wrapLng(lng);
+  minimapPlaneMarker.setLatLng([lat, mmLng]);
+  minimap.setView([lat, mmLng], EXPLORE_MODE.MINIMAP.ZOOM, { animate: false });
 }
 
 function hideMinimap() {
@@ -119,8 +120,9 @@ function hideMinimap() {
 
 function updateMinimap(lat, lng, heading) {
   if (!minimap || !minimapPlaneMarker) return;
-  minimapPlaneMarker.setLatLng([lat, lng]);
-  minimap.setView([lat, lng], EXPLORE_MODE.MINIMAP.ZOOM, { animate: false });
+  const mmLng = wrapLng(lng);
+  minimapPlaneMarker.setLatLng([lat, mmLng]);
+  minimap.setView([lat, mmLng], EXPLORE_MODE.MINIMAP.ZOOM, { animate: false });
   const el = minimapPlaneMarker.getElement()?.querySelector('.minimap-plane');
   if (el) {
     el.style.transform = `rotate(${(heading || 0) + CONFIG_DEFAULTS.emojiRotationOffset}deg)`;
@@ -247,6 +249,7 @@ function getNearbyCityEntities(lat, lng, radiusM) {
     return cityEntities;
   }
 
+  lng = wrapLng(lng);
   const metersPerDegLat = 111_320;
   const latRangeDeg = radiusM / metersPerDegLat;
   const cosLat = Math.cos(lat * Math.PI / 180);
@@ -611,12 +614,25 @@ function cullCityMarkersToViewport() {
   const shouldBeVisible = new Set();
 
   for (const c of _exploreCityPool) {
-    if (c.lat >= south && c.lat <= north && c.lng >= west && c.lng <= east) {
+    const adjLng = nearestLng(c.lng, state.lng);
+    if (c.lat >= south && c.lat <= north && adjLng >= west && adjLng <= east) {
       shouldBeVisible.add(c.key);
 
       if (!_visibleCityMarkers.has(c.key)) {
-        addCityMarker(c.lat, c.lng, c.pop, c.name, c.country);
-        _visibleCityMarkers.set(c.key, true);
+        addCityMarker(c.lat, adjLng, c.pop, c.name, c.country);
+        _visibleCityMarkers.set(c.key, adjLng);
+      } else {
+        // Reposition marker if world copy changed
+        const prevLng = _visibleCityMarkers.get(c.key);
+        if (Math.abs(prevLng - adjLng) > 1) {
+          const m = window.cityMarkerIndex?.get(c.key);
+          if (m) {
+            layerCities.removeLayer(m);
+            window.cityMarkerIndex.delete(c.key);
+          }
+          addCityMarker(c.lat, adjLng, c.pop, c.name, c.country);
+          _visibleCityMarkers.set(c.key, adjLng);
+        }
       }
     }
   }
@@ -636,9 +652,11 @@ function cullCityMarkersToViewport() {
 
 
 const _exploreMusicMarkers = new Map();
+let _lastMusicWorldCopy = 0;
 
 function spawnExploreMusicMarkers(musicCities) {
   _exploreMusicMarkers.clear();
+  _lastMusicWorldCopy = 0;
   for (const mc of musicCities) {
     const key = `${mc.city}|${mc.country}`;
     const marker = L.marker([mc.lat, mc.lng], {
@@ -653,6 +671,20 @@ function spawnExploreMusicMarkers(musicCities) {
       pane: "fxPane"
     }).addTo(layerFx);
     _exploreMusicMarkers.set(key, marker);
+  }
+}
+
+function repositionExploreMusicMarkers() {
+  if (!state.isExploreMode) return;
+  const worldCopy = Math.round(state.lng / 360) * 360;
+  if (worldCopy === _lastMusicWorldCopy) return;
+  _lastMusicWorldCopy = worldCopy;
+  for (const mc of (state.exploreMusicCities || [])) {
+    const key = `${mc.city}|${mc.country}`;
+    const marker = _exploreMusicMarkers.get(key);
+    if (marker) {
+      marker.setLatLng([mc.lat, nearestLng(mc.lng, state.lng)]);
+    }
   }
 }
 

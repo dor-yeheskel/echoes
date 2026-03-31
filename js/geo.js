@@ -4,6 +4,18 @@ const R = 6371000;
 const rad = d => d * Math.PI / 180;
 const deg = r => r * 180 / Math.PI;
 
+/** Wrap longitude to [-180, 180] */
+function wrapLng(lng) {
+  return ((lng + 180) % 360 + 360) % 360 - 180;
+}
+
+/** Return the equivalent of `lng` (mod 360) closest to `ref` */
+function nearestLng(lng, ref) {
+  let d = lng - ref;
+  d = ((d + 180) % 360 + 360) % 360 - 180;
+  return ref + d;
+}
+
 function move(lat, lng, hdg, dist) {
   const d = dist / R;
   const h = rad(hdg);
@@ -24,6 +36,8 @@ function move(lat, lng, hdg, dist) {
 
 function distance(a, b) {
   const dx = rad(b.lat - a.lat);
-  const dy = rad(b.lng - a.lng);
+  let dlng = b.lng - a.lng;
+  dlng = ((dlng + 180) % 360 + 360) % 360 - 180;
+  const dy = rad(dlng);
   return Math.sqrt(dx * dx + dy * dy) * R;
 }
