@@ -5,6 +5,9 @@ const GAME_STATE = {
   GAMEOVER: "gameover"
 };
 
+/* ========= POLAR BOUNDARY ========= */
+const POLAR_LAT_LIMIT = 75; // keep viewport away from tile edge (~85°)
+
 /* ========= CONSTANTS (defaults preserved) ========= */
 const CONFIG_DEFAULTS = {
   minSpeed: 600_000,

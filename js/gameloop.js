@@ -51,6 +51,23 @@ function loop(t) {
     state.lat = pos.lat;
     state.lng = pos.lng;
 
+    // Polar boundary: clamp latitude and reflect heading away from pole
+    if (state.lat > POLAR_LAT_LIMIT) {
+      state.lat = POLAR_LAT_LIMIT;
+      pos.lat = POLAR_LAT_LIMIT;
+      const normH = ((state.heading % 360) + 360) % 360;
+      if (normH < 90 || normH > 270) {
+        state.heading = 180 - state.heading;
+      }
+    } else if (state.lat < -POLAR_LAT_LIMIT) {
+      state.lat = -POLAR_LAT_LIMIT;
+      pos.lat = -POLAR_LAT_LIMIT;
+      const normH = ((state.heading % 360) + 360) % 360;
+      if (normH > 90 && normH < 270) {
+        state.heading = 180 - state.heading;
+      }
+    }
+
     state.fuelPrevLat = state.lat;
     state.fuelPrevLng = state.lng;
 

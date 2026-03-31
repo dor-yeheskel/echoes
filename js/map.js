@@ -1,6 +1,11 @@
 /* ========= MAP ========= */
 
-const map = L.map("map", { zoomControl: false, inertia: false });
+const map = L.map("map", {
+  zoomControl: false,
+  inertia: false,
+  maxBounds: L.latLngBounds(L.latLng(-85, -Infinity), L.latLng(85, Infinity)),
+  maxBoundsViscosity: 1.0
+});
 map.keyboard.disable();
 map.dragging.disable();
 
