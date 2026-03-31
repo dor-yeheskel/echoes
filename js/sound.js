@@ -28,8 +28,6 @@ sounds.victory.volume = V.end;
 // Keys are normalized as "city|country" in lowercase.
 // You can extend or override this map per your assets.
 
-// Gen:"COUNTRY Folk dance music." / "COUNTRY Folk modern dance music."
-
 const CITY_TRACKS = {
   // Level 1: Euro Trip
   "paris|france": new Audio("assets/sounds/cities/paris.wav"),
@@ -87,6 +85,17 @@ const CITY_TRACKS = {
   "lima|peru": new Audio("assets/sounds/cities/lima.wav"),
   "rio de janeiro|brazil": new Audio("assets/sounds/cities/rio-de-janeiro.wav"),
   "buenos aires|argentina": new Audio("assets/sounds/cities/buenos-aires.wav"),
+
+  // Others
+  "london|united kingdom": new Audio("assets/sounds/cities/london.wav"),
+  "moscow|russia": new Audio("assets/sounds/cities/moscow.wav"),
+  "lagos|nigeria": new Audio("assets/sounds/cities/lagos.wav"),
+  "jakarta|indonesia": new Audio("assets/sounds/cities/jakarta.wav"),
+  "singapore|singapore": new Audio("assets/sounds/cities/singapore.wav"),
+  "sydney|australia": new Audio("assets/sounds/cities/sydney.wav"),
+  "toronto|canada": new Audio("assets/sounds/cities/toronto.wav"),
+  "chicago|united states": new Audio("assets/sounds/cities/chicago.wav"),
+  "san francisco|united states": new Audio("assets/sounds/cities/san_francisco.wav"),
 };
 
 
