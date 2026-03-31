@@ -63,7 +63,7 @@ const CITY_MARKERS = {
 
 
   CACHE_KEY: "echoes_city_markers_v4",
-  CACHE_SCHEMA_VERSION: 3
+  CACHE_SCHEMA_VERSION: 4
 };
 
 /* ========= RUNTIME OVERRIDES (PER LEVEL) ========= */

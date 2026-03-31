@@ -377,8 +377,8 @@ async function loadCityIndex() {
     // cached may be in compact-array format ([lat,lng,pop,name,country])
     for (const row of cached) {
       if (Array.isArray(row)) {
-        const [lat, lng, pop, name, country] = row;
-        cityItems.push({ lat, lng, pop, isCapital: false, name, country });
+        const [lat, lng, pop, name, country, cap] = row;
+        cityItems.push({ lat, lng, pop, isCapital: !!cap, name, country });
         upsertCityIndex(name, country, lat, lng, pop);
       } else {
         const name = row.city ?? row.name;

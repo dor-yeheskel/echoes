@@ -125,11 +125,12 @@ function loadCityMarkersCache() {
 
 function saveCityMarkersCache(items) {
   try {
-    // Normalize to compact arrays for compatibility with older versions:
+    // Normalize to compact arrays:
+    // [lat, lng, pop, cityName, countryName, isCapital]
     const compact = items.map(it => {
       if (Array.isArray(it)) return it;
       const name = it.name ?? it.city ?? "";
-      return [Number(it.lat), Number(it.lng), Number(it.pop ?? 0), name, it.country ?? ""];
+      return [Number(it.lat), Number(it.lng), Number(it.pop ?? 0), name, it.country ?? "", it.isCapital ? 1 : 0];
     });
 
     const payload = {
