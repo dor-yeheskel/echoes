@@ -45,6 +45,10 @@ window.addEventListener('DOMContentLoaded', async function() {
   if (introLoader) introLoader.style.display = "none";
   if (introContent) introContent.style.display = "";
 
+  // Show top-right buttons now that loading is done
+  document.getElementById("themeBtn").style.display = "";
+  document.getElementById("muteBtn").style.display = "";
+
   levelToData = window.LEVELS;
   levelOrder = Object.keys(window.LEVELS);
 
