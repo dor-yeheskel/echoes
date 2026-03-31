@@ -141,6 +141,9 @@ function loadLevel(levelId) {
   planeMarker.setLatLng([state.lat, state.lng]);
   map.setView([state.lat, state.lng], 13, { animate: false });
 
+  showMinimap(state.lat, state.lng);
+  initMinimapForLevel();
+
   introEl.style.display = "flex";
   endScreenEl.style.display = "none";
 

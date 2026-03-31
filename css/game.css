@@ -1021,6 +1021,34 @@ body.explore-mode #routeHud {
   display: none;
 }
 
+/* Minimap dot reveal pulse (level mode) */
+.minimap-dot-pulse {
+  width: 14px;
+  height: 14px;
+  margin-left: -7px;
+  margin-top: -7px;
+  border-radius: 50%;
+  background: rgba(124, 255, 178, 0.5);
+  box-shadow: 0 0 8px rgba(124, 255, 178, 0.7);
+  animation: minimapDotPulse 0.7s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes minimapDotPulse {
+  0% {
+    transform: scale(0.3);
+    opacity: 1;
+  }
+  60% {
+    transform: scale(2);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
 @keyframes strikeRipple {
   0% {
     transform: scale(0.15);

@@ -85,6 +85,7 @@ function endLevel() {
 
   state.gameOver = true;
   state.gameStarted = false;
+  hideMinimap();
 
   const currentIndex = state.levelIndex;
   const nextIndex = currentIndex + 1;
@@ -114,6 +115,7 @@ function crash() {
 
   state.gameOver = true;
   state.gameStarted = false;
+  hideMinimap();
   currentState = GAME_STATE.GAMEOVER;
 
   stopAllSounds({ fade: true, duration: 600 });

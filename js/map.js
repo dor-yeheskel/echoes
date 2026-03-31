@@ -158,6 +158,47 @@ function markMinimapCityDiscovered(city, country) {
   }
 }
 
+/* ========= LEVEL MODE MINIMAP ========= */
+function initMinimapForLevel() {
+  if (!minimap) return;
+  for (const dot of _minimapCityDots.values()) {
+    try { minimap.removeLayer(dot); } catch {}
+  }
+  _minimapCityDots.clear();
+}
+
+function revealMinimapTarget(city, country, lat, lng) {
+  if (!minimap) return;
+  const key = `${city}|${country}`;
+  if (_minimapCityDots.has(key)) return;
+
+  // Pulse ring (temporary expanding glow)
+  const pulse = L.marker([lat, lng], {
+    interactive: false,
+    keyboard: false,
+    icon: L.divIcon({
+      html: '<div class="minimap-dot-pulse"></div>',
+      className: '',
+      iconSize: [0, 0],
+      iconAnchor: [0, 0]
+    })
+  }).addTo(minimap);
+  setTimeout(() => {
+    try { minimap.removeLayer(pulse); } catch {}
+  }, 700);
+
+  // Green dot
+  const dot = L.circleMarker([lat, lng], {
+    radius: 1.5,
+    color: '#7CFFB2',
+    fillColor: '#7CFFB2',
+    fillOpacity: 0.9,
+    weight: 0,
+    interactive: false,
+  }).addTo(minimap);
+  _minimapCityDots.set(key, dot);
+}
+
 const cityEntities = [];
 const cityHudGrid = new Map(); // key "latCell|lngCell" -> city[]
 const CITY_HUD_GRID_DEG = 0.35;

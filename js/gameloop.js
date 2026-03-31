@@ -78,7 +78,7 @@ function loop(t) {
     }
     planeMarker.setLatLng(pos);
     map.setView(pos, map.getZoom(), { animate: false });
-    if (state.isExploreMode) updateMinimap(pos.lat, pos.lng, state.heading);
+    updateMinimap(pos.lat, pos.lng, state.heading);
     
 
     // Free-order: check proximity against any unfinished target
@@ -100,6 +100,10 @@ function loop(t) {
 
           if (typeof markDestinationCityReached === "function") {
             try { markDestinationCityReached(t); } catch {}
+          }
+
+          if (!state.isExploreMode && t.city && t.country) {
+            revealMinimapTarget(t.city, t.country, t.lat, t.lng);
           }
 
           if (t.city && t.country && typeof playCityTrack === 'function') {
