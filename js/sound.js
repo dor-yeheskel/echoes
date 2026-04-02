@@ -30,77 +30,92 @@ sounds.victory.volume = V.end;
 
 const CITY_TRACKS = {
   // Level 1: Euro Trip
-  "paris|france": new Audio("assets/sounds/cities/paris.wav"),
-  "berlin|germany": new Audio("assets/sounds/cities/berlin.wav"),
-  "barcelona|spain": new Audio("assets/sounds/cities/barcelona.wav"),
+  "paris|france": "assets/sounds/cities/paris.wav",
+  "berlin|germany": "assets/sounds/cities/berlin.wav",
+  "barcelona|spain": "assets/sounds/cities/barcelona.wav",
 
   // Level 2: Mediterranean Sea
-  "rome|italy": new Audio("assets/sounds/cities/rome.wav"),
-  "athens|greece": new Audio("assets/sounds/cities/athens.wav"),
-  "istanbul|turkey": new Audio("assets/sounds/cities/istanbul.wav"),
-  "cairo|egypt": new Audio("assets/sounds/cities/cairo.wav"),
+  "rome|italy": "assets/sounds/cities/rome.wav",
+  "athens|greece": "assets/sounds/cities/athens.wav",
+  "istanbul|turkey": "assets/sounds/cities/istanbul.wav",
+  "cairo|egypt": "assets/sounds/cities/cairo.wav",
 
   // Level 3: Middle East
-  "mecca|saudi arabia": new Audio("assets/sounds/cities/mecca.wav"),
-  "baghdad|iraq": new Audio("assets/sounds/cities/baghdad.wav"),
-  "tehran|iran": new Audio("assets/sounds/cities/tehran.wav"),
-  "dubai|united arab emirates": new Audio("assets/sounds/cities/dubai.wav"),
+  "mecca|saudi arabia": "assets/sounds/cities/mecca.wav",
+  "baghdad|iraq": "assets/sounds/cities/baghdad.wav",
+  "tehran|iran": "assets/sounds/cities/tehran.wav",
+  "dubai|united arab emirates": "assets/sounds/cities/dubai.wav",
 
   // Level 4: South Asia
-  "karachi|pakistan": new Audio("assets/sounds/cities/karachi.wav"),
-  "kathmandu|nepal": new Audio("assets/sounds/cities/kathmandu.wav"),
-  "mumbai|india": new Audio("assets/sounds/cities/mumbai.wav"),
-  "delhi|india": new Audio("assets/sounds/cities/delhi.wav"),
-  "kolkāta|india": new Audio("assets/sounds/cities/kolkata.wav"),
+  "karachi|pakistan": "assets/sounds/cities/karachi.wav",
+  "kathmandu|nepal": "assets/sounds/cities/kathmandu.wav",
+  "mumbai|india": "assets/sounds/cities/mumbai.wav",
+  "delhi|india": "assets/sounds/cities/delhi.wav",
+  "kolkāta|india": "assets/sounds/cities/kolkata.wav",
 
   // Level 5: South East Asia
-  "rangoon|myanmar": new Audio("assets/sounds/cities/rangoon.wav"),
-  "bangkok|thailand": new Audio("assets/sounds/cities/bangkok.wav"),
-  "manila|philippines": new Audio("assets/sounds/cities/manila.wav"),
-  "ho chi minh city|vietnam": new Audio("assets/sounds/cities/ho-chi-minh-city.wav"),
-  "hanoi|vietnam": new Audio("assets/sounds/cities/hanoi.wav"),
+  "rangoon|myanmar": "assets/sounds/cities/rangoon.wav",
+  "bangkok|thailand": "assets/sounds/cities/bangkok.wav",
+  "manila|philippines": "assets/sounds/cities/manila.wav",
+  "ho chi minh city|vietnam": "assets/sounds/cities/ho-chi-minh-city.wav",
+  "hanoi|vietnam": "assets/sounds/cities/hanoi.wav",
 
   // Level 6: The East
-  "shenzhen|china": new Audio("assets/sounds/cities/shenzhen.wav"),
-  "shanghai|china": new Audio("assets/sounds/cities/shanghai.wav"),
-  "beijing|china": new Audio("assets/sounds/cities/beijing.wav"),
-  "chengdu|china": new Audio("assets/sounds/cities/chengdu.wav"),
-  "seoul|south korea": new Audio("assets/sounds/cities/seoul.wav"),
-  "tokyo|japan": new Audio("assets/sounds/cities/tokyo.wav"),
+  "shenzhen|china": "assets/sounds/cities/shenzhen.wav",
+  "shanghai|china": "assets/sounds/cities/shanghai.wav",
+  "beijing|china": "assets/sounds/cities/beijing.wav",
+  "chengdu|china": "assets/sounds/cities/chengdu.wav",
+  "seoul|south korea": "assets/sounds/cities/seoul.wav",
+  "tokyo|japan": "assets/sounds/cities/tokyo.wav",
 
   // Level 7: Africa Crossing
-  "addis ababa|ethiopia": new Audio("assets/sounds/cities/addis-ababa.wav"),
-  "nairobi|kenya": new Audio("assets/sounds/cities/nairobi.wav"),
-  "dar es salaam|tanzania": new Audio("assets/sounds/cities/dar-es-salaam.wav"),
-  "cape town|south africa": new Audio("assets/sounds/cities/cape-town.wav"),
+  "addis ababa|ethiopia": "assets/sounds/cities/addis-ababa.wav",
+  "nairobi|kenya": "assets/sounds/cities/nairobi.wav",
+  "dar es salaam|tanzania": "assets/sounds/cities/dar-es-salaam.wav",
+  "cape town|south africa": "assets/sounds/cities/cape-town.wav",
 
   // Level 8: The New World
-  "new york|united states": new Audio("assets/sounds/cities/new-york.wav"),
+  "new york|united states": "assets/sounds/cities/new-york.wav",
 
   // Level 9: America Crossing
-  "miami|united states": new Audio("assets/sounds/cities/miami.wav"),
-  "havana|cuba": new Audio("assets/sounds/cities/havana.wav"),
-  "mexico city|mexico": new Audio("assets/sounds/cities/mexico-city.wav"),
-  "panama city|panama": new Audio("assets/sounds/cities/panama-city.wav"),
-  "lima|peru": new Audio("assets/sounds/cities/lima.wav"),
-  "rio de janeiro|brazil": new Audio("assets/sounds/cities/rio-de-janeiro.wav"),
-  "buenos aires|argentina": new Audio("assets/sounds/cities/buenos-aires.wav"),
+  "miami|united states": "assets/sounds/cities/miami.wav",
+  "havana|cuba": "assets/sounds/cities/havana.wav",
+  "mexico city|mexico": "assets/sounds/cities/mexico-city.wav",
+  "panama city|panama": "assets/sounds/cities/panama-city.wav",
+  "lima|peru": "assets/sounds/cities/lima.wav",
+  "rio de janeiro|brazil": "assets/sounds/cities/rio-de-janeiro.wav",
+  "buenos aires|argentina": "assets/sounds/cities/buenos-aires.wav",
 
   // Others
-  "london|united kingdom": new Audio("assets/sounds/cities/london.wav"),
-  "moscow|russia": new Audio("assets/sounds/cities/moscow.wav"),
-  "lagos|nigeria": new Audio("assets/sounds/cities/lagos.wav"),
-  "jakarta|indonesia": new Audio("assets/sounds/cities/jakarta.wav"),
-  "singapore|singapore": new Audio("assets/sounds/cities/singapore.wav"),
-  "sydney|australia": new Audio("assets/sounds/cities/sydney.wav"),
-  "toronto|canada": new Audio("assets/sounds/cities/toronto.wav"),
-  "chicago|united states": new Audio("assets/sounds/cities/chicago.wav"),
-  "san francisco|united states": new Audio("assets/sounds/cities/san_francisco.wav"),
+  "london|united kingdom": "assets/sounds/cities/london.wav",
+  "moscow|russia": "assets/sounds/cities/moscow.wav",
+  "lagos|nigeria": "assets/sounds/cities/lagos.wav",
+  "jakarta|indonesia": "assets/sounds/cities/jakarta.wav",
+  "singapore|singapore": "assets/sounds/cities/singapore.wav",
+  "sydney|australia": "assets/sounds/cities/sydney.wav",
+  "toronto|canada": "assets/sounds/cities/toronto.wav",
+  "chicago|united states": "assets/sounds/cities/chicago.wav",
+  "san francisco|united states": "assets/sounds/cities/san_francisco.wav",
 };
 
+// Lazy Audio cache — created on demand, not at boot
+const _cityAudioCache = {};
 
-for (const a of Object.values(CITY_TRACKS)) {
-  try { a.volume = V.city; a.loop = false; } catch {}
+function _getOrCreateCityAudio(key) {
+  if (_cityAudioCache[key]) return _cityAudioCache[key];
+  const url = CITY_TRACKS[key];
+  if (!url) return null;
+  const a = new Audio(url);
+  a.volume = V.city;
+  a.loop = false;
+  _cityAudioCache[key] = a;
+  return a;
+}
+
+function preloadCityTracks(keys) {
+  for (const key of keys) {
+    _getOrCreateCityAudio(key);
+  }
 }
 
 
@@ -163,7 +178,8 @@ function _cancelFade(a) {
 function playCityTrack(city, country, { playbackRate = 1 } = {}) {
   if (!soundEnabled) return;
   const key = _cityKey(city, country);
-  const a = CITY_TRACKS[key];
+  if (!CITY_TRACKS[key]) return;
+  const a = _getOrCreateCityAudio(key);
   if (!a) return;
 
   try {
@@ -192,7 +208,7 @@ function playCityTrack(city, country, { playbackRate = 1 } = {}) {
 function getAllAudios() {
   return [
     ...Object.values(sounds),
-    ...Object.values(CITY_TRACKS)
+    ...Object.values(_cityAudioCache)
   ];
 }
 

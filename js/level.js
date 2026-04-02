@@ -4,9 +4,13 @@ async function loadLevels() {
 
     window.LEVELS = {};
 
-    for (const id of index.levels) {
-      const level = await fetch(`assets/levels/${id}.json`).then(r => r.json());
-      window.LEVELS[id] = level;
+    const entries = await Promise.all(
+      index.levels.map(id =>
+        fetch(`assets/levels/${id}.json`).then(r => r.json()).then(data => [id, data])
+      )
+    );
+    for (const [id, data] of entries) {
+      window.LEVELS[id] = data;
     }
 }
 
@@ -137,6 +141,13 @@ function loadLevel(levelId) {
   state.fuelPrevLng = state.lng;
   setLevelCenterFromTargets(entities.targets);
   preloadCityMarkers();
+
+  // Preload audio for this level's cities
+  const trackKeys = entities.targets
+    .filter(t => t.city && t.country)
+    .map(t => _cityKey(t.city, t.country))
+    .filter(k => CITY_TRACKS[k]);
+  preloadCityTracks(trackKeys);
 
   planeMarker.setLatLng([state.lat, state.lng]);
   map.setView([state.lat, state.lng], 13, { animate: false });
