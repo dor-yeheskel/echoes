@@ -802,6 +802,10 @@ select:focus {
   opacity: 0.35;
 }
 
+.city-marker.city-done.explore-visited-glow {
+  opacity: 1;
+}
+
 .city-marker.city-pulse::after {
   content: "";
   position: absolute;

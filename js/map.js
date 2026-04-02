@@ -574,6 +574,31 @@ function markDestinationCityReached(target) {
   if (!target) return;
   if (target.city && target.country) {
     markCityMarkerCompleted(target.city, target.country);
+
+    // Apply same persistent green effect as explore mode
+    const cityMarker = window.cityMarkerIndex?.get(`${target.city}|${target.country}`);
+    if (cityMarker) {
+      const root = cityMarker.getElement?.();
+      const el = root?.querySelector?.(".city-marker") || root;
+      if (el) {
+        el.classList.add("explore-visited-glow");
+      }
+    }
+
+    // Spawn persistent green echo pulse (same as explore)
+    if (Number.isFinite(target.lat) && Number.isFinite(target.lng)) {
+      L.marker([target.lat, target.lng], {
+        interactive: false,
+        keyboard: false,
+        icon: L.divIcon({
+          html: '<div class="music-visited-pulse"></div>',
+          className: "",
+          iconSize: [56, 56],
+          iconAnchor: [28, 28]
+        }),
+        pane: "fxPane"
+      }).addTo(layerFx);
+    }
   }
   spawnArrivalPulse(target.lat, target.lng);
 }
