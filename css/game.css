@@ -919,8 +919,8 @@ body.explore-mode #routeHud {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 4px 2px;
-  font-size: 13px;
+  padding: 6px 2px;
+  font-size: 14px;
   opacity: 0.8;
 }
 
