@@ -101,13 +101,31 @@ function loop(t) {
     // Free-order: check proximity against any unfinished target
     if (!state.gameOver && entities.targets && entities.targets.length) {
       for (const t of entities.targets) {
-        if (t.completed) continue;
+        if (t.completed) {
+          // Replay sound when re-entering a completed target's radius
+          const dc = distance(state, t);
+          const rc = Number.isFinite(t.arrivalRadius)
+            ? t.arrivalRadius
+            : CONFIG_DEFAULTS.arrivalRadius;
+          const inRadius = dc <= rc;
+          if (inRadius && !t.inRadius) {
+            t.inRadius = true;
+            if (t.city && t.country && typeof playCityTrack === 'function') {
+              playSound("reached");
+              playCityTrack(t.city, t.country);
+            }
+          } else if (!inRadius && t.inRadius) {
+            t.inRadius = false;
+          }
+          continue;
+        }
         const d = distance(state, t);
         const radius = Number.isFinite(t.arrivalRadius)
           ? t.arrivalRadius
           : CONFIG_DEFAULTS.arrivalRadius;
         if (d <= radius) {
           t.completed = true;
+          t.inRadius = true;
           if (typeof entities.remainingTargets === 'number' && entities.remainingTargets > 0) {
             entities.remainingTargets--;
           }
