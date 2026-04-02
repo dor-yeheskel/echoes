@@ -8,6 +8,10 @@ function startGame() {
   const themeBtn = document.getElementById("themeBtn");
   if (themeBtn) themeBtn.style.display = "none";
 
+  // Show menu button during gameplay
+  const menuBtn = document.getElementById("menuBtn");
+  if (menuBtn) menuBtn.style.display = "";
+
   whiteFlash();
 
   setTimeout(() => {
@@ -80,6 +84,17 @@ window.addEventListener('DOMContentLoaded', async function() {
       e.stopPropagation();
       toggleTheme();
       themeBtn.blur();
+    });
+  }
+
+  // Menu (back) button
+  const menuBtnEl = document.getElementById("menuBtn");
+  if (menuBtnEl) {
+    menuBtnEl.addEventListener("click", e => {
+      e.preventDefault();
+      e.stopPropagation();
+      goToMenu();
+      menuBtnEl.blur();
     });
   }
 

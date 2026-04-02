@@ -118,6 +118,9 @@ html, body {
   opacity: 0.6;
   z-index: 100001;
 }
+#muteBtn:hover {
+  opacity: 1;
+}
 
 
 .hud-level {
@@ -1063,6 +1066,25 @@ body.explore-mode #routeHud {
   }
 }
 
+/* ========= MENU (BACK) BUTTON ========= */
+.menu-btn {
+  position: fixed;
+  top: 14px;
+  right: 58px;
+  background: rgba(0,0,0,0.5);
+  border: none;
+  border-radius: 50%;
+  padding: 8px;
+  font-size: 16px;
+  color: white;
+  cursor: pointer;
+  z-index: 100000;
+  opacity: 0.6;
+}
+.menu-btn:hover {
+  opacity: 1;
+}
+
 /* ========= THEME TOGGLE BUTTON ========= */
 .theme-btn {
   position: fixed;
@@ -1175,7 +1197,8 @@ html:not(.theme-dark) .mission-hint {
 }
 
 html:not(.theme-dark) .mute-btn,
-html:not(.theme-dark) .theme-btn {
+html:not(.theme-dark) .theme-btn,
+html:not(.theme-dark) .menu-btn {
   background: rgba(0, 0, 0, 0.12);
   color: #222;
   opacity: 1;
