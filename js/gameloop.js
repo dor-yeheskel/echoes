@@ -170,7 +170,7 @@ function loop(t) {
           }
           const isStrike = state._exploreStrikeCount === 4;
           if (isStrike) {
-            spawnStrikeEcho(mc.lat, mc.lng);
+            spawnStrikeEcho(mc.lat, nearestLng(mc.lng, state.lng));
             state._exploreStrikeCount = 0;
           }
 
@@ -180,7 +180,7 @@ function loop(t) {
 
           if (!mc.discovered) {
             mc.discovered = true;
-            spawnArrivalPulse(mc.lat, mc.lng);
+            spawnArrivalPulse(mc.lat, nearestLng(mc.lng, state.lng));
             markExploreMusicVisited(mc.city, mc.country);
             markMinimapCityDiscovered(mc.city, mc.country);
             state.exploreDiscoveredSet.add(`${mc.city}|${mc.country}`);
