@@ -231,6 +231,7 @@ const _exploreCityPool = [];          // all qualifying cities (data only, no ma
 const _visibleCityMarkers = new Map(); // key -> Leaflet marker (currently on map)
 let _lastCullBounds = null;
 const _CULL_PAD = 0.3;                // pad viewport by 30% to avoid pop-in
+const _CULL_REMOVE_PAD = 0.8;         // larger pad for removal (hysteresis to prevent flicker)
 const _CULL_INTERVAL_MS = 250;
 
 function _cityHudCellKey(lat, lng) {
@@ -444,6 +445,7 @@ async function preloadCityMarkers() {
     }
   }
 
+  const _addedPoolKeys = new Set();
   for (const c of cityItems) {
     const key = `${c.name}|${c.country}`;
     const isForced = forcedCityKeys.has(key);
@@ -480,15 +482,18 @@ async function preloadCityMarkers() {
     _cityHudGridInsert(cityEntities[cityEntities.length - 1]);
 
     if (state.isExploreMode) {
-      // Defer marker creation to viewport culling
-      _exploreCityPool.push({
-        lat: c.lat,
-        lng: c.lng,
-        pop: c.pop,
-        name: c.name,
-        country: c.country,
-        key
-      });
+      // Defer marker creation to viewport culling (deduplicate by key)
+      if (!_addedPoolKeys.has(key)) {
+        _addedPoolKeys.add(key);
+        _exploreCityPool.push({
+          lat: c.lat,
+          lng: c.lng,
+          pop: c.pop,
+          name: c.name,
+          country: c.country,
+          key
+        });
+      }
     } else {
       addCityMarker(c.lat, c.lng, c.pop, c.name, c.country);
     }
@@ -608,43 +613,60 @@ function cullCityMarkersToViewport() {
   const bounds = map.getBounds();
   if (!bounds) return;
 
-  const latPad = (bounds.getNorth() - bounds.getSouth()) * _CULL_PAD;
-  const lngPad = (bounds.getEast() - bounds.getWest()) * _CULL_PAD;
+  const latSpan = bounds.getNorth() - bounds.getSouth();
+  const lngSpan = bounds.getEast() - bounds.getWest();
 
-  const south = bounds.getSouth() - latPad;
-  const north = bounds.getNorth() + latPad;
-  const west = bounds.getWest() - lngPad;
-  const east = bounds.getEast() + lngPad;
+  // Addition bounds (smaller): markers enter the tracked set here
+  const addLatPad = latSpan * _CULL_PAD;
+  const addLngPad = lngSpan * _CULL_PAD;
+  const addSouth = bounds.getSouth() - addLatPad;
+  const addNorth = bounds.getNorth() + addLatPad;
+  const addWest  = bounds.getWest()  - addLngPad;
+  const addEast  = bounds.getEast()  + addLngPad;
 
-  const shouldBeVisible = new Set();
+  // Removal bounds (larger): markers only leave the tracked set here
+  const remLatPad = latSpan * _CULL_REMOVE_PAD;
+  const remLngPad = lngSpan * _CULL_REMOVE_PAD;
+  const remSouth = bounds.getSouth() - remLatPad;
+  const remNorth = bounds.getNorth() + remLatPad;
+  const remWest  = bounds.getWest()  - remLngPad;
+  const remEast  = bounds.getEast()  + remLngPad;
+
+  const shouldKeep = new Set();   // keys that must NOT be removed
 
   for (const c of _exploreCityPool) {
     const adjLng = nearestLng(c.lng, state.lng);
-    if (c.lat >= south && c.lat <= north && adjLng >= west && adjLng <= east) {
-      shouldBeVisible.add(c.key);
+    const alreadyVisible = _visibleCityMarkers.has(c.key);
 
-      if (!_visibleCityMarkers.has(c.key)) {
+    // Decide if this city should have a marker:
+    // - New markers: must be inside the tighter addition bounds
+    // - Existing markers: stay as long as inside the wider removal bounds
+    const inAddBounds  = c.lat >= addSouth && c.lat <= addNorth && adjLng >= addWest && adjLng <= addEast;
+    const inRemBounds  = alreadyVisible && c.lat >= remSouth && c.lat <= remNorth && adjLng >= remWest && adjLng <= remEast;
+
+    if (inAddBounds || inRemBounds) {
+      shouldKeep.add(c.key);
+
+      if (!alreadyVisible) {
         addCityMarker(c.lat, adjLng, c.pop, c.name, c.country);
         _visibleCityMarkers.set(c.key, adjLng);
       } else {
-        // Reposition marker if world copy changed
+        // Reposition marker if world copy changed (use setLatLng to avoid DOM churn)
         const prevLng = _visibleCityMarkers.get(c.key);
         if (Math.abs(prevLng - adjLng) > 1) {
           const m = window.cityMarkerIndex?.get(c.key);
           if (m) {
-            layerCities.removeLayer(m);
-            window.cityMarkerIndex.delete(c.key);
+            m.setLatLng([c.lat, adjLng]);
           }
-          addCityMarker(c.lat, adjLng, c.pop, c.name, c.country);
           _visibleCityMarkers.set(c.key, adjLng);
         }
       }
     }
   }
 
-  // Remove markers that went off-screen
+  // Remove markers that went outside the wider removal bounds
   for (const [key] of _visibleCityMarkers) {
-    if (!shouldBeVisible.has(key)) {
+    if (!shouldKeep.has(key)) {
       const m = window.cityMarkerIndex?.get(key);
       if (m) {
         layerCities.removeLayer(m);
