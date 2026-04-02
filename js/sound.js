@@ -273,8 +273,17 @@ function toggleMute() {
   localStorage.setItem(SOUND_KEY, soundEnabled ? "on" : "off");
   if (!soundEnabled) {
     for (const s of getAllAudios()) {
-      s.pause();
-      s.currentTime = 0;
+      if (!s.paused && !s.ended) {
+        s._wasMutedWhilePlaying = true;
+        s.pause();
+      }
+    }
+  } else {
+    for (const s of getAllAudios()) {
+      if (s._wasMutedWhilePlaying) {
+        s._wasMutedWhilePlaying = false;
+        s.play().catch(() => {});
+      }
     }
   }
   updateMuteUI();
