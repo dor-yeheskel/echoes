@@ -246,6 +246,11 @@ function loadExploreMode() {
     }
   }
 
+  // If all cities already discovered from saved progress, suppress victory sound on first render
+  const allAlreadyFound = state.exploreMusicCities.length > 0 &&
+    state.exploreDiscoveredSet.size >= state.exploreMusicCities.length;
+  state._exploreVictoryPlayed = allAlreadyFound;
+
   // Reset easter egg strike counter (per session only)
   state._exploreStrikeCount = 0;
   state._exploreLastVisitKey = null;
