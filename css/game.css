@@ -1020,6 +1020,9 @@ body.explore-mode #routeHud {
 #minimap .leaflet-control-attribution {
   display: none;
 }
+#minimap .leaflet-tile {
+  outline: 1px solid transparent;
+}
 
 /* Minimap dot reveal pulse (level mode) */
 .minimap-dot-pulse {
