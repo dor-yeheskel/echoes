@@ -44,11 +44,6 @@ L.tileLayer(
   { attribution: "Tiles © Esri" }
 ).addTo(map);
 
-L.tileLayer(
-  "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
-  { maxZoom: 19 }
-)
-
 let zoom = CONFIG_DEFAULTS.zoom;
 map.setMinZoom(zoom);
 map.setMaxZoom(zoom);
@@ -90,9 +85,7 @@ function initMinimap() {
   });
   minimap.setView([0, 0], cfg.ZOOM);
 
-  const tileUrl = cfg.SATELLITE
-    ? "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-    : "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
+  const tileUrl = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}";
   L.tileLayer(tileUrl, { maxZoom: 19 }).addTo(minimap);
 
   minimapPlaneMarker = L.marker([0, 0], {

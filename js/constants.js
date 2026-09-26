@@ -103,6 +103,5 @@ const EXPLORE_MODE = {
     WIDTH: 260,        // px
     HEIGHT: 180,       // px
     ZOOM: 2,           // world overview zoom
-    SATELLITE: false,  // false = dark carto style
   },
 };
