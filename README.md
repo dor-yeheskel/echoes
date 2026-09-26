@@ -1,6 +1,6 @@
 # Echoes — navigate the world through sound
 ### Link: https://dor-yeheskel.itch.io/echoes
-### Demo: https://www.youtube.com/watch?v=bRqHlcFKc1M
+### Gameplay Demo: https://www.youtube.com/watch?v=bRqHlcFKc1M
 
 ## 🧭 Overview
 
