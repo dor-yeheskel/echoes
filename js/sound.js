@@ -8,6 +8,7 @@ const sounds = {
 };
 
 const V = {
+  jet: 0.1,
   ui: 0.95,
   ui_clicked: 0.55,
   fx: 0.65,
@@ -18,6 +19,72 @@ const V = {
 };
 
 const CITY_TRACK_PLAY_MS = 3500;
+
+let jetContext = null;
+let jetBuffer = null;
+let jetGain = null;
+let jetSource = null;
+let jetLoading = null;
+let jetOffset = 0;
+let jetStartedAt = 0;
+
+function stopJetSound(reset = true) {
+  if (jetSource) {
+    if (!reset) jetOffset = (jetContext.currentTime - jetStartedAt) % jetBuffer.duration;
+    jetSource.stop();
+    jetSource.disconnect();
+    jetSource = null;
+  }
+  if (reset) jetOffset = 0;
+}
+
+function updateJetSound() {
+  if (!soundEnabled || state.paused) {
+    stopJetSound(false);
+    return;
+  }
+  if (!state.gameStarted || state.gameOver || currentState !== GAME_STATE.PLAYING) {
+    stopJetSound();
+    return;
+  }
+  if (jetSource) return;
+
+  if (!jetLoading) {
+    jetLoading = (async () => {
+      jetContext = new AudioContext();
+      const response = await fetch("assets/sounds/jet.wav");
+      if (!response.ok) throw new Error(`Jet audio: ${response.status}`);
+      const decoded = await jetContext.decodeAudioData(await response.arrayBuffer());
+      const overlap = Math.min(Math.round(decoded.sampleRate * 0.15), Math.floor(decoded.length / 4));
+      jetBuffer = jetContext.createBuffer(decoded.numberOfChannels, decoded.length - overlap, decoded.sampleRate);
+
+      for (let channel = 0; channel < decoded.numberOfChannels; channel++) {
+        const original = decoded.getChannelData(channel);
+        const seamless = jetBuffer.getChannelData(channel);
+        seamless.set(original.subarray(0, seamless.length));
+        for (let i = 0; i < overlap; i++) {
+          const blend = (i + 1) / (overlap + 1);
+          seamless[i] = original[decoded.length - overlap + i] * (1 - blend) + original[i] * blend;
+        }
+      }
+
+      jetGain = jetContext.createGain();
+      jetGain.gain.value = V.jet;
+      jetGain.connect(jetContext.destination);
+      updateJetSound();
+    })().catch(error => console.warn("Jet ambience unavailable", error));
+    return;
+  }
+  if (!jetBuffer) return;
+
+  jetContext.resume().catch(() => {});
+  jetSource = jetContext.createBufferSource();
+  jetSource.buffer = jetBuffer;
+  jetSource.loop = true;
+  jetSource.connect(jetGain);
+  jetStartedAt = jetContext.currentTime - jetOffset;
+  jetSource.start(0, jetOffset);
+}
 
 sounds.key_arrow.volume = V.ui;
 sounds.clicked.volume   = V.ui_clicked;
@@ -256,6 +323,7 @@ function toggleMute() {
   soundEnabled = !soundEnabled;
   localStorage.setItem(SOUND_KEY, soundEnabled ? "on" : "off");
   if (!soundEnabled) {
+    stopJetSound(false);
     for (const s of getAllAudios()) {
       if (!s.paused && !s.ended) {
         s._wasMutedWhilePlaying = true;
@@ -284,6 +352,7 @@ function togglePause() {
   }
 
   if (state.paused) {
+    stopJetSound(false);
     // Pause all currently playing audio
     for (const s of getAllAudios()) {
       if (!s.paused && !s.ended) {
@@ -303,6 +372,7 @@ function togglePause() {
 }
 
 function stopAllSounds({ fade = false, duration = 1200 } = {}) {
+  stopJetSound();
   const now = performance.now();
 
   for (const s of getAllAudios()) {

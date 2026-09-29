@@ -8,6 +8,7 @@ let _debugCoordsTimer = 0;
 let last = performance.now();
 
 function loop(t) {
+  updateJetSound();
   if (state.paused) {
     requestAnimationFrame(loop);
     return;
